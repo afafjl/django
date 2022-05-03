@@ -1,0 +1,163 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<section class="main_breadcrumb">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="breadcrumb-content">
+				<h2>checkout</h2>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="">checkout</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div id="content" class="cart_page checkout_page">
+<!-- cart -->
+	<div id="cart" class="cart_section checkout_section">
+		<div class="container-fluid" id="checkout">
+			
+			<div class="row billing_and_payment_option wow fadeInDown   animated">
+				<!-- Billing Address -->
+				<!-- Delivery Address  -->
+				<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
+					<h3>Delivery Address</h3>
+					  <form class="eb-form eb-mailform form-checkout" novalidate="novalidate">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-wrap">
+									<input class="form-input form-control" id="checkout-first-name-2" type="text" name="name" data-constraints="@Required" placeholder="First Name">
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-wrap">
+									<input class="form-input form-control" id="checkout-last-name-2" type="text" name="name" data-constraints="@Required" placeholder="Last Name">
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-wrap">
+									<input class="form-input form-control" id="checkout-company-2" type="text" name="name" data-constraints="@Required" placeholder="Company">
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-wrap">
+									<input class="form-input form-control-has-validation" id="checkout-address-2" type="text" name="name" data-constraints="@Required" placeholder="Address">
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-wrap">
+								  <input class="form-input form-control-has-validation" id="checkout-city-2" type="text" name="name" data-constraints="@Required" placeholder="City/Town">
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-wrap has-error">
+									<input class="form-input form-control-has-validation" id="checkout-email-2" type="email" name="email" data-constraints="@Email @Required" placeholder="E-Mail">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-wrap has-error">
+									<input class="form-input form-control-has-validation" id="checkout-phone-2" type="text" name="phone" data-constraints="@Numeric" placeholder="Phone">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- your shopping cart -->
+			<div class="row your_cart wow fadeInDown   animated">
+				<h2>your shopping cart</h2>
+				<div class="table-custom-responsive">
+					<table class="table-custom table-cart table-responsive">
+						<thead>
+							<tr>
+								<th>Product name</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+							<tbody>
+								
+								<tr v-for="item in items">
+									<td><a class="table-cart-figure" href="checkout.html"><img v-bind:src="[[item.imageURL]]"  alt="" width="146" height="132"></a>
+										<a class="table-cart-link" href="#">[[item.name]]</a></td>
+									<td>[[item.price]]</td>
+									<td>
+									  [[item.quantity]]      
+					
+									</td>
+									<td>[[item.gettotal]]</td>
+								</tr>
+								
+							</tbody>
+					</table>
+				</div>
+			</div>	
+			
+			<!-- payment method -->
+				<div class="row payment_method wow fadeInDown   animated">
+					<div class="col-sm-6 col-lg-6">
+						<h3>Payment methods</h3>
+						<div class="inner_payment_method">
+							<div class="box-radio">
+								<div class="radio-panel">
+									<label class="radio-inline">
+										<input name="input-group-radio" value="checkbox-1" type="radio" checked="" class="radio-custom"><span class="radio-custom-dummy"></span>Direct Bank Transfer
+									</label>
+									
+								</div>
+								
+								<div class="radio-panel">
+									<label class="radio-inline">
+										<input name="input-group-radio" value="checkbox-1" type="radio" class="radio-custom"><span class="radio-custom-dummy"></span>PayPal
+									</label>
+								
+								</div>
+								<div class="radio-panel">
+									<label class="radio-inline">
+										<input name="input-group-radio" value="checkbox-1" type="radio" class="radio-custom"><span class="radio-custom-dummy"></span>Cheque Payment
+									</label>
+									
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<!--Cart total -->
+					<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
+					  <h3>Cart total</h3>
+						  <div class="table-custom-responsive">
+							<table class="table-custom table-responsive">
+								  <tbody>
+									<tr >
+									  <td>Cart Subtotal</td>
+									  <td>[[total]]</td>
+									</tr>
+									<tr>
+									  <td>Shipping</td>
+									  <td>Free</td>
+									</tr>
+									<tr>
+									  <td>Total</td>
+									  <td>[[total]]</td>
+									</tr>
+								  </tbody>
+							</table>
+							
+							<a href="#" class="btn">Confirm Order</a>
+						</div>
+					</div>
+				</div>
+			<!-- payment method -->
+		</div>	
+	</div>	
+<!-- cart end-->	
+</div>
+{% endblock content %}

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<title>Fashion Shop | Home</title>
+	<meta charset="utf-8">
+	{% load static %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/owl.carousel/assets/owl.carousel.css' %}"> 
+	<link rel="stylesheet" href="{% static 'vendor/wow/animate.css' %}"> 
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+	<script src="{% static 'vendor/owl.carousel/owl.carousel.min.js'%}"></script>
+	<script src="{% static 'vendor/wow/wow.min.js'%}"></script>
+	<!---slider use -->	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/slider-js/slideWiz.js'%}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/slider-js/slideWiz.css' %}"> 
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+		function getToken(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		const csrftoken = getToken('csrftoken');
+
+		function getCookie(name) {
+			// Split cookie string and get all individual name=value pairs in an array
+			var cookieArr = document.cookie.split(";");
+			
+			// Loop through the array elements
+			for(var i = 0; i < cookieArr.length; i++) {
+				var cookiePair = cookieArr[i].split("=");
+				
+				/* Removing whitespace at the beginning of the cookie name
+				and compare it with the given string */
+				if(name == cookiePair[0].trim()) {
+					// Decode the cookie value and return
+					return decodeURIComponent(cookiePair[1]);
+				}
+			}
+			
+			// Return null if not found
+			return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+		if(cart == undefined){
+			cart = {}
+			console.log('cart was created')
+			document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
+		}
+		console.log('Cart:',cart)
+		
+
+	</script>
+	<script>
+	new WOW().init();
+	  wow = new WOW(
+		{
+		  boxClass:     'wow',      // default
+		  animateClass: 'animated', // default
+		  offset:       0,          // default
+		  mobile:       true,       // default
+		  live:         true        // default
+		}
+		)
+		wow.init();
+		
+       
+	</script>
+	
+</head>
+<body>
+<div id="productapp">
+<header class="header-area">
+	<!-- Top Header -->
+	<div class="top-header">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				{%for message in messages%}
+				<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+				{%endfor%}
+				<div class="col-lg-8 col-md-12">
+					<ul class="top-header-contact-info">
+						<li><i class="fa fa-envelope-o"></i> info@yourcompany.com</li>
+						<li><i class="fa fa-phone"></i> Emergancy Helpline: <a href="tel:+44587154756">+91 123 456-7890</a></li>
+					</ul>
+				</div>
+				
+				<div class="col-lg-4 col-md-12">
+					<ul class="top-header-social header_account">
+						{%if user.username%}
+						<li><a href="{% url 'logout'%}"><i class="fa fa-sign-in"></i> Logout <span></span></a> </li>
+						{%else%}
+						<li><a href="{% url 'loginPage'%}"><i class="fa fa-sign-in"></i> Login <span>/</span></a> </li>
+						<li><a href="{% url 'register'%}"><i class="fa fa-pencil-square-o"></i> Register</a></li>
+						{%endif%}
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- End Top Header -->
+
+	<!-- Start Navbar Area -->
+	<div  class="navbar-area">
+		<div class="fashion-responsive-nav">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="fashion-responsive-menu">
+						<div class="logo">
+							<a href="{% url 'store'%}">
+								<img src="{% static 'assets/image/logo/logo.png'%}" alt="logo">
+							</a>
+						</div>
+						
+						
+						<div class="others-option align-items-center">
+									<div class="option-item">
+										<div class="cart-btn">
+											<a href="{% url 'cart'%}"><i class="fa fa-shopping-cart"></i><span>[[count]]  </span></a>
+										</div>
+									</div>
+
+									<div class="option-item">
+										<div class="search-btn-box">
+											<a href="#search"><i class="search-btn fa fa-search"></i></a>
+										</div>
+									</div>
+
+									<!--<div class="{% url 'contact'%}">
+										<a href="contact_us.html" class="btn"> Appointment</a>
+									</div>-->
+								</div>
+					<!--mobile Menu  -->
+
+					<div id="mySidenav" class="sidenav">
+						<div class="menu_slid_bg">
+							<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+							
+								<div class="col-sm-12" style="padding:0px;">
+									<h3>Categories</h3>
+									
+									<ul class="accordion" id="accordion-category">
+										<li class="panel mobile_menu_li">
+											<a href=""{% url 'store'%}" class=""></i> Home</a>
+										</li>
+										<li class="panel mobile_menu_li">
+											<a href=""{% url 'about_us'%}" class=""></i> about us</a>
+										</li>
+										
+										
+										
+										<li class="panel mobile_menu_li">
+											<a href="#" class="">Shop</a>
+												<span class="head"><a style="" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category84" aria-expanded="false">
+												<span class="plus">+</span><span class="minus">-</span></a></span>
+												<div id="category84" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
+													<ul>
+														<li>
+															 <a href="{% url 'products'%}">Coats</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Outwear</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">T-shirt</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Caps</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Shoes</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Innerwear</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Suits</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Shirt</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Bags</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Dresses</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Swimwear</a>
+														</li>
+														<li>
+															 <a href="{% url 'products'%}">Sweatshirts & Hoodies</a>
+														</li>
+													</ul>
+												</div>
+										</li>
+										
+										<li class="panel mobile_menu_li">
+											<a href="{% url 'store'%}" class="">Shop</a>
+												<span class="head"><a style="" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category85" aria-expanded="false">
+												<span class="plus">+</span><span class="minus">-</span></a></span>
+												<div id="category85" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
+													<ul>
+														<li>
+															 <a href="{% url 'services'%}">Products List</a>
+														</li>
+														<li>
+															 <a href="{% url 'cart'%}">Cart</a>
+														</li>
+														<li>
+															 <a href="{% url 'checkout'%}">Checkout</a>
+														</li>
+														<li>
+															 <a href="single-{% url 'products'%}">Products Details</a>
+														</li>
+
+													</ul>
+												</div>
+										</li>
+										
+										<li class="panel mobile_menu_li">
+											<a href="{% url 'blog'%}" class="">Blog</a>
+												
+										</li>
+										
+										<li class="panel mobile_menu_li">
+											<a href="#" class="">my Account</a>
+												<span class="head"><a style="" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category87" aria-expanded="false">
+												<span class="plus">+</span><span class="minus">-</span></a></span>
+												<div id="category87" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
+													<ul>
+														<li>
+															 <a href="{% url 'loginPage'%}"> Login </a>
+														</li>
+														<li>
+															 <a href="{% url 'register'%}"> Register</a>
+														</li>
+													</ul>
+												</div>
+										</li>
+
+										<li class="panel mobile_menu_li">
+											<a href="{% url 'contact'%}" class=""> Contact Us</a>
+										</li>
+									</ul>
+							<div class="clear"></div>
+							</div>
+							 
+						</div>
+					</div>
+
+					<span class="menu_open" onclick="openNav()">&#9776; Menu</span>
+					<!-- mobile Menu  end-->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="fashion-nav">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="header_menu_wrapper">
+						<nav class="navbar navbar-expand-md navbar-light">
+							<a class="navbar-brand" href="{% url 'store'%}">
+								<img src="{% static 'assets/image/logo/logo.png'%}" alt="logo">
+							</a>
+
+							<div class="collapse navbar-collapse mean-menu" style="display: block;">
+								<ul class="navbar-nav">
+									<li class="nav-item"><a href="{% url 'store'%}" class="nav-link active">Home</a></li>
+									
+									<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
+									<li class="nav-item"><a href="{% url 'services'%}" class="nav-link">Products List</a></li>
+
+									
+									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shop<i class="fa fa-angle-down"></i></a>
+										<ul class="dropdown-menu">
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Coats</a></li>
+
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Outwear</a></li>
+
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">T-shirt</a></li>
+
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Caps</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shoes</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Innerwear</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Suits</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shirt</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Bags</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Dresses</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Swimwear</a></li>
+											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Sweatshirts & Hoodies</a></li>
+
+										</ul>
+									</li> 
+									<li class="nav-item"><a href="#" class="nav-link">Pages<i class="fa fa-angle-down"></i></a>
+										<ul class="dropdown-menu">
+											<li class="nav-item"><a href="{% url 'store'%}" class="nav-link">Home</a></li>
+
+											<li class="nav-item"><a href="{% url 'blog'%}" class="nav-link">Blog</a></li>
+
+											<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Contact</a></li>
+											<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
+											<li class="nav-item"><a href="{% url 'cart'%}" class="nav-link">Cart</a></li>
+											<li class="nav-item"><a href="{% url 'checkout'%}" class="nav-link">checkout</a></li>
+										</ul>
+									</li> 
+
+									<li class="nav-item"><a href="{% url 'blog'%}" class="nav-link">Blog </a>
+									</li>
+
+									<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Contact</a></li>
+								</ul>
+
+								<div class="others-option align-items-center">
+									<div class="option-item">
+										<div class="cart-btn">
+											<a href="{% url 'cart'%}"><i class="fa fa-shopping-cart"></i><span>[[count]] </span></a>
+										</div>
+									</div>
+
+									<div class="option-item">
+										<div class="search-btn-box">
+											<a href="#search"><i class="search-btn fa fa-search"></i></a>
+										</div>
+									</div>
+
+									<!--<div class="option-item">
+										<a href="contact_us.html" class="btn"> Appointment</a>
+									</div>-->
+								</div>
+							</div>
+						</nav>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Navbar Area --> 
+	<div id="search" class="input-group header">
+		<span class="close">x</span>
+			<form>
+				<input value="" name="search" type="search" placeholder="Search">
+				<span class="input-group-btn">
+					<button type="button" class="btn"><i class="fa fa-search"></i></button>
+				</span>
+				<div class="clear"></div>
+			</form>
+	</div>	
+	</header>
+<!-- Header End -->
+<!-- silder -->
+
+{% block content %}
+
+{% endblock content %}
+<!-- Footer Section -->
+	<footer id="footer" class="footer">
+		<div class="container-fluid">
+			<div class="row">
+
+			<div class="row footer_matter">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="footer_logo_wrapper">
+						<!--<img src="{% static 'assets/image/logo/footer_logo.png'%}" alt="footer_logo" class="img-responsive wow fadeInDown animated">-->
+						<h2 class="wow fadeInDown animated">Contact Detail</h2>
+						   <ul>
+								<li><i class="fa fa-map-marker"></i> No.1023 Pellentesque nec erat.</li>
+								<li><i class="fa fa-map-marker"></i> Neque non north India.</li>
+								<li><i class="fa fa-phone"></i> Phone. (123) 456-7890</li>
+								<li><i class="fa fa-fax"></i> Fax. (123) 456-7890</li>
+								<li><i class="fa fa-envelope"></i> Email: company@Example.com</li>
+								
+							</ul>
+							
+						{% comment %} <h4 class="wow fadeInDown animated"><a href="#" class="btn wow fadeInDown animated">Read More</a></h4> {% endcomment %}
+						<ul>
+							<li class="wow fadeInDown animated"><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li class="wow fadeInDown animated"><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li class="wow fadeInDown animated"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+							<li class="wow fadeInDown animated"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="footer_list_wrapper">
+						<h2 class="wow fadeInDown animated">Categorey</h2>
+						<ul class="footer_list">
+							<li class="wow fadeInDown animated"><a href="{% url 'about_us'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> About Us</a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'services'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Our Services </a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Products List </a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'cart'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Cart</a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'checkout'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Checkout </a> </li>
+							<li class="wow fadeInDown animated"><a href="{% url 'blog'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Blog </a> </li>
+							<li class="wow fadeInDown animated"><a href="{% url 'contact'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Contact Us </a> </li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="footer_list_wrapper">
+						<h2>Shop</h2>
+						<ul class="footer_list">
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Bags</a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Jeans </a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> T-shirt</a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Dress</a>
+							</li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Caps</a> </li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Innerwear</a> </li>
+							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Shoes</a> </li>
+							
+						</ul>
+					</div>
+				</div>
+				{% comment %} <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="download_wrapper">
+						<h2 class="wow fadeInDown animated">Download App</h2>
+						<p class="wow fadeInDown animated">Download Our Mobile App</p>
+						<div class="download_btn_wrapper">
+						  <a href="#">
+							<img src="{% static 'assets/image/App-Store.png'%}" class="img-responsive wow fadeInDown animated" alt="App_Store_img">
+						  </a>
+						  <a href="#">
+							<img src="{% static 'assets/image/Google-Play.png'%}" class="img-responsive wow fadeInDown animated" alt="Google_Play_img">
+						  </a>
+						</div>
+					</div>
+				</div> {% endcomment %}
+			</div>
+		</div>
+	</div>
+</footer>
+	
+	<div class="footer_copyright">
+		<div class="container-fluid">
+			<p class="wow fadeInDown animated">© Copyright 2020 by Fashion Shop</a></p>
+		</div>
+	</div>
+
+<!-- Footer Section End -->
+<!-- back-to-top scrtion -->
+<div class="top_button">
+  <a class="back-to-top" style="cursor:pointer;" id="top-scrolltop"><i class="fa fa-angle-up"></i></a>
+</div>
+<!-- back-to-top scrtion End-->
+<!-- script files -->
+<!-- home silder -->
+</div>
+<script>
+$(document).ready(function(){
+	$('#home-silder').owlCarousel({	
+		items: 1,
+		itemsDesktop:[1199,1],
+		itemsDesktopSmall:[992,1],
+		itemsTablet:[768,1],
+		itemsMobile:[450,1],
+		autoPlay: 10000,
+		pagination: true,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	});
+});
+
+$(document).ready(function(){
+	$('#testimonial').owlCarousel({	
+		items: 3,
+		itemsDesktop:[1199,3],
+		itemsDesktopSmall:[992,3],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 10000,
+		pagination: true,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	});
+});
+
+$(document).ready(function(){
+	$('#blog').owlCarousel({	
+		items: 3,
+		itemsDesktop:[1199,3],
+		itemsDesktopSmall:[992,3],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 10000,
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	});
+});
+
+$(document).ready(function(){
+	$('#product').owlCarousel({	
+		items: 4,
+		itemsDesktop:[1199,3],
+		itemsDesktopSmall:[992,3],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 10000,
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	});
+});
+
+$(document).ready(function(){
+	$('#new_category').owlCarousel({	
+		items: 4,
+		itemsDesktop:[1199,3],
+		itemsDesktopSmall:[992,3],
+		itemsTablet:[768,2],
+		itemsMobile:[450,1],
+		autoPlay: 10000,
+		pagination: false,
+		navigation: true,
+		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	});
+});
+
+var productapp = new Vue({
+	el: '#productapp',
+	delimiters: ['[[', ']]'],
+	
+	data () {
+		return {
+			items: [{{productsstring|safe}}], 
+			count: {{cartItems}},
+			total: {{total}}
+		}
+	},
+	mounted() {
+		console.log('mounted');
+		console.log(this.items);
+		console.log(this.count);
+	},
+	methods: {
+
+		addToCart(productId){
+			if(user=== 'AnonymousUser'){
+				console.log(cart)
+				if(cart[productId] == undefined){
+					cart[productId]= {'quantity':1}
+				}else{
+					cart[productId]['quantity'] =cart[productId]['quantity'] +1
+				}
+				document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
+				
+
+			
+				this.count = this.count + 1
+				console.log(this.count)
+				for(var i=0; this.items.length; i++)	{
+					
+					if (parseInt(this.items[i].id) == productId){
+						console.log(this.items[i].gettotal)
+						this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+						this.items[i].quantity = parseInt(this.items[i].quantity)+1;
+						this.total = this.total + parseInt(this.items[i].price)
+					}
+				}
+			
+
+
+			}else{
+				console.log('sending data')
+				var url = '/update_item/'
+				var action = 'add'
+				fetch(url, {
+					method: 'POST',
+					headers:{
+						'Content-Type':'application/json',
+						'X-CSRFToken':csrftoken,
+					},
+					body:JSON.stringify({'productId': productId, 'action': action})
+				
+				})
+				.then((response)=>{
+					this.count = this.count + 1
+					console.log(this.count)
+					for(var i=0; this.items.length; i++)	{
+						
+						if (parseInt(this.items[i].id) == productId){
+							console.log(this.items[i].gettotal)
+							this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+							this.items[i].quantity = parseInt(this.items[i].quantity)+1;
+							this.total = this.total + parseInt(this.items[i].price)
+						}
+					}
+
+					return response.json()
+
+				})
+				.then((data)=>{
+					console.log('data:', data)
+				})
+			}	
+		}, 
+		removeFromCart(productId){
+			if(user=== 'AnonymousUser'){
+				console.log(cart)
+
+				cart[productId]['quantity'] =cart[productId]['quantity'] - 1
+				if(cart[productId]['quantity']<=0){
+					delete cart[productId]
+				}
+				document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
+
+				for(var i=0; this.items.length; i++)	{
+					if (parseInt(this.items[i].quantity) != 0 ){
+						if (this.items[i].id === productId){
+							this.items[i].quantity = parseInt(this.items[i].quantity)-1;
+							this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+							this.total = this.total - parseInt(this.items[i].price)
+							this.count = this.count - 1
+						}
+					}	
+				}
+					
+			}else{
+				console.log('sending data')
+				var url = '/update_item/'
+				var action = 'remove'
+				fetch(url, {
+					method: 'POST',
+					headers:{
+						'Content-Type':'application/json',
+						'X-CSRFToken':csrftoken,
+					},
+					body:JSON.stringify({'productId': productId, 'action': action})
+				
+				})
+			
+				.then((response)=>{
+					
+					
+					for(var i=0; this.items.length; i++)	{
+						if (parseInt(this.items[i].quantity) != 0 ){
+							if (this.items[i].id === productId){
+								this.items[i].quantity = parseInt(this.items[i].quantity)-1;
+								this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+								this.total = this.total - parseInt(this.items[i].price)
+								this.count = this.count - 1
+							}
+						}	
+					}
+					
+					return response.json()
+
+				})
+				.then((data)=>{
+					console.log('data:', data)
+				})
+			}
+		}
+	},
+});
+
+
+
+</script>
+
+	
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+	<script src="{% static 'assets/js/custom.js'%}"></script>
+	{% comment %} <script src="{% static 'assets/js/cart.js'%}"></script> {% endcomment %}
+<!-- script files -->
+	{% block scripts %}
+	{% endblock %}
+
+</body>
+</html>

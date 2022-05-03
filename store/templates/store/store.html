@@ -1,0 +1,440 @@
+
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<section>
+	<div id="slideWiz" class="slideWiz" style="width: 100%; height: 500px;"></div>
+	{% comment %} <img src="/static/assets/image/silder/slider-2.jpg" width="100%" alt="silder images" title="silder images"> {% endcomment %}
+</section>
+
+<!-- silder End -->
+<!-- about Us -->
+	<div id="about_us" class="about_section" style="background-image: url({% static 'assets/image/about_img.jpg'%});width: 100%;background-repeat: no-repeat; background-size: cover;">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="about_text wow slideInLeft">
+						<h1>Hurry Up!</h1>
+						<h2>Hurry Up! Daily Deal Of The Day</h2>
+						<p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.</p>
+						<p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.</p>
+						
+						<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+						
+						<!--<h3>Contact Us</h3>
+						<h2 class="about_contact"><i class="fa fa-volume-control-phone"></i> +91-123-456-7890</h2>-->
+						<a href="{% url 'services'%}" class="btn">Shop Now</a>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="about_images wow slideInRight">
+						<!--<img src="{% static 'assets/image/about_img.jpg'%}" width="100%" alt="silder images" title="silder images">-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- about Us end-->
+
+<!-- Our products  -->
+	
+	<div id="products" class="products_section">
+		<div class="container-fluid">
+			<div class="heading_wrapper wow fadeInDown animated">
+				<h2 class="wow fadeInDown animated">Our Products</h2>
+				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+			</div>
+			<div class="row">
+				<div id="product" class="owl-carousel owl-theme">
+			<!--1 -->
+				{%for product in products %}
+				<div class="item">
+					<div class="col-sm-12">
+						<div class="product-thumb">
+							<div class="image wow fadeInDown animated">
+								<a href="single-products.html"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+								
+								<div class="sale"><span class="">Sale</span></div>
+								<div class="button-group">
+									<div class="inner">
+										<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
+										<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
+										<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
+									</div>
+								</div>
+							</div>
+							<div class="caption">
+								
+								<div class="rate-and-title">
+									<h4 class="wow fadeInDown animated"><a href="single-products.html">{{product.name}}</a></h4>
+									<div class="rating wow fadeInDown animated">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-o"></i>
+										<i class="fa fa-star-o"></i>
+										<i class="fa fa-star-o"></i>
+										<div class="clear"></div>
+									</div>
+									<p class="price wow fadeInDown animated">
+										{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
+										<span class="price-new">{{product.price}}.000</span>  
+									</p>
+									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+									
+								</div>
+							</div>
+						</div>
+					</div>				
+				</div>				
+				{%endfor%}
+				<!-- products end -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- Products End-->
+
+
+<!-- Our Astrologers Work for You -->
+	<div id="website_visitors" class="astrologers-work">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-6 condition-set">
+					<div class="astrologers_title">
+						<h2 class="wow fadeInDown animated">Our Fashion Shop Work for You</h2>
+						<p class="wow fadeInDown animated">Our Fashion Shop delivers daily and monthly Shop for all readers of our website visitors.</p>
+						<p class="wow fadeInDown animated">Recognized as the best esoteric and fashion online in the USA. Every day we publish fresh products, shop by and for professional products, personalized predictions, shop readings, shose and Chinese fashion Brands and much more.</p>
+						<p class="wow fadeInDown animated">Our Fashion Shop can help you find a proper approach to solving all daily problems and achieving happiness in your life.</p>
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="astrologers_visitors">
+						<div class="col-sm-6">
+							<div class="astrologers_experience">
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="25" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Years of experience</h5>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="astrologers_experience">
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="15" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Types of best brands</h5>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="astrologers_experience">
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="17" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Best Quality</h5>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="astrologers_experience">
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="1000" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Hourly Fashion</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- Our products  -->
+	<div id="products" class="products_section">
+		<div class="container-fluid">
+			<div class="heading_wrapper wow fadeInDown animated">
+				<h2 class="wow fadeInDown animated">New Category</h2>
+				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+			</div>
+			<div class="row">
+				<div id="new_category" class="owl-carousel owl-theme">
+					{%for product in products %}
+					<div class="item">
+						<div class="col-sm-12">
+							<div class="product-thumb">
+								<div class="image wow fadeInDown animated">
+									<a href="single-products.html"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+									
+									<div class="sale"><span class="">Sale</span></div>
+									<div class="button-group">
+										<div class="inner">
+											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
+											<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
+											<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
+										</div>
+									</div>
+								</div>
+								<div class="caption">
+									
+									<div class="rate-and-title">
+										<h4 class="wow fadeInDown animated"><a href="single-products.html">{{product.name}}</a></h4>
+										<div class="rating wow fadeInDown animated">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-o"></i>
+											<i class="fa fa-star-o"></i>
+											<i class="fa fa-star-o"></i>
+											<div class="clear"></div>
+										</div>
+										<p class="price wow fadeInDown animated">
+											{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
+											<span class="price-new">{{product.price}}.000</span>  
+										</p>
+										<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+										
+									</div>
+								</div>
+							</div>
+						</div>				
+					</div>				
+					{%endfor%}
+				<!-- products end -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Products End-->
+
+<!-- testimonial -->
+	<div id="testimonials" class="testimonial_section">
+		<div class="container-fluid">
+			<div class="heading_wrapper wow fadeInDown animated">
+				<h2 class="wow fadeInDown animated">What My Client Says</h2>
+				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+			</div>
+				<div class="row">
+					<div id="testimonial" class="owl-carousel owl-theme">
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="testimonial_inner_matter">
+									<img src="{% static 'assets/image/testimonial/1.jpg'%}" class="wow fadeInDown animated">
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
+									<h6 class="wow fadeInDown animated">Design Manager</h6>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="testimonial_inner_matter">
+									<img src="{% static 'assets/image/testimonial/2.jpg'%}" class="wow fadeInDown animated">
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
+									<h6 class="wow fadeInDown animated">Design Manager</h6>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="testimonial_inner_matter">
+									<img src="{% static 'assets/image/testimonial/3.jpg'%}" class="wow fadeInDown animated">
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
+									<h6 class="wow fadeInDown animated">Design Manager</h6>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="testimonial_inner_matter">
+									<img src="{% static 'assets/image/testimonial/4.jpg'%}" class="wow fadeInDown animated">
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
+									<h6 class="wow fadeInDown animated">Design Manager</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+<!-- testimonial end -->
+
+<!-- Blog -->
+	<div id="blogs" class="blog_section">
+		<div class="container-fluid">
+			<div class="heading_wrapper wow fadeInDown animated">
+				<h2 class="wow fadeInDown animated">latest fashion</h2>
+				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+			</div>
+				<div class="row">
+					<div id="blog" class="owl-carousel owl-theme">
+					
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="blog_inner_matter">
+									<div class="image">
+										<a href=""><img src="{% static 'assets/image/blog/1.jpg'%}" class="wow fadeInDown animated"></a>
+										<div class="blog_date  wow fadeInDown animated">
+											<span>01-04-2020<span>
+										</div>
+									</div>
+									<div class="admin_and_comments wow fadeInDown animated">
+										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
+									</div>
+									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+									<a href="" class="btn wow fadeInDown animated" >Read More</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="blog_inner_matter">
+									<div class="image">
+										<a href=""><img src="{% static 'assets/image/blog/3.jpg'%}" class="wow fadeInDown animated"></a>
+										<div class="blog_date  wow fadeInDown animated">
+											<span>01-04-2020<span>
+										</div>
+									</div>
+									<div class="admin_and_comments wow fadeInDown animated">
+										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
+									</div>
+									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+									<a href="" class="btn wow fadeInDown animated" >Read More</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="blog_inner_matter">
+									<div class="image">
+										<a href=""><img src="{% static 'assets/image/blog/2.jpg'%}" class="wow fadeInDown animated"></a>
+										<div class="blog_date  wow fadeInDown animated">
+											<span>01-04-2020<span>
+										</div>
+									</div>
+									<div class="admin_and_comments wow fadeInDown animated">
+										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
+									</div>
+									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+									<a href="" class="btn wow fadeInDown animated" >Read More</a>
+								</div>
+							</div>
+						</div>
+						
+						<div class="item">
+							<div class="col-sm-12">
+								<div class="blog_inner_matter">
+									<div class="image">
+										<a href=""><img src="{% static 'assets/image/blog/1.jpg'%}" class="wow fadeInDown animated"></a>
+										<div class="blog_date  wow fadeInDown animated">
+											<span>01-04-2020<span>
+										</div>
+									</div>
+									<div class="admin_and_comments wow fadeInDown animated">
+										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
+									</div>
+									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
+									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
+									<a href="" class="btn wow fadeInDown animated" >Read More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+<!-- Blog End -->
+<script>
+	
+	$(document).ready(function () {
+	
+		$('#slideWiz').slideWiz({
+			auto: true,
+			speed: 5000,
+			row: 12,
+			col: 35,
+			animation: [
+				'flip',
+				'slice',
+				'box3D',
+			   
+				'fade',
+				'glide',
+				'card'
+			],
+			file: [
+				{
+					src: {
+						main: "static/assets/image/silder/slider-2.jpg",
+						cover: "static/assets/image/silder/slider-1.jpg"
+					},
+					title: 'Change Your Look',
+					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					descLength: 220,
+					button: {
+						text: 'Shop Now',
+						url: '{% url 'services'%}',
+						class: 'btn btn-medium btn-primary'
+					}
+				},
+				{
+					src: {
+						main: "static/assets/image/silder/slider-6.jpg",
+						cover: "static/assets/image/silder/slider-2.jpg"
+					},
+					title: 'Best Brand Shoes',
+					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					button: {
+						text: 'Shop Now',
+						url: '#',
+						class: 'btn btn-medium btn-primary'
+					}
+				},
+				{
+					src: {
+						main: "static/assets/image/silder/slider-1.jpg",
+						cover: "static/assets/image/silder/slider-3.jpg"
+					},
+					title: 'Change Your Life',
+					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					descLength: 190,
+					button: {
+						text: 'Shop Now',
+						url: '#',
+						class: 'btn btn-medium btn-primary'
+					}
+				},
+				{
+					src: {
+						main: "static/assets/image/silder/slider-2.jpg",
+						cover: "static/assets/image/silder/slider-6.jpg"
+					},
+					title: 'New Style Fashion ',
+					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					button: {
+						text: 'Shop Now',
+						url: false,
+						class: 'btn btn-medium btn-primary'
+					}
+				}
+			]
+	
+		});
+	
+	});
+	
+	</script>
+
+{% endblock content %}
+{% block scripts %}
+
+{% endblock %}

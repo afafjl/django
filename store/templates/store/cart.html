@@ -1,0 +1,78 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<section class="main_breadcrumb">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="breadcrumb-content">
+				<h2>cart</h2>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="">cart</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div id="content" class="cart_page" >
+<!-- cart -->
+	<div id="cart" class="cart_section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="table-custom-responsive wow fadeInDown animated">
+					<table class="table-custom table-cart table-responsive">
+						<thead>
+							<tr>
+								<th>Product name</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+							<tbody>
+								
+								<tr v-for="item in items">
+									<td><a class="table-cart-figure" href="checkout.html"><img v-bind:src="[[item.imageURL]]" alt="" width="146" height="132"></a>
+										<a class="table-cart-link" href="#">[[item.name]]</a></td>
+									<td>[[item.price]]</td>
+									<td>
+
+										<p class="table-cart-link" href="#"><button @click="addToCart( item.id)" class="btn btn-dark">+</button>      [[item.quantity]]     
+											<button  @click="removeFromCart( item.id)" class="btn btn-dark">-</button></p>
+										
+									</td>
+									<td>[[item.gettotal]]</td>
+								</tr>
+								
+							</tbody>
+					</table>
+				</div>
+
+				<div class="group-xl group-justify  wow fadeInDown animated">
+					<div>
+						<form class="eb-form eb-mailform eb-form-inline eb-form-coupon" novalidate="novalidate">
+							<div class="form-wrap">
+							  <input class="form-input form-input-inverse" id="coupon-code" type="text" name="text" placeholder="Coupon code">
+							</div>
+							<div class="form-button">
+							  <button class="btn" type="submit">Apply</button>
+							</div>
+						</form>
+					</div>
+					<div>
+						<div class="group-xl group-middle">
+							<div>
+							  <div class="group-md group-middle">
+								<div class="heading-5 font-weight-medium text-gray-500">Total</div>
+								<div class="heading-3 font-weight-normal">[[total]]</div>
+							  </div>
+							</div><a class="btn" href="{% url 'checkout'%}">Proceed to checkout</a>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>	
+	</div>	
+<!-- cart end-->	
+</div>
+{% endblock content %}

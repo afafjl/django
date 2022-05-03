@@ -1,0 +1,60 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class="main_breadcrumb">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="breadcrumb-content">
+				<h2>login</h2>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="">login</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+<div id="content" class="cart_page checkout_page register_page login_page">
+<!-- cart -->
+	<div id="register" class="cart_section checkout_section register_section">
+		<div class="container-fluid" id="checkout">
+				
+			<div class="row billing_and_payment_option wow fadeInDown   animated">
+				<div class="heading_wrapper wow fadeInDown animated">
+					<h2 class="wow fadeInDown animated">Login your Account</h2>
+					{%for message in messages%}
+						<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+					{%endfor%}
+					
+				</div>
+				<!-- Billing Address -->
+				<div class="login_box">
+					<h3>Create Your Account</h3>
+						<form method = "POST" class="eb-form eb-mailform form-checkout" novalidate="novalidate">
+							{% csrf_token%}
+							<div class="form-wrap">
+								<input class="form-input form-control" id="checkout-email-1" type="text" name="username" data-constraints=" @Required" placeholder="User Name">
+							</div>
+							<div class="form-wrap">
+								<input class="form-input form-control" id="checkout-city-1" type="password" name="password" data-constraints="@Required" placeholder="Password">
+							</div>
+							<div class="custom-control custom-checkbox">
+								{% comment %} <input type="checkbox" class="custom-control-input" id="defaultUnchecked"> {% endcomment %}
+								{% comment %} <label class="custom-control-label register-remember" for="defaultUnchecked">Remember me on this device</label> {% endcomment %}
+                            </div>
+							<input type = "submit" class="btn " name = "Login">
+							
+							<p class="signInclass"> Dont Have an Account?  &nbsp;<a href="login.html">Sign In</a> </p>
+						
+					</form>
+					<div class="clear"></div>
+				</div>
+				<!-- Delivery Address  -->
+			</div>
+			<!-- your shopping cart -->
+		</div>	
+	</div>	
+<!-- cart end-->	
+</div>
+{% endblock content %}
