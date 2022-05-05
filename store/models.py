@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from taggit.managers import TaggableManager
 # Create your models here.
 class Customer(models.Model):
     user = models.OneToOneField(User, null= True, blank= True, on_delete= models.CASCADE)
@@ -11,8 +11,13 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField( max_length=100, null= True)
-    price = models.IntegerField()
-    image = models.ImageField(null=True, blank = True)
+    price = models.IntegerField( null= True)
+    unsale_price = models.IntegerField( null= True)
+    stars = models.FloatField(default=0, null= True)
+    review_times = models.IntegerField(default=0, null= True)
+    image = models.ImageField(null=True, blank = True,)
+    description = models.TextField( max_length=2000, null= True)
+    short_description = models.CharField( max_length=500, null= True)
     def __str__(self):
         return self.name
     @property
@@ -22,10 +27,13 @@ class Product(models.Model):
         except:
             url = ''
         return url
-
+    def aaa(self):
+        return 5-round(self.stars,0)
+    def aaaa(self):
+        return round(self.stars,0)
 class Order(models.Model):
     customer = models.ForeignKey(Customer, blank=True, null= True, on_delete=models.SET_NULL)
-    date_ordered = models.DateTimeField( auto_now_add=True)
+    date_ordered = models.DateTimeField( auto_now_add=True, null= True)
     complete = models.BooleanField(default= False, null = True, blank = False)
     transaction_id = models.CharField( max_length=100, null= True)
     def __str__(self):
@@ -43,7 +51,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, blank=True, null= True, on_delete=models.SET_NULL)
     order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
     quantity = models.IntegerField(default= 0, null=True, blank= True)
-    date_added= models.DateTimeField( auto_now_add=True)
+    date_added= models.DateTimeField( auto_now_add=True, null= True)
     @property
     def get_total(self):
         total = self.product.price * self.quantity
@@ -53,6 +61,46 @@ class ShippingAddress(models.Model):
     order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
     address = models.CharField( max_length=400, null= True)
     city = models.CharField( max_length=100, null= True)
-    date_added = models.DateTimeField( auto_now_add=True)
+    date_added = models.DateTimeField( auto_now_add=True, null= True)
     def __str__(self):
         return sefl.address
+class Blog(models.Model):
+    title = models.CharField( max_length=100, null= True)
+    description = models.TextField( null= True)
+    short_description = models.CharField( max_length=300, null= True)
+    image = models.ImageField(null=True, blank = True)
+    time = models.DateTimeField()
+    tags = TaggableManager()
+     
+    def __str__(self):
+        return self.title
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+class Comment(models.Model):
+    product = models.ForeignKey(Product, blank=True,related_name = "comments", null= True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
+    description = models.TextField( null= True)
+    date_added= models.DateTimeField( auto_now_add=True,null= True)
+    def __str__(self):
+        return self.description
+class Blog_comment(models.Model):
+    blog = models.ForeignKey(Blog, blank=True,related_name = "comments", null= True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
+    description = models.TextField( null= True)
+    date_added= models.DateTimeField( auto_now_add=True,null= True)
+    def __str__(self):
+        return self.description
+class Review(models.Model):
+    product = models.ForeignKey(Product, blank=True, null= True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
+    stars = models.IntegerField(default=0,null= True)
+    first_time = models.BooleanField(default= True, null = True, blank = False)
+    @property
+
+    def aaa(self):
+        return 5 - self.stars

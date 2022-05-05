@@ -222,7 +222,7 @@
 												<div id="category85" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
 													<ul>
 														<li>
-															 <a href="{% url 'services'%}">Products List</a>
+															 <a href="{% url 'products'%}">Products</a>
 														</li>
 														<li>
 															 <a href="{% url 'cart'%}">Cart</a>
@@ -230,9 +230,7 @@
 														<li>
 															 <a href="{% url 'checkout'%}">Checkout</a>
 														</li>
-														<li>
-															 <a href="single-{% url 'products'%}">Products Details</a>
-														</li>
+
 
 													</ul>
 												</div>
@@ -290,7 +288,7 @@
 									<li class="nav-item"><a href="{% url 'store'%}" class="nav-link active">Home</a></li>
 									
 									<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
-									<li class="nav-item"><a href="{% url 'services'%}" class="nav-link">Products List</a></li>
+									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Products</a></li>
 
 									
 									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shop<i class="fa fa-angle-down"></i></a>
@@ -368,13 +366,16 @@
 				<div class="clear"></div>
 			</form>
 	</div>	
-	</header>
+</header>
 <!-- Header End -->
 <!-- silder -->
 
 {% block content %}
 
 {% endblock content %}
+
+
+
 <!-- Footer Section -->
 	<footer id="footer" class="footer">
 		<div class="container-fluid">
@@ -459,11 +460,11 @@
 	</div>
 </footer>
 	
-	<div class="footer_copyright">
-		<div class="container-fluid">
-			<p class="wow fadeInDown animated">© Copyright 2020 by Fashion Shop</a></p>
-		</div>
+<div class="footer_copyright">
+	<div class="container-fluid">
+		<p class="wow fadeInDown animated">© Copyright 2020 by Fashion Shop</a></p>
 	</div>
+</div>
 
 <!-- Footer Section End -->
 <!-- back-to-top scrtion -->
@@ -474,135 +475,110 @@
 <!-- script files -->
 <!-- home silder -->
 </div>
-<script>
-$(document).ready(function(){
-	$('#home-silder').owlCarousel({	
-		items: 1,
-		itemsDesktop:[1199,1],
-		itemsDesktopSmall:[992,1],
-		itemsTablet:[768,1],
-		itemsMobile:[450,1],
-		autoPlay: 10000,
-		pagination: true,
-		navigation: true,
-		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+<script type="application/javascript">
+	$(document).ready(function(){
+		$('#home-silder').owlCarousel({	
+			items: 1,
+			itemsDesktop:[1199,1],
+			itemsDesktopSmall:[992,1],
+			itemsTablet:[768,1],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: true,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
 	});
-});
 
-$(document).ready(function(){
-	$('#testimonial').owlCarousel({	
-		items: 3,
-		itemsDesktop:[1199,3],
-		itemsDesktopSmall:[992,3],
-		itemsTablet:[768,2],
-		itemsMobile:[450,1],
-		autoPlay: 10000,
-		pagination: true,
-		navigation: true,
-		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	$(document).ready(function(){
+		$('#testimonial').owlCarousel({	
+			items: 3,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: true,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
 	});
-});
 
-$(document).ready(function(){
-	$('#blog').owlCarousel({	
-		items: 3,
-		itemsDesktop:[1199,3],
-		itemsDesktopSmall:[992,3],
-		itemsTablet:[768,2],
-		itemsMobile:[450,1],
-		autoPlay: 10000,
-		pagination: false,
-		navigation: true,
-		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	$(document).ready(function(){
+		$('#blog').owlCarousel({	
+			items: 3,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
 	});
-});
 
-$(document).ready(function(){
-	$('#product').owlCarousel({	
-		items: 4,
-		itemsDesktop:[1199,3],
-		itemsDesktopSmall:[992,3],
-		itemsTablet:[768,2],
-		itemsMobile:[450,1],
-		autoPlay: 10000,
-		pagination: false,
-		navigation: true,
-		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	$(document).ready(function(){
+		$('#product').owlCarousel({	
+			items: 4,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
 	});
-});
 
-$(document).ready(function(){
-	$('#new_category').owlCarousel({	
-		items: 4,
-		itemsDesktop:[1199,3],
-		itemsDesktopSmall:[992,3],
-		itemsTablet:[768,2],
-		itemsMobile:[450,1],
-		autoPlay: 10000,
-		pagination: false,
-		navigation: true,
-		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+	$(document).ready(function(){
+		$('#new_category').owlCarousel({	
+			items: 4,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
 	});
-});
+</script>
+{% block scripts %}
+{% endblock %}
+<script type="application/javascript">
+	var productapp = new Vue({
+		el: '#productapp',
+		delimiters: ['[[', ']]'],
+		
+		data () {
+			return {
+				items: [{{productsstring|safe}}], 
+				count: {{cartItems}},
+				total: {{total}}
+			}
+		},
+		mounted() {
+			console.log('mounted');
+			console.log(this.items);
+			console.log(this.count);
+		},
+		methods: {
 
-var productapp = new Vue({
-	el: '#productapp',
-	delimiters: ['[[', ']]'],
-	
-	data () {
-		return {
-			items: [{{productsstring|safe}}], 
-			count: {{cartItems}},
-			total: {{total}}
-		}
-	},
-	mounted() {
-		console.log('mounted');
-		console.log(this.items);
-		console.log(this.count);
-	},
-	methods: {
-
-		addToCart(productId){
-			if(user=== 'AnonymousUser'){
-				console.log(cart)
-				if(cart[productId] == undefined){
-					cart[productId]= {'quantity':1}
-				}else{
-					cart[productId]['quantity'] =cart[productId]['quantity'] +1
-				}
-				document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
-				
-
-			
-				this.count = this.count + 1
-				console.log(this.count)
-				for(var i=0; this.items.length; i++)	{
-					
-					if (parseInt(this.items[i].id) == productId){
-						console.log(this.items[i].gettotal)
-						this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
-						this.items[i].quantity = parseInt(this.items[i].quantity)+1;
-						this.total = this.total + parseInt(this.items[i].price)
+			addToCart(productId){
+				if(user=== 'AnonymousUser'){
+					console.log(cart)
+					if(cart[productId] == undefined){
+						cart[productId]= {'quantity':1}
+					}else{
+						cart[productId]['quantity'] =cart[productId]['quantity'] +1
 					}
-				}
-			
+					document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
+					
 
-
-			}else{
-				console.log('sending data')
-				var url = '/update_item/'
-				var action = 'add'
-				fetch(url, {
-					method: 'POST',
-					headers:{
-						'Content-Type':'application/json',
-						'X-CSRFToken':csrftoken,
-					},
-					body:JSON.stringify({'productId': productId, 'action': action})
 				
-				})
-				.then((response)=>{
 					this.count = this.count + 1
 					console.log(this.count)
 					for(var i=0; this.items.length; i++)	{
@@ -614,53 +590,53 @@ var productapp = new Vue({
 							this.total = this.total + parseInt(this.items[i].price)
 						}
 					}
-
-					return response.json()
-
-				})
-				.then((data)=>{
-					console.log('data:', data)
-				})
-			}	
-		}, 
-		removeFromCart(productId){
-			if(user=== 'AnonymousUser'){
-				console.log(cart)
-
-				cart[productId]['quantity'] =cart[productId]['quantity'] - 1
-				if(cart[productId]['quantity']<=0){
-					delete cart[productId]
-				}
-				document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
-
-				for(var i=0; this.items.length; i++)	{
-					if (parseInt(this.items[i].quantity) != 0 ){
-						if (this.items[i].id === productId){
-							this.items[i].quantity = parseInt(this.items[i].quantity)-1;
-							this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
-							this.total = this.total - parseInt(this.items[i].price)
-							this.count = this.count - 1
-						}
-					}	
-				}
-					
-			}else{
-				console.log('sending data')
-				var url = '/update_item/'
-				var action = 'remove'
-				fetch(url, {
-					method: 'POST',
-					headers:{
-						'Content-Type':'application/json',
-						'X-CSRFToken':csrftoken,
-					},
-					body:JSON.stringify({'productId': productId, 'action': action})
 				
-				})
-			
-				.then((response)=>{
+
+
+				}else{
+					console.log('sending data')
+					var url = '/update_item/'
+					var action = 'add'
+					fetch(url, {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json',
+							'X-CSRFToken':csrftoken,
+						},
+						body:JSON.stringify({'productId': productId, 'action': action})
 					
-					
+					})
+					.then((response)=>{
+						this.count = this.count + 1
+						console.log(this.count)
+						for(var i=0; this.items.length; i++)	{
+							
+							if (parseInt(this.items[i].id) == productId){
+								console.log(this.items[i].gettotal)
+								this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+								this.items[i].quantity = parseInt(this.items[i].quantity)+1;
+								this.total = this.total + parseInt(this.items[i].price)
+							}
+						}
+
+						return response.json()
+
+					})
+					.then((data)=>{
+						console.log('data:', data)
+					})
+				}	
+			}, 
+			removeFromCart(productId){
+				if(user=== 'AnonymousUser'){
+					console.log(cart)
+
+					cart[productId]['quantity'] =cart[productId]['quantity'] - 1
+					if(cart[productId]['quantity']<=0){
+						delete cart[productId]
+					}
+					document.cookie = 'cart=' + JSON.stringify(cart) +";domain=;path=/"
+
 					for(var i=0; this.items.length; i++)	{
 						if (parseInt(this.items[i].quantity) != 0 ){
 							if (this.items[i].id === productId){
@@ -671,29 +647,54 @@ var productapp = new Vue({
 							}
 						}	
 					}
+						
+				}else{
+					console.log('sending data')
+					var url = '/update_item/'
+					var action = 'remove'
+					fetch(url, {
+						method: 'POST',
+						headers:{
+							'Content-Type':'application/json',
+							'X-CSRFToken':csrftoken,
+						},
+						body:JSON.stringify({'productId': productId, 'action': action})
 					
-					return response.json()
+					})
+				
+					.then((response)=>{
+						
+						
+						for(var i=0; this.items.length; i++)	{
+							if (parseInt(this.items[i].quantity) != 0 ){
+								if (this.items[i].id === productId){
+									this.items[i].quantity = parseInt(this.items[i].quantity)-1;
+									this.items[i].gettotal = parseInt(this.items[i].price) * parseInt(this.items[i].quantity)
+									this.total = this.total - parseInt(this.items[i].price)
+									this.count = this.count - 1
+								}
+							}	
+						}
+						
+						return response.json()
 
-				})
-				.then((data)=>{
-					console.log('data:', data)
-				})
+					})
+					.then((data)=>{
+						console.log('data:', data)
+					})
+				}
 			}
-		}
-	},
-});
-
-
+		},
+	});
 
 </script>
 
-	
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
-	<script src="{% static 'assets/js/custom.js'%}"></script>
-	{% comment %} <script src="{% static 'assets/js/cart.js'%}"></script> {% endcomment %}
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'assets/js/custom.js'%}"></script>
+{% comment %} <script src="{% static 'assets/js/cart.js'%}"></script> {% endcomment %}
 <!-- script files -->
-	{% block scripts %}
-	{% endblock %}
+
 
 </body>
 </html>

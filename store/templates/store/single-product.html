@@ -1,0 +1,319 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+	<section class="main_breadcrumb">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="breadcrumb-content">
+					<h2>Single products</h2>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="">Single products</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div id="content" class="single_products_page">
+
+		<div id="products_products" class="single_products_section">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="eb_right single_products_right_side">
+							<div class="single_products_images">
+								<div class="single_product_image">
+									<div class="sp-loading">
+										<img src="{{product.imageURL}}" alt="" width="100%">
+									</div>
+									<div class="sale"><span class="">Sale</span></div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="col-sm-6">
+						<div class="eb_left single_products_left_side">
+							<h2>{{product.name}}</h2>
+							<div class="rating">
+								<p>	
+									{% with ''|center:product.aaaa as range %}
+									{% for _ in range %}
+									<span><i class="fa fa-star"></i></span>	
+									{% endfor %}
+									{% endwith %}
+									{% with ''|center:product.aaa as range %}
+									{% for _ in range %}
+										<span><i class="fa fa-star-o"></i></span>
+									{% endfor %}
+									{% endwith %}
+										
+											  					
+									<span class="border"> | </span> 
+
+									<a href="" onclick="">{{product.review_times}} lượt đánh giá</a> 	  
+								</p>
+							</div>
+							<hr>
+							<div class="price-block">
+								<div class="price-box">
+									<p class="in-stock"><i class="fa fa-check"></i> In Stock</p>
+									<p class="special-price"> <span class="price-label">Special Price</span> <span id="product-price-48" class="price"> {{product.price}}.000 d </span> </p>
+									<p class="old-price"> <span class="price-label">Regular Price:</span><span class="price">{{product.unsale_price}}.000 d</span></p>
+								</div>
+							</div>
+							
+							<div class="add-to-box">
+								<div class="add-to-cart">
+									<div class="pull-left">
+
+									</div>
+									<button @click="addToCart({{ product.id }})" class="btn btn-cart" title="Add to Cart" type="button">Add to Cart</button>
+								</div>
+							</div>
+							
+							<div class="short-description">
+								<h3>overview</h3>
+								<p> {{product.short_description |linebreaks }}</p>
+							</div>
+							
+							<div class="email-addto-box">
+								<ul class="add-to-links">
+									<li> <a class="link-wishlist" href="#"><span>Add to Wishlist</span></a></li>
+									<li><span class="separator">|</span> <a class="link-compare" href="#"><span>Add to Compare</span></a></li>
+								</ul>
+								<p class="email-friend"><a href="#" class=""><span>Email to a Friend</span></a></p>
+						</div>
+							<ul class="shipping-pro">
+								<li>Free Wordwide Shipping</li>
+								<li>30 Days Return</li>
+								<li>Member Discount</li>
+							</ul>
+							
+						</div>	
+					</div>
+				</div>		
+				
+				<!---- ---------------------->
+				<div class="row">
+					<div class="product-collateral">
+						<div class="add_info">
+							<ul id="product-detail-tab" class="nav nav-tabs product-tabs">
+								<li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Product Description </a> </li>
+							</ul>
+
+
+							<div id="productTabContent" class="tab-content">
+								<div class="tab-pane fade in active" id="product_tabs_description">
+									<div class="std">
+									<p>{{product.description |linebreaks }} </p>
+								</div>
+								<!-- product tabs description End-->
+
+									<!-- Add Tags End-->
+								<div class="tab-pane fade" id="reviews_tabs">
+									<div class="eb-Reviews">
+										<div>
+											<h4 class="eb-Reviews-title">2 reviews for <span>Bacca Bucci Men's Running Shoes</span></h4>
+											<ol class="commentlist">
+												{%for comment in product.comments.all%}
+												<li class="comment">
+												<div>
+													<img alt="" src="{% static 'assets/image/member/member.png'%}" class="avatar avatar-60 photo">
+													<div class="comment-text">
+													<div class="ratings">
+
+														</div>
+														<p class="meta">
+														<strong>{{comment.user.username}}</strong> 
+														<span>–</span>{{comment.date_added.date}}
+														</p>
+														<div class="description"><p>{{comment.description |linebreaks }}</p>
+													</div>
+												</div>
+												</li><!-- #comment-## -->
+												{%endfor%}
+											</ol>
+										</div>
+									<div>
+								<div>
+									<div class="comment-respond">
+										{%if user.username%}
+										<h3 >Add a review </h3>			
+											
+											<div class="comment-form-rating">
+												<label id="rating">Your rating</label>
+
+											</div>
+											{%if review.first_time%}
+											<div class="comment-form-rating">
+												
+												<p class="stars">
+											<span>
+												<a class="star-1" href="{%url 'review_stars' pk=product.id stars=1 %}">1</a>
+												<a class="star-2" href="{%url 'review_stars' pk=product.id stars=2 %}">2</a>
+												<a class="star-3" href="{%url 'review_stars' pk=product.id stars=3 %}">3</a>
+												<a class="star-4" href="{%url 'review_stars' pk=product.id stars=4 %}">4</a>
+												<a class="star-5" href="{%url 'review_stars' pk=product.id stars=5 %}">5</a>
+											</span> 
+										</p>
+										</div>
+											{%else%}
+												<p>Bạn đã đánh giá sản phẩm này <strong>{{review.stars}}</strong> sao</p>
+												<label id="rating">Đánh giá lại</label>
+											<div class="comment-form-rating">
+
+													<p class="stars">
+
+
+												<span>
+													<a class="star-1" href="{%url 'review_stars' pk=product.id stars=1 %}">1</a>
+													<a class="star-2" href="{%url 'review_stars' pk=product.id stars=2 %}">2</a>
+													<a class="star-3" href="{%url 'review_stars' pk=product.id stars=3 %}">3</a>
+													<a class="star-4" href="{%url 'review_stars' pk=product.id stars=4 %}">4</a>
+													<a class="star-5" href="{%url 'review_stars' pk=product.id stars=5 %}">5</a>
+												</span> 
+											</p>
+										</div>
+											{%endif%}
+
+											<form action="" method="POST" class="comment-form" novalidate="">
+												{% csrf_token%}
+											
+											<br>
+											<p class="comment-form-comment">
+												<label>Your review <span class="required">*</span></label>
+												<textarea id="comment" name="comment" cols="45" rows="4" required=""></textarea>
+											</p>
+											
+											<p class="comment-form-author">
+											
+											<p class="form-submit">
+											<input name="submit" type="submit" id="submit" class="btn submit" value="Submit"> 
+											</p>
+										</form>
+										{%else%}
+				
+										{%endif%}
+									</div><!-- #respond -->
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+
+				</div>
+					
+				<!---- ---------------------->
+				
+				<!-- relative products -->
+				
+				<!-- Our products  -->
+				<div id="products" class="products_section related_product">
+						<div class="heading_wrapper wow fadeInDown animated">
+							<h2 class="wow fadeInDown animated">Related Products</h2>
+						</div>
+						<div class="row">
+							<div id="related_product" class="owl-carousel owl-theme">
+								{%for product in products %}
+								<div class="item">
+									<div class="col-sm-12">
+										<div class="product-thumb">
+											<div class="image wow fadeInDown animated">
+												<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+												
+												<div class="sale"><span class="">con hang</span></div>
+												<div class="button-group">
+													<div class="inner">
+														<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
+														<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
+														<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
+													</div>
+												</div>
+											</div>
+											<div class="caption">
+												
+												<div class="rate-and-title">
+													<h4 class="wow fadeInDown animated"><a href="{%url 'single_product' product.id %}">{{product.name}}</a></h4>
+													<div class="rating wow fadeInDown animated">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														<div class="clear"></div>
+													</div>
+													<p class="price wow fadeInDown animated">
+														
+														<span class="price-new">{{product.price}}.000</span>
+														<span class="price-old">{{product.unsale_price}}</span>   
+													</p>
+													<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+													
+												</div>
+											</div>
+										</div>
+									</div>				
+								</div>				
+								{%endfor%}	
+								<!-- products end -->
+							</div>
+						</div>
+				</div>
+			
+				<!-- Products End-->
+				
+				<!-- relative products  end-->
+				
+			</div>	
+		</div>
+	</div>	
+</div>
+</div>
+</div>
+</div>
+
+{% endblock content %}
+{% block scripts %}
+
+<script >
+
+	$(document).ready(function(){
+		$('#additional_silder_products_images').owlCarousel({	
+			items:5,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,2],
+			itemsTablet:[768,3],
+			itemsMobile:[600,2],
+			autoPlay: 6000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+		});
+	});
+	
+	$(document).ready(function(){
+		$('#related_product').owlCarousel({	
+			items: 4,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
+	});
+	
+	$(window).load(function() {
+		$('.sp-wrap').smoothproducts();
+	});
+	
+</script>
+
+<script  src="assets/vendor/smoothproducts/smoothproducts.min.js"></script>
+
+{% endblock %}

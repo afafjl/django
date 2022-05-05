@@ -8,9 +8,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .form import OrderForm, CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
-
+from django.http import HttpResponseRedirect
 def store(request):
-	products = Product.objects.all()
+	products = Product.objects.order_by("id")[:7]
+	blogs = Blog.objects.all()
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -26,7 +27,7 @@ def store(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'products': products, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
 	return render(request, 'store/store.html', context)
 def cart(request):
 	try:
@@ -94,25 +95,7 @@ def checkout(request):
 
 	context = {'productsstring': productsstring, 'total':total, 'cartItems': cartItems}
 	return render(request, 'store/checkout.html', context)
-def blog_single(request):
-	products = Product.objects.all()
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/blog_single.html', context)
+
 def contact(request):
 	products = Product.objects.all()
 	# try:
@@ -132,25 +115,7 @@ def contact(request):
 	# 	pass
 	context = {'products': products, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/contact_us.html', context)
-def product_single(request):
-	products = Product.objects.all()
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/product_single.html', context)
+
 def products(request):
 	products = Product.objects.all()
 	# try:
@@ -172,7 +137,8 @@ def products(request):
 	return render(request, 'store/products.html', context)
 def blog(request):
 	products = Product.objects.all()
-	# try:
+
+
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
@@ -208,9 +174,18 @@ def about_us(request):
 	# 	pass
 	context = {'products': products, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/about_us.html', context)	
-def blog_details(request):
-	products = Product.objects.all()
-	# try:
+def blog_details(request, pk):
+
+	products = Product.objects.order_by("id")[:7]
+	blogs = Blog.objects.order_by("id")[:4]
+	blog = Blog.objects.get(id=pk)
+	# tag = get_object_or_404(Tag, slug=tag_slug)
+
+	if request.method == 'POST':
+		description = request.POST.get('comment')
+		Blog_comment.objects.create( user=request.user, description = description, blog = blog)
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
@@ -225,7 +200,7 @@ def blog_details(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'products': products, 'cartItems': cartItems, 'total':0, 'blog': blog, 'blogs':blogs}
 	return render(request, 'store/blog_details.html', context)	
 def logoutUser(request):
 	logout(request)
@@ -282,7 +257,7 @@ def register(request):
 		username= request.POST.get('username')
 		user = User.objects.get(username= username)
 		login(request, user) 
-		Customer.objects.create(email=user.email, user=user, name= 'macdinh')
+		Customer.objects.create(email=user.email, user=user, name= user.username)
 		messages.success(request, 'Đăng ký Thành Công')
 		return redirect('store')
 
@@ -322,3 +297,47 @@ def updateItem(request):
 	if orderItem.quantity <= 0:
 		orderItem.delete()
 	return JsonResponse('Item added', safe= False)
+def single_product(request, pk):
+	product = Product.objects.get(id=pk)
+	if request.method == 'POST':
+		description = request.POST.get('comment')
+		Comment.objects.create( user=request.user, description = description, product = product)
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+	products = Product.objects.order_by("id")[:7]
+
+
+	if request.user.is_authenticated:
+		review, created = Review.objects.get_or_create(user= request.user,product= product)
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cartItems = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cartItems = 0
+		for i in cart:
+			cartItems += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'products': products, 'cartItems': cartItems, 'total':0, 'product': product, 'review':review}
+	return render(request, 'store/single-product.html', context)	
+def review_stars(request, stars, pk):
+	product = Product.objects.get(id=pk)
+	review, created = Review.objects.get_or_create(user= request.user,product= product)
+
+	if(review.first_time):
+		review.first_time = False
+		product.stars = ((product.stars*product.review_times + stars)/(product.review_times+1))
+		product.review_times += 1
+	else:
+		product.stars = ((product.stars*product.review_times + stars - review.stars)/(product.review_times))
+	review.b = round(review.stars, 0)
+	review.stars = stars
+	product.save()
+	review.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
+

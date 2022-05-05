@@ -52,7 +52,7 @@
 					<div class="col-sm-12">
 						<div class="product-thumb">
 							<div class="image wow fadeInDown animated">
-								<a href="single-products.html"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+								<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
 								
 								<div class="sale"><span class="">Sale</span></div>
 								<div class="button-group">
@@ -66,18 +66,24 @@
 							<div class="caption">
 								
 								<div class="rate-and-title">
-									<h4 class="wow fadeInDown animated"><a href="single-products.html">{{product.name}}</a></h4>
+									<h4 class="wow fadeInDown animated"><a href="{%url 'single_product' product.id %}">{{product.name}}</a></h4>
 									<div class="rating wow fadeInDown animated">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-o"></i>
-										<i class="fa fa-star-o"></i>
-										<i class="fa fa-star-o"></i>
+										{% with ''|center:product.aaaa as range %}
+										{% for _ in range %}
+										<span><i class="fa fa-star"></i></span>	
+										{% endfor %}
+										{% endwith %}
+										{% with ''|center:product.aaa as range %}
+										{% for _ in range %}
+											<span><i class="fa fa-star-o"></i></span>
+										{% endfor %}
+										{% endwith %}
+										<a href="" onclick="">({{product.review_times}})</a> 
 										<div class="clear"></div>
 									</div>
 									<p class="price wow fadeInDown animated">
 										{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
-										<span class="price-new">{{product.price}}.000</span>  
+										<span class="price-new">{{product.price}}.000</span>  <span class="price-old">{{product.unsale_price}}.000</span>
 									</p>
 									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
 									
@@ -157,9 +163,9 @@
 						<div class="col-sm-12">
 							<div class="product-thumb">
 								<div class="image wow fadeInDown animated">
-									<a href="single-products.html"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+									<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
 									
-									<div class="sale"><span class="">Sale</span></div>
+									<div class="sale"><span class="">con hang</span></div>
 									<div class="button-group">
 										<div class="inner">
 											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
@@ -171,18 +177,24 @@
 								<div class="caption">
 									
 									<div class="rate-and-title">
-										<h4 class="wow fadeInDown animated"><a href="single-products.html">{{product.name}}</a></h4>
+										<h4 class="wow fadeInDown animated"><a href="{%url 'single_product' product.id %}">{{product.name}}</a></h4>
 										<div class="rating wow fadeInDown animated">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
+											{% with ''|center:product.aaaa as range %}
+											{% for _ in range %}
+											<span><i class="fa fa-star"></i></span>	
+											{% endfor %}
+											{% endwith %}
+											{% with ''|center:product.aaa as range %}
+											{% for _ in range %}
+												<span><i class="fa fa-star-o"></i></span>
+											{% endfor %}
+											{% endwith %}
+											<a href="" onclick="">({{product.review_times}})</a> 
 											<div class="clear"></div>
 										</div>
 										<p class="price wow fadeInDown animated">
 											{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
-											<span class="price-new">{{product.price}}.000</span>  
+											<span class="price-new">{{product.price}}.000</span> <span class="price-old">{{product.unsale_price}}.000</span> 
 										</p>
 										<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
 										
@@ -267,92 +279,36 @@
 			</div>
 				<div class="row">
 					<div id="blog" class="owl-carousel owl-theme">
-					
+						{%for blog in blogs%}
 						<div class="item">
 							<div class="col-sm-12">
 								<div class="blog_inner_matter">
 									<div class="image">
-										<a href=""><img src="{% static 'assets/image/blog/1.jpg'%}" class="wow fadeInDown animated"></a>
+										<a href="{%url 'blog_details' blog.id %}"><img src="{{blog.imageURL}}" class="wow fadeInDown animated"></a>
 										<div class="blog_date  wow fadeInDown animated">
-											<span>01-04-2020<span>
+											<span>{{blog.time.date}}<span>
 										</div>
 									</div>
 									<div class="admin_and_comments wow fadeInDown animated">
 										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
-										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
+										{% comment %} <span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span> {% endcomment %}
 									</div>
-									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-									<a href="" class="btn wow fadeInDown animated" >Read More</a>
+									<h3 class="wow fadeInDown animated"><a href="{%url 'blog_details' blog.id %}">{{blog.title}}</a></h3>
+									<p class="wow fadeInDown animated">{{blog.short_description}}</p>
+									<a href="{%url 'blog_details' blog.pk %}" class="btn wow fadeInDown animated" >Read More</a>
 								</div>
 							</div>
 						</div>
-						
-						<div class="item">
-							<div class="col-sm-12">
-								<div class="blog_inner_matter">
-									<div class="image">
-										<a href=""><img src="{% static 'assets/image/blog/3.jpg'%}" class="wow fadeInDown animated"></a>
-										<div class="blog_date  wow fadeInDown animated">
-											<span>01-04-2020<span>
-										</div>
-									</div>
-									<div class="admin_and_comments wow fadeInDown animated">
-										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
-										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
-									</div>
-									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-									<a href="" class="btn wow fadeInDown animated" >Read More</a>
-								</div>
-							</div>
-						</div>
-						
-						<div class="item">
-							<div class="col-sm-12">
-								<div class="blog_inner_matter">
-									<div class="image">
-										<a href=""><img src="{% static 'assets/image/blog/2.jpg'%}" class="wow fadeInDown animated"></a>
-										<div class="blog_date  wow fadeInDown animated">
-											<span>01-04-2020<span>
-										</div>
-									</div>
-									<div class="admin_and_comments wow fadeInDown animated">
-										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
-										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
-									</div>
-									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-									<a href="" class="btn wow fadeInDown animated" >Read More</a>
-								</div>
-							</div>
-						</div>
-						
-						<div class="item">
-							<div class="col-sm-12">
-								<div class="blog_inner_matter">
-									<div class="image">
-										<a href=""><img src="{% static 'assets/image/blog/1.jpg'%}" class="wow fadeInDown animated"></a>
-										<div class="blog_date  wow fadeInDown animated">
-											<span>01-04-2020<span>
-										</div>
-									</div>
-									<div class="admin_and_comments wow fadeInDown animated">
-										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
-										<span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span>
-									</div>
-									<h3 class="wow fadeInDown animated"><a href="">Proin gravida nibh vel velit auctor aliquet.</a></h3>
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-									<a href="" class="btn wow fadeInDown animated" >Read More</a>
-								</div>
-							</div>
-						</div>
+						{%endfor%}
 					</div>
 				</div>
 			</div>
 	</div>
 
 <!-- Blog End -->
+
+{% endblock content %}
+{% block scripts %}
 <script>
 	
 	$(document).ready(function () {
@@ -432,9 +388,6 @@
 	
 	});
 	
-	</script>
-
-{% endblock content %}
-{% block scripts %}
+</script>
 
 {% endblock %}
