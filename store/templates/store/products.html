@@ -25,106 +25,15 @@
 						<div id="category" class="category">
 							<h3 class="wow fadeInDown animated">category</h3>
 								<ul class="wow fadeInDown animated">
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Bags</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Swimwear</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Shirts</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Shoes</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Outerwear</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Jeans</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Coats</a></li>
-									<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Dress</a></li>
+									{%for category in categories%}
+									<li><a href="{%url 'category' category.pk %}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{category.name}}</a></li>
+									{%endfor%}
 								</ul>
 						</div>
 						<!-- category end-->
 						
 						<!-- category product -->
-						<div id="category_product" class="category_product">
-							<h3 class="wow fadeInDown animated">Latest Products </h3>
-								<div class="">
-									<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-1.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										<div class="sale"><span class="">Sale</span></div>
-									</div>
-									<div class="caption ">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Natural Mineral Stone</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="clear"></div>
-							<!-- products category end-->
-								<div class="">
-									<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/products_07.png" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										<div class="sale"><span class="">Sale</span></div>
-									</div>
-									<div class="caption ">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Natural Agate</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="clear"></div>
-							<!-- products category end-->
-							<div class="">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-1.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										<div class="sale"><span class="">Sale</span></div>
-									</div>
-									<div class="caption ">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Titanium Quartz</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="clear"></div>
-							<!-- products category end-->
-						</div>
+
 						<!-- products category end-->
 						
 					</div>
@@ -135,7 +44,13 @@
 					<!-- product-list-top -->
 						<div class="product-list-top">
 							<div class="sort-by-wrapper">
-								  <div class="col-md-6 col-xs-6 sort">
+								{%if category%}
+									<h3>Sản phẩm liên quan đến {{category.name}}</h3>
+								{%endif%}
+								{%if q%}
+								<h3>Sản phẩm liên quan đến {{q}}</h3>
+							{%endif%}
+								  {% comment %} <div class="col-md-6 col-xs-6 sort">
 										<div class="form-group input-group input-group-sm wow fadeInDown pull-left">
 											<label class="input-group-addon" for="input-sort">Sort By:</label>
 											<div class="select-wrapper">
@@ -170,15 +85,16 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> {% endcomment %}
 							<div class="clear"></div>
 						</div>
 					<!-- product-list-top -->
 			<!--1 -->
+						 {% for product in category.products.all%}
 						<div class="col-sm-4">
 							<div class="product-thumb">
 								<div class="image wow fadeInDown animated">
-									<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-3.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+									<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
 									
 									<div class="sale"><span class="">Sale</span></div>
 									<div class="button-group">
@@ -193,302 +109,78 @@
 								<div class="caption">
 									
 									<div class="rate-and-title">
-										<h4 class="wow fadeInDown animated"><a href="">Natural Mineral Stone</a></h4>
+										<h4 class="wow fadeInDown animated"><a href="{%url 'single_product' product.id %}">{{product.name}}</a></h4>
 										<div class="rating wow fadeInDown animated">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
+											{% with ''|center:product.aaaa as range %}
+											{% for _ in range %}
+											<span><i class="fa fa-star"></i></span>	
+											{% endfor %}
+											{% endwith %}
+											{% with ''|center:product.aaa as range %}
+											{% for _ in range %}
+												<span><i class="fa fa-star-o"></i></span>
+											{% endfor %}
+											{% endwith %}
+											<a href="" onclick="">({{product.review_times}})</a> 
+											<div class="clear"></div>
 											<div class="clear"></div>
 										</div>
 										<p class="price wow fadeInDown animated">
-											<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
+											 <span class="price-new">{{product.price}}.000</span>  <span class="price-old">{{product.unsale_price}}.000</span>
 										</p>
-										<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+										<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
 									</div>
 								</div>
 							</div>
 						</div>							
-					<!-- 2-->
-						<div class="col-sm-4">
-							<div class="product-thumb">
-								<div class="image wow fadeInDown animated">
-									<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-4.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-									
-									<div class="sale"><span class="">Sale</span></div>
-									<div class="button-group">
-										<div class="inner">
-											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-											<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-											<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-										</div>
-									</div>
-								</div>
-								<div class="caption">
-									
-									<div class="rate-and-title">
-										<h4 class="wow fadeInDown animated"><a href="">Natural Agate</a></h4>
-										<div class="rating wow fadeInDown animated">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<div class="clear"></div>
-										</div>
-										<p class="price wow fadeInDown animated">
-											<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-										</p>
-										<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+					{%endfor%}
+					{% for product in products%}
+					<div class="col-sm-4">
+						<div class="product-thumb">
+							<div class="image wow fadeInDown animated">
+								<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
+								
+								<div class="sale"><span class="">Sale</span></div>
+								<div class="button-group">
+									<div class="inner">
+										
+										<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
+										<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
+										<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
 									</div>
 								</div>
 							</div>
-						</div>								
-					<!-- 3-->
-						<div class="col-sm-4">
-							<div class="product-thumb">
-								<div class="image wow fadeInDown animated">
-									<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-5.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-									<div class="button-group">
-										<div class="inner">
-											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-											<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-											<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-										</div>
+							<div class="caption">
+								
+								<div class="rate-and-title">
+									<h4 class="wow fadeInDown animated"><a href="{%url 'single_product' product.id %}">{{product.name}}</a></h4>
+									<div class="rating wow fadeInDown animated">
+										{% with ''|center:product.aaaa as range %}
+										{% for _ in range %}
+										<span><i class="fa fa-star"></i></span>	
+										{% endfor %}
+										{% endwith %}
+										{% with ''|center:product.aaa as range %}
+										{% for _ in range %}
+											<span><i class="fa fa-star-o"></i></span>
+										{% endfor %}
+										{% endwith %}
+										<a href="" onclick="">({{product.review_times}})</a> 
+										<div class="clear"></div>
+										<div class="clear"></div>
 									</div>
-								</div>
-								<div class="caption">
-									
-									<div class="rate-and-title">
-										<h4 class="wow fadeInDown animated"><a href="">Innerwear</a></h4>
-										<div class="rating wow fadeInDown animated">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<div class="clear"></div>
-										</div>
-										<p class="price wow fadeInDown animated">
-											<span class="price-new">$50.00</span>  
-										</p>
-										<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-									</div>
+									<p class="price wow fadeInDown animated">
+										 <span class="price-new">{{product.price}}.000</span>  <span class="price-old">{{product.unsale_price}}.000</span>
+									</p>
+									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
 								</div>
 							</div>
-						</div>								
-					<!--4 -->
-						<div class="col-sm-4">
-							<div class="product-thumb">
-								<div class="image wow fadeInDown animated">
-									<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-6.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-									<div class="button-group">
-										<div class="inner">
-											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-											<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-											<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-										</div>
-									</div>
-								</div>
-								<div class="caption">
-									
-									<div class="rate-and-title">
-										<h4 class="wow fadeInDown animated"><a href="">Swimwear</a></h4>
-										<div class="rating wow fadeInDown animated">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-											<div class="clear"></div>
-										</div>
-										<p class="price wow fadeInDown animated">
-											<span class="price-old">$40.20</span>  
-										</p>
-										<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-									</div>
-								</div>
-							</div>
-						</div>	
-					<!--5 -->	
-							<div class="col-sm-4">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-7.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										
-										<div class="sale"><span class="">Sale</span></div>
-										<div class="button-group">
-											<div class="inner">
-												<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-												<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-												<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-											</div>
-										</div>
-									</div>
-									<div class="caption">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Sweatshirts & Hoodies</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--6 -->	
-							<div class="col-sm-4">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-8.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										
-										<div class="sale"><span class="">Sale</span></div>
-										<div class="button-group">
-											<div class="inner">
-												<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-												<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-												<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-											</div>
-										</div>
-									</div>
-									<div class="caption">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Sweatshirts & Hoodies</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>				
-							<!--7 -->	
-							<div class="col-sm-4">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-9.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										
-										<div class="sale"><span class="">Sale</span></div>
-										<div class="button-group">
-											<div class="inner">
-												<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-												<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-												<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-											</div>
-										</div>
-									</div>
-									<div class="caption">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Natural Mineral Stone</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>				
-							<!--8 -->	
-							<div class="col-sm-4">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-11.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										
-										<div class="sale"><span class="">Sale</span></div>
-										<div class="button-group">
-											<div class="inner">
-												<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-												<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-												<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-											</div>
-										</div>
-									</div>
-									<div class="caption">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Natural Mineral Stone</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>				
-							<!--9 -->	
-							<div class="col-sm-4">
-								<div class="product-thumb">
-									<div class="image wow fadeInDown animated">
-										<a href=""><img class="wow fadeInDown animated" src="assets/image/products/product-10.jpg" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
-										
-										<div class="sale"><span class="">Sale</span></div>
-										<div class="button-group">
-											<div class="inner">
-												<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
-												<button type="button" title="Add to Wish List" class="button-wishlist"><span>Add to Wish List</span></button>
-												<button type="button" title="Compare this Product" class="button-compare"><span>Compare this Product</span></button>
-											</div>
-										</div>
-									</div>
-									<div class="caption">
-										
-										<div class="rate-and-title">
-											<h4 class="wow fadeInDown animated"><a href="">Natural Mineral Stone</a></h4>
-											<div class="rating wow fadeInDown animated">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<div class="clear"></div>
-											</div>
-											<p class="price wow fadeInDown animated">
-												<span class="price-old">$123.20</span> <span class="price-new">$110.00</span>  
-											</p>
-											<button type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
-										</div>
-									</div>
-								</div>
-							</div>				
+						</div>
+					</div>							
+				{%endfor%}
 					<!-- products end -->
 					<!-- Pagination -->
-						<div class="clear"></div>
+						{% comment %} <div class="clear"></div>
 								<div class="pagination-section text-center wow fadeInDown animated">
 									<a href="#" class="prev page-numbers"><i class="fa fa-angle-left"></i></a>
 									<span class="page-numbers current" aria-current="page">1</span>
@@ -497,7 +189,7 @@
 									<a href="#" class="page-numbers">4</a>
 									<a href="#" class="page-numbers">5</a>
 									<a href="#" class="next page-numbers"><i class="fa fa-angle-right"></i></a>
-								</div>
+								</div> {% endcomment %}
 						<!-- Pagination End-->
 					</div>	
 				</div>

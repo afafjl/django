@@ -21,8 +21,11 @@ urlpatterns = [
 	path('login/', views.loginPage, name="loginPage"), 
 	path('logout/', views.logoutUser, name="logout"),
 	path('register/', views.register, name="register"),
-	path('services/', views.services, name="services"),
+
 	path('blog_details/<int:pk>', views.blog_details, name="blog_details"),
 	path('single_product/<int:pk>', views.single_product, name="single_product"),
 	path('single_product/<int:pk>/<int:stars>', views.review_stars, name="review_stars"),
+	path('category/<int:pk>', views.category, name="category"),
+	path('search', views.search, name="search"),
+	path('vnpay', views.payment, name="vnpay"),
 ]	

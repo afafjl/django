@@ -85,7 +85,7 @@
 		
        
 	</script>
-	
+
 </head>
 <body>
 <div id="productapp">
@@ -97,14 +97,27 @@
 				{%for message in messages%}
 				<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
 				{%endfor%}
-				<div class="col-lg-8 col-md-12">
+				<div class="col-lg-6 col-md-12">
 					<ul class="top-header-contact-info">
 						<li><i class="fa fa-envelope-o"></i> info@yourcompany.com</li>
-						<li><i class="fa fa-phone"></i> Emergancy Helpline: <a href="tel:+44587154756">+91 123 456-7890</a></li>
-					</ul>
+						<li><i class="fa fa-phone"></i> Emergancy Helpline: <a href="tel:+44587154756">+91 123 456-7890</a>
+						</ul>
 				</div>
+				<div class="col-lg-3 col-md-12">
+
+		
 				
-				<div class="col-lg-4 col-md-12">
+						<div class="form">
+							<form action="{%url 'search'%}" method="get">
+							{% comment %} <i class="fa fa-search"></i> {% endcomment %}
+							<input type="text" name="q" class="form-control form-input" placeholder="Search anything...">
+						</form>
+						  </div>
+
+
+						  
+				</div>
+				<div class="col-lg-3 col-md-12">
 					<ul class="top-header-social header_account">
 						{%if user.username%}
 						<li><a href="{% url 'logout'%}"><i class="fa fa-sign-in"></i> Logout <span></span></a> </li>
@@ -161,10 +174,10 @@
 									
 									<ul class="accordion" id="accordion-category">
 										<li class="panel mobile_menu_li">
-											<a href=""{% url 'store'%}" class=""></i> Home</a>
+											<a href="{% url 'store'%}" class=""></i> Home</a>
 										</li>
 										<li class="panel mobile_menu_li">
-											<a href=""{% url 'about_us'%}" class=""></i> about us</a>
+											<a href="{% url 'about_us'%}" class=""></i> about us</a>
 										</li>
 										
 										
@@ -285,6 +298,11 @@
 
 							<div class="collapse navbar-collapse mean-menu" style="display: block;">
 								<ul class="navbar-nav">
+
+									<li class="nav-item"> 
+									
+
+									</li>
 									<li class="nav-item"><a href="{% url 'store'%}" class="nav-link active">Home</a></li>
 									
 									<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
@@ -337,11 +355,11 @@
 										</div>
 									</div>
 
-									<div class="option-item">
+									{% comment %} <div class="option-item">
 										<div class="search-btn-box">
 											<a href="#search"><i class="search-btn fa fa-search"></i></a>
 										</div>
-									</div>
+									</div> {% endcomment %}
 
 									<!--<div class="option-item">
 										<a href="contact_us.html" class="btn"> Appointment</a>
@@ -410,8 +428,7 @@
 						<ul class="footer_list">
 							<li class="wow fadeInDown animated"><a href="{% url 'about_us'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> About Us</a>
 							</li>
-							<li class="wow fadeInDown animated"><a href="{% url 'services'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Our Services </a>
-							</li>
+
 							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Products List </a>
 							</li>
 							<li class="wow fadeInDown animated"><a href="{% url 'cart'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Cart</a>

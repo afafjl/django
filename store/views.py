@@ -30,6 +30,7 @@ def store(request):
 	context = {'products': products, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
 	return render(request, 'store/store.html', context)
 def cart(request):
+
 	try:
 		if request.user.is_authenticated:
 			customer = request.user.customer
@@ -118,6 +119,7 @@ def contact(request):
 
 def products(request):
 	products = Product.objects.all()
+	categories = Category.objects.all()
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -133,7 +135,7 @@ def products(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'products': products, 'cartItems': cartItems, 'categories': categories, 'total':0}
 	return render(request, 'store/products.html', context)
 def blog(request):
 	products = Product.objects.all()
@@ -205,25 +207,7 @@ def blog_details(request, pk):
 def logoutUser(request):
 	logout(request)
 	return redirect('loginPage')	
-def services(request):
-	products = Product.objects.all()
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/services.html', context)
+
 def loginPage(request):
 	if request.method == 'POST':
 		username= request.POST.get('username')
@@ -340,4 +324,129 @@ def review_stars(request, stars, pk):
 	product.save()
 	review.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
+def category(request, pk):
+	category = Category.objects.get(id=pk)
+	categories = Category.objects.all()
+	
+	if request.user.is_authenticated:
+
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cartItems = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cartItems = 0
+		for i in cart:
+			cartItems += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0, 'category': category}
+	return render(request, 'store/products.html', context)
+def search(request):
+
+	categories = Category.objects.all()
+	if request.method == 'GET':   
+		q =  request.GET.get('q')     
+
+		products= Product.objects.filter(name__contains=q)
+	else:
+		products =Product.objects.all()
+	if request.user.is_authenticated:
+
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cartItems = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cartItems = 0
+		for i in cart:
+			cartItems += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0,'products':products, 'q': q}
+	return render(request, 'store/products.html', context)
+def payment(request):
+	import urllib.request
+	import urllib
+	import uuid
+	import requests
+	import hmac
+	import hashlib
+	price =  request.POST.get('price') 
+	name =  request.POST.get('name')
+	address =  request.POST.get('address') 
+	email =  request.POST.get('email') 
+	city =  request.POST.get('price') 
+	phone =  request.POST.get('phone') 
+
+	Address.objects.create(name= name, address= address, city=city,phone = phone)
+	price = str(int(price)*1000)
+	# parameters send to MoMo get get payUrl
+	endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+	partnerCode = "MOMO"
+	accessKey = "F8BBA842ECF85"
+	secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+	orderInfo = "pay with MoMo"
+	redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+	ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+	amount = price
+	orderId = str(uuid.uuid4())
+	requestId = str(uuid.uuid4())
+	requestType = "captureWallet"
+	extraData = ""  # pass empty value or Encode base64 JsonString
+
+	# before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
+	# &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
+	# &requestType=$requestType
+	rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl + "&requestId=" + requestId + "&requestType=" + requestType
+
+	# puts raw signature
+	print("--------------------RAW SIGNATURE----------------")
+	print(rawSignature)
+	# signature
+	h = hmac.new(bytes(secretKey, 'ascii'), bytes(rawSignature, 'ascii'), hashlib.sha256)
+	signature = h.hexdigest()
+	print("--------------------SIGNATURE----------------")
+	print(signature)
+
+	# json object send to MoMo endpoint
+
+	data = {
+		'partnerCode': partnerCode,
+		'partnerName': "Test",
+		'storeId': "MomoTestStore",
+		'requestId': requestId,
+		'amount': amount,
+		'orderId': orderId,
+		'orderInfo': orderInfo,
+		'redirectUrl': redirectUrl,
+		'ipnUrl': ipnUrl,
+		'lang': "vi",
+		'extraData': extraData,
+		'requestType': requestType,
+		'signature': signature
+	}
+	print("--------------------JSON REQUEST----------------\n")
+	data = json.dumps(data)
+	print(data)
+
+	clen = len(data)
+	response = requests.post(endpoint, data=data, headers={'Content-Type': 'application/json', 'Content-Length': str(clen)})
+
+	# f.close()
+	print("--------------------JSON response----------------\n")
+	print(response.json())
+	print( price)
+	# print(response.json()['payUrl'])
+	return redirect(response.json()['payUrl'])
+
+
 

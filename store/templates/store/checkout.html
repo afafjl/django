@@ -18,41 +18,32 @@
 <!-- cart -->
 	<div id="cart" class="cart_section checkout_section">
 		<div class="container-fluid" id="checkout">
+			<form action="{%url 'vnpay'%}" method="POST" class="eb-form eb-mailform form-checkout" novalidate="novalidate">
 			
-			<div class="row billing_and_payment_option wow fadeInDown   animated">
+				{%csrf_token%}
+			<div class="row billing_and_payment_option wow fadeInDown payment_method  animated">
 				<!-- Billing Address -->
 				<!-- Delivery Address  -->
 				<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
 					<h3>Delivery Address</h3>
-					  <form class="eb-form eb-mailform form-checkout" novalidate="novalidate">
+					
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-wrap">
-									<input class="form-input form-control" id="checkout-first-name-2" type="text" name="name" data-constraints="@Required" placeholder="First Name">
+									<input class="form-input form-control" id="checkout-first-name-2" type="text" name="name" data-constraints="@Required" placeholder="Tên">
 								</div>
 							</div>
+							<input type="hidden" v-bind:value="[[total]]" name="price">
 							
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="form-wrap">
-									<input class="form-input form-control" id="checkout-last-name-2" type="text" name="name" data-constraints="@Required" placeholder="Last Name">
+									<input class="form-input form-control-has-validation" id="checkout-address-2" type="text" name="address" data-constraints="@Required" placeholder="Địa chỉ">
 								</div>
 							</div>
 							
 							<div class="col-sm-12">
 								<div class="form-wrap">
-									<input class="form-input form-control" id="checkout-company-2" type="text" name="name" data-constraints="@Required" placeholder="Company">
-								</div>
-							</div>
-							
-							<div class="col-sm-12">
-								<div class="form-wrap">
-									<input class="form-input form-control-has-validation" id="checkout-address-2" type="text" name="name" data-constraints="@Required" placeholder="Address">
-								</div>
-							</div>
-							
-							<div class="col-sm-12">
-								<div class="form-wrap">
-								  <input class="form-input form-control-has-validation" id="checkout-city-2" type="text" name="name" data-constraints="@Required" placeholder="City/Town">
+								  <input class="form-input form-control-has-validation" id="checkout-city-2" type="text" name="city" data-constraints="@Required" placeholder="Tỉnh/Thành Phố">
 								</div>
 							</div>
 							
@@ -63,13 +54,44 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-wrap has-error">
-									<input class="form-input form-control-has-validation" id="checkout-phone-2" type="text" name="phone" data-constraints="@Numeric" placeholder="Phone">
+									<input class="form-input form-control-has-validation" id="checkout-phone-2" type="text" name="phone" data-constraints="@Numeric" placeholder="Số ĐT ">
 								</div>
 							</div>
 						</div>
-					</form>
+
 				</div>
+				<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
+					<h3>Cart total</h3>
+					  
+						
+							{% comment %} <div class="col-sm-6 col-lg-6 wow fadeInDown   animated"> {% endcomment %}
+								
+								<div class="table-custom-responsive">
+								  <table class="table-custom table-responsive">
+										<tbody>
+										  <tr >
+											<td>Cart Subtotal</td>
+											<td>[[total]]</td>
+										  </tr>
+										  <tr>
+											<td>Shipping</td>
+											<td>Free</td>
+										  </tr>
+										  <tr>
+											<td>Total</td>
+											<td>[[total]]</td>
+										  </tr>
+										</tbody>
+								  </table>
+
+								  <button class="btn">Thanh toán MOMO</button>
+								 
+							  </div>
+						  {% comment %} </div> {% endcomment %}
+						
+				</div>	
 			</div>
+		</form>
 			<!-- your shopping cart -->
 			<div class="row your_cart wow fadeInDown   animated">
 				<h2>your shopping cart</h2>
@@ -104,7 +126,7 @@
 			<!-- payment method -->
 				<div class="row payment_method wow fadeInDown   animated">
 					<div class="col-sm-6 col-lg-6">
-						<h3>Payment methods</h3>
+						{% comment %} <h3>Payment methods</h3>
 						<div class="inner_payment_method">
 							<div class="box-radio">
 								<div class="radio-panel">
@@ -128,32 +150,10 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-						</div>
+						</div> {% endcomment %}
 					</div>
 					<!--Cart total -->
-					<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
-					  <h3>Cart total</h3>
-						  <div class="table-custom-responsive">
-							<table class="table-custom table-responsive">
-								  <tbody>
-									<tr >
-									  <td>Cart Subtotal</td>
-									  <td>[[total]]</td>
-									</tr>
-									<tr>
-									  <td>Shipping</td>
-									  <td>Free</td>
-									</tr>
-									<tr>
-									  <td>Total</td>
-									  <td>[[total]]</td>
-									</tr>
-								  </tbody>
-							</table>
-							
-							<a href="#" class="btn">Confirm Order</a>
-						</div>
-					</div>
+					
 				</div>
 			<!-- payment method -->
 		</div>	
