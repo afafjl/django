@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-	<title>Fashion Shop | Home</title>
+	<title>Fashion Shop | Trang chủ</title>
 	<meta charset="utf-8">
 	{% load static %}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,7 +98,7 @@
 				<div class="col-lg-6 col-md-12">
 					<ul class="top-header-contact-info">
 						<li><i class="fa fa-envelope-o"></i> hosiluan1003@gmail.com</li>
-						<li><i class="fa fa-phone"></i> Emergancy Helpline: <a href="tel:+44587154756">+91 123 456-7890</a>
+						<li><i class="fa fa-phone"></i> Số điện thoại liên hệ: <a href="tel:+44587154756">+81 38 6684223</a>
 						</ul>
 				</div>
 				<div class="col-lg-3 col-md-12">
@@ -118,10 +118,10 @@
 				<div class="col-lg-3 col-md-12">
 					<ul class="top-header-social header_account">
 						{%if user.username%}
-						<li><a href="{% url 'logout'%}"><i class="fa fa-sign-in"></i> Logout <span></span></a> </li>
+						<li><a href="{% url 'logout'%}"><i class="fa fa-sign-in"></i> Đăng Xuất <span></span></a> </li>
 						{%else%}
-						<li><a href="{% url 'loginPage'%}"><i class="fa fa-sign-in"></i> Login <span>/</span></a> </li>
-						<li><a href="{% url 'register'%}"><i class="fa fa-pencil-square-o"></i> Register</a></li>
+						<li><a href="{% url 'loginPage'%}"><i class="fa fa-sign-in"></i> Đăng Nhập <span>/</span></a> </li>
+						<li><a href="{% url 'register'%}"><i class="fa fa-pencil-square-o"></i> Đăng kí </a></li>
 						{%endif%}
 					</ul>
 				</div>
@@ -168,20 +168,20 @@
 							<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
 							
 								<div class="col-sm-12" style="padding:0px;">
-									<h3>Categories</h3>
+									<h3>Danh Mục</h3>
 									
 									<ul class="accordion" id="accordion-category">
 										<li class="panel mobile_menu_li">
-											<a href="{% url 'store'%}" class=""></i> Home</a>
+											<a href="{% url 'store'%}" class=""></i> Trang Chủ</a>
 										</li>
 										<li class="panel mobile_menu_li">
-											<a href="{% url 'about_us'%}" class=""></i> about us</a>
+											<a href="{% url 'about_us'%}" class=""></i> About Us</a>
 										</li>
 										
 										
 										
 										<li class="panel mobile_menu_li">
-											<a href="#" class="">Shop</a>
+											<a href="#" class="">Cửa Hàng</a>
 												<span class="head"><a style="" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category84" aria-expanded="false">
 												<span class="plus">+</span><span class="minus">-</span></a></span>
 												<div id="category84" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
@@ -227,7 +227,7 @@
 										</li>
 										
 										<li class="panel mobile_menu_li">
-											<a href="{% url 'store'%}" class="">Shop</a>
+											<a href="{% url 'store'%}" class="">Cửa hàng</a>
 												<span class="head"><a style="" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-category" href="#category85" aria-expanded="false">
 												<span class="plus">+</span><span class="minus">-</span></a></span>
 												<div id="category85" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
@@ -301,13 +301,13 @@
 									
 
 									</li>
-									<li class="nav-item"><a href="{% url 'store'%}" class="nav-link active">Home</a></li>
+									<li class="nav-item"><a href="{% url 'store'%}" class="nav-link active">Trang Chủ</a></li>
 									
-									<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
-									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Products</a></li>
+									<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">Giới Thiệu Chung</a></li>
+									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Sản Phẩm</a></li>
 
 									
-									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shop<i class="fa fa-angle-down"></i></a>
+									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Danh Mục<i class="fa fa-angle-down"></i></a>
 										<ul class="dropdown-menu">
 											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Coats</a></li>
 
@@ -327,23 +327,21 @@
 
 										</ul>
 									</li> 
-									<li class="nav-item"><a href="#" class="nav-link">Pages<i class="fa fa-angle-down"></i></a>
+									<li class="nav-item"><a href="#" class="nav-link">Thêm<i class="fa fa-angle-down"></i></a>
 										<ul class="dropdown-menu">
-											<li class="nav-item"><a href="{% url 'store'%}" class="nav-link">Home</a></li>
-
+											<li class="nav-item"><a href="{% url 'store'%}" class="nav-link">Trang Chủ</a></li>
 											<li class="nav-item"><a href="{% url 'blog'%}" class="nav-link">Blog</a></li>
-
-											<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Contact</a></li>
-											<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">About Us</a></li>
-											<li class="nav-item"><a href="{% url 'cart'%}" class="nav-link">Cart</a></li>
-											<li class="nav-item"><a href="{% url 'checkout'%}" class="nav-link">checkout</a></li>
+											<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Liên Hệ</a></li>
+											<li class="nav-item"><a href="{% url 'about_us'%}" class="nav-link">Giới Thiệu Chung</a></li>
+											<li class="nav-item"><a href="{% url 'cart'%}" class="nav-link">Giỏ Hàng</a></li>
+											<li class="nav-item"><a href="{% url 'checkout'%}" class="nav-link">Thanh Toán</a></li>
 										</ul>
 									</li> 
 
-									<li class="nav-item"><a href="{% url 'blog'%}" class="nav-link">Blog </a>
+									<li class="nav-item"><a href="{% url 'blog'%}" class="nav-link">Blog</a>
 									</li>
 
-									<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Contact</a></li>
+									<li class="nav-item"><a href="{% url 'contact'%}" class="nav-link">Liên Hệ</a></li>
 								</ul>
 
 								<div class="others-option align-items-center">
