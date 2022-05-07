@@ -8,7 +8,7 @@
 			<div class="breadcrumb-content">
 				<h2>login</h2>
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="{%url 'store'%}">Home</a></li>
 					<li><a href="">login</a></li>
 				</ul>
 			</div>
@@ -23,14 +23,15 @@
 			<div class="row billing_and_payment_option wow fadeInDown   animated">
 				<div class="heading_wrapper wow fadeInDown animated">
 					<h2 class="wow fadeInDown animated">Login your Account</h2>
-					{%for message in messages%}
-						<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
-					{%endfor%}
+
 					
 				</div>
 				<!-- Billing Address -->
 				<div class="login_box">
 					<h3>Create Your Account</h3>
+					{%for message in messages%}
+					<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+					{%endfor%}
 						<form method = "POST" class="eb-form eb-mailform form-checkout" novalidate="novalidate">
 							{% csrf_token%}
 							<div class="form-wrap">
@@ -45,7 +46,7 @@
                             </div>
 							<input type = "submit" class="btn " name = "Login">
 							
-							<p class="signInclass"> Dont Have an Account?  &nbsp;<a href="login.html">Sign In</a> </p>
+							<p class="signInclass"> Dont Have an Account?  &nbsp;<a href="{%url 'register' %}">Sign In</a> </p>
 						
 					</form>
 					<div class="clear"></div>

@@ -7,7 +7,7 @@
 			<div class="breadcrumb-content">
 				<h2>checkout</h2>
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="{%url 'store'%}">Home</a></li>
 					<li><a href="">checkout</a></li>
 				</ul>
 			</div>
@@ -18,6 +18,9 @@
 <!-- cart -->
 	<div id="cart" class="cart_section checkout_section">
 		<div class="container-fluid" id="checkout">
+			{%for message in messages%}
+			<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+			{%endfor%}
 			<form action="{%url 'vnpay'%}" method="POST" class="eb-form eb-mailform form-checkout" novalidate="novalidate">
 			
 				{%csrf_token%}
@@ -37,24 +40,24 @@
 							
 							<div class="col-sm-12">
 								<div class="form-wrap">
-									<input class="form-input form-control-has-validation" id="checkout-address-2" type="text" name="address" data-constraints="@Required" placeholder="Địa chỉ">
+									<input required class="form-input form-control-has-validation" id="checkout-address-2" type="text" name="address" data-constraints="@Required" placeholder="Địa chỉ">
 								</div>
 							</div>
 							
 							<div class="col-sm-12">
 								<div class="form-wrap">
-								  <input class="form-input form-control-has-validation" id="checkout-city-2" type="text" name="city" data-constraints="@Required" placeholder="Tỉnh/Thành Phố">
+								  <input required class="form-input form-control-has-validation" id="checkout-city-2" type="text" name="city" data-constraints="@Required" placeholder="Tỉnh/Thành Phố">
 								</div>
 							</div>
 							
 							<div class="col-sm-6">
 								<div class="form-wrap has-error">
-									<input class="form-input form-control-has-validation" id="checkout-email-2" type="email" name="email" data-constraints="@Email @Required" placeholder="E-Mail">
+									<input required class="form-input form-control-has-validation" id="checkout-email-2" type="email" name="email" data-constraints="@Email @Required" placeholder="E-Mail">
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="form-wrap has-error">
-									<input class="form-input form-control-has-validation" id="checkout-phone-2" type="text" name="phone" data-constraints="@Numeric" placeholder="Số ĐT ">
+									<input required class="form-input form-control-has-validation" id="checkout-phone-2" type="text" name="phone" data-constraints="@Numeric" placeholder="Số ĐT ">
 								</div>
 							</div>
 						</div>
@@ -108,8 +111,8 @@
 							<tbody>
 								
 								<tr v-for="item in items">
-									<td><a class="table-cart-figure" href="checkout.html"><img v-bind:src="[[item.imageURL]]"  alt="" width="146" height="132"></a>
-										<a class="table-cart-link" href="#">[[item.name]]</a></td>
+									<td><div class="table-cart-figure" ><img v-bind:src="[[item.imageURL]]"  alt="" width="146" height="132"></div>
+										<a class="table-cart-link">[[item.name]]</a></td>
 									<td>[[item.price]]</td>
 									<td>
 									  [[item.quantity]]      

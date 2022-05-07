@@ -7,7 +7,7 @@
 			<div class="breadcrumb-content">
 				<h2>cart</h2>
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="{%url 'store'%}">Home</a></li>
 					<li><a href="">cart</a></li>
 				</ul>
 			</div>
@@ -32,8 +32,8 @@
 							<tbody>
 								
 								<tr v-for="item in items">
-									<td><a class="table-cart-figure" href="checkout.html"><img v-bind:src="[[item.imageURL]]" alt="" width="146" height="132"></a>
-										<a class="table-cart-link" href="#">[[item.name]]</a></td>
+									<td><div class="table-cart-figure" ><img v-bind:src="[[item.imageURL]]" alt="" width="146" height="132"></div>
+										<a class="table-cart-link" >  [[item.name]]</a></td>
 									<td>[[item.price]]</td>
 									<td>
 
@@ -50,14 +50,14 @@
 
 				<div class="group-xl group-justify  wow fadeInDown animated">
 					<div>
-						<form class="eb-form eb-mailform eb-form-inline eb-form-coupon" novalidate="novalidate">
+						{% comment %} <form class="eb-form eb-mailform eb-form-inline eb-form-coupon" novalidate="novalidate">
 							<div class="form-wrap">
 							  <input class="form-input form-input-inverse" id="coupon-code" type="text" name="text" placeholder="Coupon code">
 							</div>
 							<div class="form-button">
 							  <button class="btn" type="submit">Apply</button>
 							</div>
-						</form>
+						</form> {% endcomment %}
 					</div>
 					<div>
 						<div class="group-xl group-middle">

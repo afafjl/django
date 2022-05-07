@@ -2,6 +2,9 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
+{%for message in messages%}
+<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+{%endfor%}
 <section>
 	<div id="slideWiz" class="slideWiz" style="width: 100%; height: 500px;"></div>
 	{% comment %} <img src="/static/assets/image/silder/slider-2.jpg" width="100%" alt="silder images" title="silder images"> {% endcomment %}

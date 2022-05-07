@@ -28,4 +28,5 @@ urlpatterns = [
 	path('category/<int:pk>', views.category, name="category"),
 	path('search', views.search, name="search"),
 	path('vnpay', views.payment, name="vnpay"),
+	path('feedback', views.feedback, name="feedback"),
 ]	

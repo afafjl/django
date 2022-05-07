@@ -7,7 +7,7 @@
 			<div class="breadcrumb-content">
 				<h2>Contact Us</h2>
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="{%url 'store'%}">Home</a></li>
 					<li><a href="">Contact Us</a></li>
 				</ul>
 			</div>
@@ -21,17 +21,21 @@
 			<div class="row">
 				<div class="col-sm-8">
 					<div class="block-sm login_box">
+						{%for message in messages%}
+						<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
+						{%endfor%}
 						<h3>Get in Touch</h3>
 						<p>We are available 24/7 by fax, e-mail or by phone. You can also use our quick contact form to ask a question about our services and projects we’re working on.</p>
 						<div class="comments-form-wrapper clearfix comment-respond">
-							<form class="comment-form" method="post" id="postComment" action="">
+							<form class="comment-form" method="post" id="postComment" action="{%url 'feedback' %}">
+								{%csrf_token%}
 								<div class="field">
 									<label for="name">Name<em class="required">*</em></label>
-									<input type="text" class="input-text" title="Name" value="" id="user" name="user_name">
+									<input type="text" class="input-text" title="Name" value="" id="user" name="name">
 								</div>
 								<div class="field">
 									<label for="email">Email<em class="required">*</em></label>
-									<input type="text" class="input-text validate-email" title="Email" value="" id="email" name="user_email">
+									<input type="text" class="input-text validate-email" title="Email" value="" id="email" name="email">
 								</div>
 								<div class="clear"></div>
 								<div class="field aw-blog-comment-area">

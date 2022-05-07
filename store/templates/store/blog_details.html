@@ -25,14 +25,14 @@
 						<div class="col-sm-12">
 							<div class="blog_inner_matter">
 								<div class="image">
-									<a href=""><img src="{{blog.imageURL}}" class="wow fadeInDown animated"></a>
+									<a href="{%url 'blog_details' blog.id %}"><img src="{{blog.imageURL}}" class="wow fadeInDown animated"></a>
 								</div>
 								<div class="admin_and_comments wow fadeInDown animated">
 									<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
 									{% comment %} <span class="comments_date blog_admin"><span><i class="fa fa-comments-o"></i> 10 comments</span></span> {% endcomment %}
 									<span class="comments_date blog_dates"><span><i class="fa fa-clock-o"></i> {{blog.time}}</span></span>
 								</div>
-								<h2 class="wow fadeInDown animated"><a href="">{{blog.title}}</a></h2>
+								<h2 class="wow fadeInDown animated"><a href="{%url 'blog_details' blog.id %}">{{blog.title}}</a></h2>
 								<p class="wow fadeInDown animated">{{blog.description|linebreaks}}</p>
 								</div>
 								
@@ -141,7 +141,7 @@
 									<ul class="big_tags wow fadeInDown animated">
 										{% for tag in blog.tags.all %}
 
-										<li><a class="tag btn" href="#">{{tag.name}}</a></li>
+										<li><p class="tag btn">{{tag.name}}</p></li>
 									{% endfor %}
 
 									</ul>

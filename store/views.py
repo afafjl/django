@@ -138,7 +138,7 @@ def products(request):
 	context = {'products': products, 'cartItems': cartItems, 'categories': categories, 'total':0}
 	return render(request, 'store/products.html', context)
 def blog(request):
-	products = Product.objects.all()
+	blogs = Blog.objects.all()
 
 
 	if request.user.is_authenticated:
@@ -155,7 +155,7 @@ def blog(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'blogs': blogs, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/blog.html', context)	
 def about_us(request):
 	products = Product.objects.all()
@@ -216,6 +216,7 @@ def loginPage(request):
 		if user is not None:
 			login(request, user) 
 			return redirect('store')
+		messages.success(request, 'Tài khoản hoặc mật khẩu không chính xác')
 	products = Product.objects.all()
 	# try:
 	if request.user.is_authenticated:
@@ -380,73 +381,100 @@ def payment(request):
 	import requests
 	import hmac
 	import hashlib
-	price =  request.POST.get('price') 
-	name =  request.POST.get('name')
-	address =  request.POST.get('address') 
-	email =  request.POST.get('email') 
-	city =  request.POST.get('price') 
-	phone =  request.POST.get('phone') 
+	if request.method == 'POST': 
+		price =  request.POST.get('price') 
+		name =  request.POST.get('name')
+		address =  request.POST.get('address') 
+		email =  request.POST.get('email') 
+		city =  request.POST.get('price') 
+		phone =  request.POST.get('phone') 
+		if name and address and email and city and phone:
+			pass
+		else:
+			messages.success(request, 'Vui lòng điền đầy đủ thông tin')
+			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+		Address.objects.create(name= name, address= address, city=city,phone = phone)
+		price = str(int(price)*1000)
+		# parameters send to MoMo get get payUrl
+		endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+		partnerCode = "MOMO"
+		accessKey = "F8BBA842ECF85"
+		secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+		orderInfo = "pay with MoMo"
+		redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+		ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+		amount = price
+		orderId = str(uuid.uuid4())
+		requestId = str(uuid.uuid4())
+		requestType = "captureWallet"
+		extraData = ""  # pass empty value or Encode base64 JsonString
 
-	Address.objects.create(name= name, address= address, city=city,phone = phone)
-	price = str(int(price)*1000)
-	# parameters send to MoMo get get payUrl
-	endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
-	partnerCode = "MOMO"
-	accessKey = "F8BBA842ECF85"
-	secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-	orderInfo = "pay with MoMo"
-	redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
-	ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
-	amount = price
-	orderId = str(uuid.uuid4())
-	requestId = str(uuid.uuid4())
-	requestType = "captureWallet"
-	extraData = ""  # pass empty value or Encode base64 JsonString
+		# before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
+		# &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
+		# &requestType=$requestType
+		rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl + "&requestId=" + requestId + "&requestType=" + requestType
 
-	# before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
-	# &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
-	# &requestType=$requestType
-	rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl + "&requestId=" + requestId + "&requestType=" + requestType
+		# puts raw signature
+		print("--------------------RAW SIGNATURE----------------")
+		print(rawSignature)
+		# signature
+		h = hmac.new(bytes(secretKey, 'ascii'), bytes(rawSignature, 'ascii'), hashlib.sha256)
+		signature = h.hexdigest()
+		print("--------------------SIGNATURE----------------")
+		print(signature)
 
-	# puts raw signature
-	print("--------------------RAW SIGNATURE----------------")
-	print(rawSignature)
-	# signature
-	h = hmac.new(bytes(secretKey, 'ascii'), bytes(rawSignature, 'ascii'), hashlib.sha256)
-	signature = h.hexdigest()
-	print("--------------------SIGNATURE----------------")
-	print(signature)
+		# json object send to MoMo endpoint
 
-	# json object send to MoMo endpoint
+		data = {
+			'partnerCode': partnerCode,
+			'partnerName': "Test",
+			'storeId': "MomoTestStore",
+			'requestId': requestId,
+			'amount': amount,
+			'orderId': orderId,
+			'orderInfo': orderInfo,
+			'redirectUrl': redirectUrl,
+			'ipnUrl': ipnUrl,
+			'lang': "vi",
+			'extraData': extraData,
+			'requestType': requestType,
+			'signature': signature
+		}
+		print("--------------------JSON REQUEST----------------\n")
+		data = json.dumps(data)
+		print(data)
 
-	data = {
-		'partnerCode': partnerCode,
-		'partnerName': "Test",
-		'storeId': "MomoTestStore",
-		'requestId': requestId,
-		'amount': amount,
-		'orderId': orderId,
-		'orderInfo': orderInfo,
-		'redirectUrl': redirectUrl,
-		'ipnUrl': ipnUrl,
-		'lang': "vi",
-		'extraData': extraData,
-		'requestType': requestType,
-		'signature': signature
-	}
-	print("--------------------JSON REQUEST----------------\n")
-	data = json.dumps(data)
-	print(data)
+		clen = len(data)
+		response = requests.post(endpoint, data=data, headers={'Content-Type': 'application/json', 'Content-Length': str(clen)})
 
-	clen = len(data)
-	response = requests.post(endpoint, data=data, headers={'Content-Type': 'application/json', 'Content-Length': str(clen)})
+		# f.close()
+		print("--------------------JSON response----------------\n")
+		print(response.json())
+		print( price)
+		# print(response.json()['payUrl'])
+		return redirect(response.json()['payUrl'])
+	else:
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def feedback(request):
+	if request.method == 'POST':
+		name= request.POST.get('name')
+		email= request.POST.get('email')
+		comment =request.POST.get('comment')
+		Feedback.objects.create( name= name, email = email, comment = comment)
+		messages.success(request, 'Gửi tin thành công')
+	return redirect('contact')	
 
-	# f.close()
-	print("--------------------JSON response----------------\n")
-	print(response.json())
-	print( price)
-	# print(response.json()['payUrl'])
-	return redirect(response.json()['payUrl'])
+
+
+
+
+
+
+
+
+
+
+
 
 
 
