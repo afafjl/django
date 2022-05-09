@@ -6,10 +6,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>login</h2>
+				<h2>Đăng Nhập</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">login</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Đăng Nhập</a></li>
 				</ul>
 			</div>
 		</div>
@@ -22,13 +22,13 @@
 				
 			<div class="row billing_and_payment_option wow fadeInDown   animated">
 				<div class="heading_wrapper wow fadeInDown animated">
-					<h2 class="wow fadeInDown animated">Login your Account</h2>
+					<h2 class="wow fadeInDown animated">Đăng Nhập Tài Khoản</h2>
 
 					
 				</div>
 				<!-- Billing Address -->
 				<div class="login_box">
-					<h3>Create Your Account</h3>
+					<h3>Tài Khoản</h3>
 					{%for message in messages%}
 					<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
 					{%endfor%}
@@ -46,7 +46,7 @@
                             </div>
 							<input type = "submit" class="btn " name = "Login">
 							
-							<p class="signInclass"> Dont Have an Account?  &nbsp;<a href="{%url 'register' %}">Sign In</a> </p>
+							<p class="signInclass"> Bạn Chưa Có Tài Khoản?  &nbsp;<a href="{%url 'register' %}">Đăng Kí Ngay</a> </p>
 						
 					</form>
 					<div class="clear"></div>
