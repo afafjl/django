@@ -5,10 +5,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>cart</h2>
+				<h2>Giỏ Hàng</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">cart</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Giỏ Hàng</a></li>
 				</ul>
 			</div>
 		</div>
@@ -23,10 +23,10 @@
 					<table class="table-custom table-cart table-responsive">
 						<thead>
 							<tr>
-								<th>Product name</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Total</th>
+								<th>Sản Phẩm</th>
+								<th>Giá</th>
+								<th>Số Lượng</th>
+								<th>Thành Tiền</th>
 							</tr>
 						</thead>
 							<tbody>
@@ -63,10 +63,10 @@
 						<div class="group-xl group-middle">
 							<div>
 							  <div class="group-md group-middle">
-								<div class="heading-5 font-weight-medium text-gray-500">Total</div>
+								<div class="heading-5 font-weight-medium text-gray-500">Tổng Giá Tiền</div>
 								<div class="heading-3 font-weight-normal">[[total]]</div>
 							  </div>
-							</div><a class="btn" href="{% url 'checkout'%}">Proceed to checkout</a>
+							</div><a class="btn" href="{% url 'checkout'%}">Thanh Toán</a>
 						</div>
 					</div>
 				</div>
