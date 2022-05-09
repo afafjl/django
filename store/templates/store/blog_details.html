@@ -6,10 +6,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>Blog Details</h2>
+				<h2>Bài Viết</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">Blog Details</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Bài Viết </a></li>
 				</ul>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 									<a href="{%url 'blog_details' blog.id %}"><img src="{{blog.imageURL}}" class="wow fadeInDown animated"></a>
 								</div>
 								<div class="admin_and_comments wow fadeInDown animated">
-									<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+									<span class="blog_admin"><span><i class="fa fa-user-o"></i> Đăng Bởi</span> <span><a href="">Admin</a></span></span>
 									{% comment %} <span class="comments_date blog_admin"><span><i class="fa fa-comments-o"></i> 10 comments</span></span> {% endcomment %}
 									<span class="comments_date blog_dates"><span><i class="fa fa-clock-o"></i> {{blog.time}}</span></span>
 								</div>
@@ -39,7 +39,7 @@
 								
 							<div class="comment-content wow bounceInUp animated">
 								<div class="comments-wrapper">
-								<h3> Comments </h3>
+								<h3> Bình Luận </h3>
 									<ol class="commentlist">
 										{%for comment in blog.comments.all%}
 										<li class="comment">
@@ -67,17 +67,17 @@
 								<div class="comments-form-wrapper clearfix comment-respond">
 									{%if user.username%}
 
-									<h3>Leave A reply</h3>
+									<h3>Thêm Nhận Xét</h3>
 									<form class="comment-form" method="post" id="postComment" action="">
 										{% csrf_token%}
 										<div class="clear"></div>
 										<div class="field aw-blog-comment-area">
-											<label for="comment">Comment<em class="required">*</em></label>
+											<label for="comment">Bình Luận<em class="required">*</em></label>
 											<textarea rows="5" cols="40" class="input-text" title="Comment" id="comment" name="comment"></textarea>
 										</div>
 										<div style="width:96%" class="button-set">
 											<input type="hidden" value="1" name="blog_id">
-											<button type="submit" class="btn submit"><span><span>Add Comment</span></span></button>
+											<button type="submit" class="btn submit"><span><span>Đăng</span></span></button>
 										</div>
 									</form>
 									{%else%}
@@ -95,7 +95,7 @@
 							<div class="eb_right">
 								<!-- category -->
 								{% comment %} <div id="category" class="category blog_margin">
-									<h3 class="wow fadeInDown animated">category</h3>
+									<h3 class="wow fadeInDown animated">Danh Mục</h3>
 										<ul class="wow fadeInDown animated">
 											<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Book</a></li>
 											<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Candle</a></li>
@@ -110,7 +110,7 @@
 								<!-- category end-->
 							<!-- sidebar_blog -->
 								<div id="sidebar_blog" class="sidebar_blog blog_margin">
-									<h3 class="wow fadeInDown animated">Latest Blogs </h3>
+									<h3 class="wow fadeInDown animated">Bài Viết Đã Đăng </h3>
 									<div class="row">
 										{%for blog in blogs%}
 										<div class="col-sm-12">
@@ -124,10 +124,10 @@
 												<div class="blog_text_matter">
 												<h3 class="wow fadeInDown animated"><a href="{%url 'blog_details' blog.id %}">{{blog.title}}</a></h3>
 													<div class="admin_and_comments wow fadeInDown animated">
-														<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+														<span class="blog_admin"><span><i class="fa fa-user-o"></i> Đăng Bởi</span> <span><a href="">Admin</a></span></span>
 													</div>
 													
-													<a href="{%url 'blog_details' blog.id %}" class="btn wow fadeInDown animated" >Read More</a>
+													<a href="{%url 'blog_details' blog.id %}" class="btn wow fadeInDown animated" >Xem Thêm</a>
 												</div>
 												<div class="clear"></div>
 											</div>
