@@ -5,10 +5,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>products</h2>
+				<h2>Sản Phẩm</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">products</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Sản Phẩm</a></li>
 				</ul>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 					<div class="eb_right">
 						<!-- category -->
 						<div id="category" class="category">
-							<h3 class="wow fadeInDown animated">category</h3>
+							<h3 class="wow fadeInDown animated">Danh Mục</h3>
 								<ul class="wow fadeInDown animated">
 									{%for category in categories%}
 									<li><a href="{%url 'category' category.pk %}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{category.name}}</a></li>
@@ -172,7 +172,7 @@
 									<p class="price wow fadeInDown animated">
 										 <span class="price-new">{{product.price}}.000</span>  <span class="price-old">{{product.unsale_price}}.000</span>
 									</p>
-									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ Hàng</span></button>
 								</div>
 							</div>
 						</div>
