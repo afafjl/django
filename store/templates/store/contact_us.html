@@ -5,10 +5,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>Contact Us</h2>
+				<h2>Liên Hệ Ngay</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">Contact Us</a></li>
+					<li><a href="{%url 'store'%}">Cửa Hàng</a></li>
+					<li><a href="">Liên Hệ</a></li>
 				</ul>
 			</div>
 		</div>
@@ -24,27 +24,27 @@
 						{%for message in messages%}
 						<h4 id = "messages" class="custom-control-label register-remember"> {{message}} </h4>
 						{%endfor%}
-						<h3>Get in Touch</h3>
-						<p>We are available 24/7 by fax, e-mail or by phone. You can also use our quick contact form to ask a question about our services and projects we’re working on.</p>
+						<h3>Nhập Thông Tin Liên Lạc</h3>
+						<p>Chúng tôi luôn hoạt động 24/7. Bạn có thể sử dụng form điền nhanh để hỏi về dịch vụ và các sản phẩm bên cửa hàng</p>
 						<div class="comments-form-wrapper clearfix comment-respond">
 							<form class="comment-form" method="post" id="postComment" action="{%url 'feedback' %}">
 								{%csrf_token%}
 								<div class="field">
-									<label for="name">Name<em class="required">*</em></label>
+									<label for="name">Họ Và tên<em class="required">*</em></label>
 									<input type="text" class="input-text" title="Name" value="" id="user" name="name">
 								</div>
 								<div class="field">
-									<label for="email">Email<em class="required">*</em></label>
+									<label for="email">Địa chỉ email<em class="required">*</em></label>
 									<input type="text" class="input-text validate-email" title="Email" value="" id="email" name="email">
 								</div>
 								<div class="clear"></div>
 								<div class="field aw-blog-comment-area">
-									<label for="comment">Your Message<em class="required">*</em></label>
+									<label for="comment">Câu hỏi của bạn<em class="required">*</em></label>
 									<textarea rows="5" cols="50" class="input-text" title="Comment" id="comment" name="comment"></textarea>
 								</div>
 								<div style="width:96%" class="button-set">
 									<input type="hidden" value="1" name="blog_id">
-									<button type="submit" class="btn submit"><span><span>Add Comment</span></span></button>
+									<button type="submit" class="btn submit"><span><span>Gửi</span></span></button>
 								</div>
 							</form>
 						</div>
@@ -55,7 +55,7 @@
 					<div class="contact-box-wrap">
 						<div class="contact-box">
 						  <div class="contact-box-item">
-							<p class="contact-box-title">Get social</p>
+							<p class="contact-box-title">Các mạng xã hội</p>
 								<ul class="top-header-social">
 									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -65,16 +65,16 @@
 								</ul>
 						  </div>
 						  <div class="contact-box-item">
-							<p class="contact-box-title">Phone</p>
-							<div class="link-inline"><a href="#"><i class="fa fa-phone"></i> 1-800-1234-567</a></div>
+							<p class="contact-box-title">Số Điện Thoại</p>
+							<div class="link-inline"><a href="#"><i class="fa fa-phone"></i> +81-386684223</a></div>
 						  </div>
 						  <div class="contact-box-item">
 							<p class="contact-box-title">E-mail</p>
-							<div class="link-inline"><a href="#"><i class="fa fa-envelope-o"></i> info@company.gmail.com</a></div>
+							<div class="link-inline"><a href="#"><i class="fa fa-envelope-o"></i> hosiluan1003@gmail.com</a></div>
 						  </div>
 						  <div class="contact-box-item">
 							<p class="contact-box-title">Address</p>
-							<div class="link-inline link-inline-top"><a href="#"><i class="fa fa-map-marker"></i> 6036 Richmond hwy., Alexandria, VA, 2230</a></div>
+							<div class="link-inline link-inline-top"><a href="#"><i class="fa fa-map-marker"></i> Khu Phố 6, TP Thủ Đức, TP Hồ Chí Minh</a></div>
 						  </div>
 						</div>
 					</div>

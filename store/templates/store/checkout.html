@@ -5,10 +5,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>checkout</h2>
+				<h2>Thanh Toán</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">checkout</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Thanh Toán</a></li>
 				</ul>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 				<!-- Billing Address -->
 				<!-- Delivery Address  -->
 				<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
-					<h3>Delivery Address</h3>
+					<h3>Thông tin cá nhân</h3>
 					
 						<div class="row">
 							<div class="col-sm-12">
@@ -64,7 +64,7 @@
 
 				</div>
 				<div class="col-sm-6 col-lg-6 wow fadeInDown   animated">
-					<h3>Cart total</h3>
+					<h3>Tổng Tiền Thanh Toán</h3>
 					  
 						
 							{% comment %} <div class="col-sm-6 col-lg-6 wow fadeInDown   animated"> {% endcomment %}
@@ -73,15 +73,15 @@
 								  <table class="table-custom table-responsive">
 										<tbody>
 										  <tr >
-											<td>Cart Subtotal</td>
+											<td>Sản Phẩm</td>
 											<td>[[total]]</td>
 										  </tr>
 										  <tr>
-											<td>Shipping</td>
+											<td>Phí Vận Chuyển</td>
 											<td>Free</td>
 										  </tr>
 										  <tr>
-											<td>Total</td>
+											<td>Tổng Giá</td>
 											<td>[[total]]</td>
 										  </tr>
 										</tbody>
@@ -97,15 +97,15 @@
 		</form>
 			<!-- your shopping cart -->
 			<div class="row your_cart wow fadeInDown   animated">
-				<h2>your shopping cart</h2>
+				<h2>Giỏ Hàng Của Bạn</h2>
 				<div class="table-custom-responsive">
 					<table class="table-custom table-cart table-responsive">
 						<thead>
 							<tr>
-								<th>Product name</th>
-								<th>Price</th>
-								<th>Quantity</th>
-								<th>Total</th>
+								<th>Sản Phẩm</th>
+								<th>Giá</th>
+								<th>Số Lượng</th>
+								<th>Tổng Giá</th>
 							</tr>
 						</thead>
 							<tbody>
@@ -129,7 +129,7 @@
 			<!-- payment method -->
 				<div class="row payment_method wow fadeInDown   animated">
 					<div class="col-sm-6 col-lg-6">
-						{% comment %} <h3>Payment methods</h3>
+						{% comment %} <h3>Phương Thức Thanh Toán</h3>
 						<div class="inner_payment_method">
 							<div class="box-radio">
 								<div class="radio-panel">

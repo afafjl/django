@@ -8,10 +8,10 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="breadcrumb-content">
-				<h2>register</h2>
+				<h2>Đăng Kí</h2>
 				<ul>
-					<li><a href="{%url 'store'%}">Home</a></li>
-					<li><a href="">register</a></li>
+					<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+					<li><a href="">Đăng Kí</a></li>
 				</ul>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 				<!-- Billing Address -->
 				<div class="col-sm-6 col-lg-6">
 					<div class="login_box">
-					<h3>Create Your Account</h3>
+					<h3>Tạo Tài Khoản</h3>
 						<form method = "POST" action="" class="eb-form eb-mailform form-checkout" novalidate="novalidate">
 							{% csrf_token %}
 							
@@ -43,22 +43,22 @@
 					
 							<input type = "submit" class="btn " name = "Create User">
 							
-							<p class="signInclass"> Already have an account? &nbsp;<a href="{%url 'loginPage' %}">Sign In</a> </p>
+							<p class="signInclass"> Bạn đã có tài khoản? &nbsp;<a href="{%url 'loginPage' %}">Đăng Nhập</a> </p>
 						
 					</form>
 					</div>
 				</div>
 				<!-- Delivery Address  -->
 				<div class="col-sm-6 col-lg-6  wow fadeInDown   animated registration">
-					<h3>Benefit of Registration</h3>
-					 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum</p>
+					<h3>Quyền lợi khi đăng kí</h3>
+					 <p>Khi đăng kí tài khoản, mọi người sẽ nhận được các quyền lợi </p>
 					 
 					 <ul>
-						<li><i class="fa fa-check"></i> If you are going to use a passage of Lorem Ipsum</li>
-						<li><i class="fa fa-check"></i> All the Lorem Ipsum generators on the Internet tend</li>
-						<li><i class="fa fa-check"></i> The standard chunk of Lorem Ipsum used since the 1500s</li>
-						<li><i class="fa fa-check"></i> a Latin professor at Hampden-Sydney College in Virginia</li>
-						<li><i class="fa fa-check"></i> It is a long established fact that a reader </li>
+						<li><i class="fa fa-check"></i> Thêm sản phẩm vào mục yêu thích</li>
+						<li><i class="fa fa-check"></i> Thanh toán dễ dàng hơn</li>
+						<li><i class="fa fa-check"></i> Gửi nhận xét, đánh giá bài đăng của cửa hàng</li>
+						<li><i class="fa fa-check"></i> Hưởng các ưu đãi, quyền lợi của khách hàng thân thiết</li>
+						
 					 </ul>
 				</div>
 			</div>

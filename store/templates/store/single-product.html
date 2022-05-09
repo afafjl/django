@@ -5,10 +5,10 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="breadcrumb-content">
-					<h2>Single products</h2>
+					<h2>Chi Tiết Sản Phẩm</h2>
 					<ul>
-						<li><a href="{%url 'store'%}">Home</a></li>
-						<li><a href="">Single products</a></li>
+						<li><a href="{%url 'store'%}">Trang Chủ</a></li>
+						<li><a href="">Chi Tiết Sản Phẩm</a></li>
 					</ul>
 				</div>
 			</div>
@@ -53,15 +53,15 @@
 											  					
 									<span class="border"> | </span> 
 
-									<a href="" onclick="">{{product.review_times}} lượt đánh giá</a> 	  
+									<a href="" onclick="">{{product.review_times}} Lượt đánh giá</a> 	  
 								</p>
 							</div>
 							<hr>
 							<div class="price-block">
 								<div class="price-box">
-									<p class="in-stock"><i class="fa fa-check"></i> In Stock</p>
-									<p class="special-price"> <span class="price-label">Special Price</span> <span id="product-price-48" class="price"> {{product.price}}.000 d </span> </p>
-									<p class="old-price"> <span class="price-label">Regular Price:</span><span class="price">{{product.unsale_price}}.000 d</span></p>
+									<p class="in-stock"><i class="fa fa-check"></i> Còn Hàng</p>
+									<p class="special-price"> <span class="price-label">Giá:</span> <span id="product-price-48" class="price"> {{product.price}}.000 d </span> </p>
+									<p class="old-price"> <span class="price-label">Giá Gốc:</span><span class="price">{{product.unsale_price}}.000 d</span></p>
 								</div>
 							</div>
 							
@@ -70,26 +70,26 @@
 									<div class="pull-left">
 
 									</div>
-									<button @click="addToCart({{ product.id }})" class="btn btn-cart" title="Add to Cart" type="button">Add to Cart</button>
+									<button @click="addToCart({{ product.id }})" class="btn btn-cart" title="Add to Cart" type="button">Thêm Vào Giỏ Hàng</button>
 								</div>
 							</div>
 							
 							<div class="short-description">
-								<h3>overview</h3>
+								<h3>Giới Thiệu Sản Phẩm</h3>
 								<p> {{product.short_description |linebreaks }}</p>
 							</div>
 							
 							<div class="email-addto-box">
 								<ul class="add-to-links">
-									<li> <a class="link-wishlist" href="#"><span>Add to Wishlist</span></a></li>
-									<li><span class="separator">|</span> <a class="link-compare" href="#"><span>Add to Compare</span></a></li>
+									<li> <a class="link-wishlist" href="#"><span>Theo Dõi</span></a></li>
+									<!-- <li><span class="separator">|</span> <a class="link-compare" href="#"><span>Add to Compare</span></a></li> -->
 								</ul>
-								<p class="email-friend"><a href="#" class=""><span>Email to a Friend</span></a></p>
+								<p class="email-friend"><a href="#" class=""><span>Liên Hệ</span></a></p>
 						</div>
 							<ul class="shipping-pro">
-								<li>Free Wordwide Shipping</li>
-								<li>30 Days Return</li>
-								<li>Member Discount</li>
+								<li>Giao Hàng Miễn Phí Nội Thành</li>
+								<li>1 Tiếng Đổi Hàng</li>
+								<li>Khách Hàng Thân Thiết</li>
 							</ul>
 							
 						</div>	
@@ -101,7 +101,7 @@
 					<div class="product-collateral">
 						<div class="add_info">
 							<ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-								<li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Product Description </a> </li>
+								<li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Mô Tả Thêm Về Sản Phẩm </a> </li>
 							</ul>
 
 
@@ -114,7 +114,7 @@
 
 									<!-- Add Tags End-->
 								<div class="tab-pane fade" id="reviews_tabs">
-									<div class="eb-Reviews">
+									<!-- <div class="eb-Reviews"> 
 										<div>
 											<h4 class="eb-Reviews-title">2 reviews for <span>Bacca Bucci Men's Running Shoes</span></h4>
 											<ol class="commentlist">
@@ -133,18 +133,18 @@
 														<div class="description"><p>{{comment.description |linebreaks }}</p>
 													</div>
 												</div>
-												</li><!-- #comment-## -->
+												</li><!-- #comment-## 
 												{%endfor%}
 											</ol>
 										</div>
-									<div>
+									<div> -->
 								<div>
 									<div class="comment-respond">
 										{%if user.username%}
-										<h3 >Add a review </h3>			
+										<h3 >Bình Luận </h3>			
 											
 											<div class="comment-form-rating">
-												<label id="rating">Your rating</label>
+												<label id="rating">Đánh Giá</label>
 
 											</div>
 											{%if review.first_time%}
@@ -184,13 +184,14 @@
 											
 											<br>
 											<p class="comment-form-comment">
-												<label>Your review <span class="required">*</span></label>
+												<label>Bình Luận Của Bạn <span class="required">*</span></label>
 												<textarea id="comment" name="comment" cols="45" rows="4" required=""></textarea>
 											</p>
 											
 											<p class="comment-form-author">
 											
 											<p class="form-submit">
+											
 											<input name="submit" type="submit" id="submit" class="btn submit" value="Submit"> 
 											</p>
 										</form>
@@ -213,7 +214,7 @@
 				<!-- Our products  -->
 				<div id="products" class="products_section related_product">
 						<div class="heading_wrapper wow fadeInDown animated">
-							<h2 class="wow fadeInDown animated">Related Products</h2>
+							<h2 class="wow fadeInDown animated">Sản Phẩm Tương Tự</h2>
 						</div>
 						<div class="row">
 							<div id="related_product" class="owl-carousel owl-theme">
@@ -224,7 +225,7 @@
 											<div class="image wow fadeInDown animated">
 												<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
 												
-												<div class="sale"><span class="">con hang</span></div>
+												<div class="sale"><span class="">Còn Hàng</span></div>
 												<div class="button-group">
 													<div class="inner">
 														<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
@@ -250,7 +251,7 @@
 														<span class="price-new">{{product.price}}.000</span>
 														<span class="price-old">{{product.unsale_price}}</span>   
 													</p>
-													<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+													<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Thêm Vào Giỏ Hàng</span></button>
 													
 												</div>
 											</div>

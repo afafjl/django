@@ -44,8 +44,8 @@
 	<div id="products" class="products_section">
 		<div class="container-fluid">
 			<div class="heading_wrapper wow fadeInDown animated">
-				<h2 class="wow fadeInDown animated">Our Products</h2>
-				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+				<h2 class="wow fadeInDown animated">Sản Phẩm Nổi Bật</h2>
+				<!-- <p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p> -->
 			</div>
 			<div class="row">
 				<div id="product" class="owl-carousel owl-theme">
@@ -88,7 +88,7 @@
 										{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
 										<span class="price-new">{{product.price}}.000</span>  <span class="price-old">{{product.unsale_price}}.000</span>
 									</p>
-									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+									<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</span></button>
 									
 								</div>
 							</div>
@@ -112,12 +112,11 @@
 	<div id="website_visitors" class="astrologers-work">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-6 condition-set">
+				<div class="col-sm-6">
 					<div class="astrologers_title">
-						<h2 class="wow fadeInDown animated">Our Fashion Shop Work for You</h2>
-						<p class="wow fadeInDown animated">Our Fashion Shop delivers daily and monthly Shop for all readers of our website visitors.</p>
-						<p class="wow fadeInDown animated">Recognized as the best esoteric and fashion online in the USA. Every day we publish fresh products, shop by and for professional products, personalized predictions, shop readings, shose and Chinese fashion Brands and much more.</p>
-						<p class="wow fadeInDown animated">Our Fashion Shop can help you find a proper approach to solving all daily problems and achieving happiness in your life.</p>
+						<h2 class="wow fadeInDown animated">Bạn chính là chủ của Fashion Shop</h2>
+						<p class="wow fadeInDown animated">Đội ngũ của chúng tôi luôn giao hàng 24/24</p>
+						<p class="wow fadeInDown animated">Đội ngũ nhân viên của chúng tôi luôn sẵn sàng giúp bạn tìm ra gu thời trang phù hợp và mang lại hạnh phúc trong cuộc sống của bạn.</p>
 					</div>
 				</div>
 				
@@ -125,26 +124,26 @@
 					<div class="astrologers_visitors">
 						<div class="col-sm-6">
 							<div class="astrologers_experience">
-								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="25" data-count-speed="30"></h3>
-								<h5 class="wow fadeInDown animated">Years of experience</h5>
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="10" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Kinh Nghiệm Kinh Doanh (Tháng)</h5>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="astrologers_experience">
 								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="15" data-count-speed="30"></h3>
-								<h5 class="wow fadeInDown animated">Types of best brands</h5>
+								<h5 class="wow fadeInDown animated">Nhãn Hiệu Tốt Nhất</h5>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="astrologers_experience">
 								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="17" data-count-speed="30"></h3>
-								<h5 class="wow fadeInDown animated">Best Quality</h5>
+								<h5 class="wow fadeInDown animated">Giá cả hợp lí</h5>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<div class="astrologers_experience">
-								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="1000" data-count-speed="30"></h3>
-								<h5 class="wow fadeInDown animated">Hourly Fashion</h5>
+								<h3 class="wow fadeInDown animated number-counter" data-count-from="0" data-count-to="10000000" data-count-speed="30"></h3>
+								<h5 class="wow fadeInDown animated">Số người đang truy cập</h5>
 							</div>
 						</div>
 					</div>
@@ -156,8 +155,8 @@
 	<div id="products" class="products_section">
 		<div class="container-fluid">
 			<div class="heading_wrapper wow fadeInDown animated">
-				<h2 class="wow fadeInDown animated">New Category</h2>
-				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+				<h2 class="wow fadeInDown animated">Sản Phẩm Mới</h2>
+				<!-- <p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p> -->
 			</div>
 			<div class="row">
 				<div id="new_category" class="owl-carousel owl-theme">
@@ -168,7 +167,7 @@
 								<div class="image wow fadeInDown animated">
 									<a href="{%url 'single_product' product.id %}"><img class="wow fadeInDown animated" src="{{product.imageURL}}" alt="Kundli Dosha" title="Kundli Dosha" width="100%"></a>
 									
-									<div class="sale"><span class="">con hang</span></div>
+									<div class="sale"><span class="">Còn hàng</span></div>
 									<div class="button-group">
 										<div class="inner">
 											<button type="button" title="Quick View" class="button-quickview"><span>Quick View</span></button>
@@ -199,7 +198,7 @@
 											{% comment %} <span class="price-old">$123.20</span>  {% endcomment %}
 											<span class="price-new">{{product.price}}.000</span> <span class="price-old">{{product.unsale_price}}.000</span> 
 										</p>
-										<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Add to Cart</span></button>
+										<button @click="addToCart({{ product.id }})" type="button" class="btn wow fadeInDown animated" onclick="" title="Add to Cart"><span><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</span></button>
 										
 									</div>
 								</div>
@@ -219,8 +218,8 @@
 	<div id="testimonials" class="testimonial_section">
 		<div class="container-fluid">
 			<div class="heading_wrapper wow fadeInDown animated">
-				<h2 class="wow fadeInDown animated">What My Client Says</h2>
-				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+				<h2 class="wow fadeInDown animated">Khách Hàng Nói Gì Về Cửa Hàng</h2>
+				<!-- <p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p> -->
 			</div>
 				<div class="row">
 					<div id="testimonial" class="owl-carousel owl-theme">
@@ -228,9 +227,9 @@
 							<div class="col-sm-12">
 								<div class="testimonial_inner_matter">
 									<img src="{% static 'assets/image/testimonial/1.jpg'%}" class="wow fadeInDown animated">
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
-									<h6 class="wow fadeInDown animated">Design Manager</h6>
+									<p class="wow fadeInDown animated">Sản phẩm theo trend, giá cả hợp lí.</p>
+									<h5 class="wow fadeInDown animated">Nguyễn Văn A</h5>
+									<h6 class="wow fadeInDown animated">Nữ</h6>
 								</div>
 							</div>
 						</div>
@@ -239,9 +238,9 @@
 							<div class="col-sm-12">
 								<div class="testimonial_inner_matter">
 									<img src="{% static 'assets/image/testimonial/2.jpg'%}" class="wow fadeInDown animated">
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
-									<h6 class="wow fadeInDown animated">Design Manager</h6>
+									<p class="wow fadeInDown animated">Nhân viên thân thiện, sẽ quay lại.</p>
+									<h5 class="wow fadeInDown animated">Nguyễn Thị B</h5>
+									<h6 class="wow fadeInDown animated">Nữ</h6>
 								</div>
 							</div>
 						</div>
@@ -250,9 +249,9 @@
 							<div class="col-sm-12">
 								<div class="testimonial_inner_matter">
 									<img src="{% static 'assets/image/testimonial/3.jpg'%}" class="wow fadeInDown animated">
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
-									<h6 class="wow fadeInDown animated">Design Manager</h6>
+									<p class="wow fadeInDown animated">Ship nhanh, giày đẹp</p>
+									<h5 class="wow fadeInDown animated">Trần Thế C</h5>
+									<h6 class="wow fadeInDown animated">Nam</h6>
 								</div>
 							</div>
 						</div>
@@ -261,9 +260,9 @@
 							<div class="col-sm-12">
 								<div class="testimonial_inner_matter">
 									<img src="{% static 'assets/image/testimonial/4.jpg'%}" class="wow fadeInDown animated">
-									<p class="wow fadeInDown animated">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-									<h5 class="wow fadeInDown animated">Shoko Mugikura</h5>
-									<h6 class="wow fadeInDown animated">Design Manager</h6>
+									<p class="wow fadeInDown animated">5*</p>
+									<h5 class="wow fadeInDown animated">Trần Thị D</h5>
+									<h6 class="wow fadeInDown animated">Nữ</h6>
 								</div>
 							</div>
 						</div>
@@ -277,8 +276,8 @@
 	<div id="blogs" class="blog_section">
 		<div class="container-fluid">
 			<div class="heading_wrapper wow fadeInDown animated">
-				<h2 class="wow fadeInDown animated">latest fashion</h2>
-				<p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p>
+				<h2 class="wow fadeInDown animated">Bài Viết</h2>
+				<!-- <p class="wow fadeInDown animated">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text </p> -->
 			</div>
 				<div class="row">
 					<div id="blog" class="owl-carousel owl-theme">
@@ -293,12 +292,12 @@
 										</div>
 									</div>
 									<div class="admin_and_comments wow fadeInDown animated">
-										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Post By</span> <span><a href="">Admin</a></span></span>
+										<span class="blog_admin"><span><i class="fa fa-user-o"></i> Đăng bởi:</span> <span><a href="">Admin</a></span></span>
 										{% comment %} <span class="comments_date"><span><i class="fa fa-comments-o"></i> 10 comments</span></span> {% endcomment %}
 									</div>
 									<h3 class="wow fadeInDown animated"><a href="{%url 'blog_details' blog.id %}">{{blog.title}}</a></h3>
 									<p class="wow fadeInDown animated">{{blog.short_description}}</p>
-									<a href="{%url 'blog_details' blog.pk %}" class="btn wow fadeInDown animated" >Read More</a>
+									<a href="{%url 'blog_details' blog.pk %}" class="btn wow fadeInDown animated" >Xem Thêm</a>
 								</div>
 							</div>
 						</div>
@@ -336,11 +335,11 @@
 						main: "static/assets/image/silder/slider-2.jpg",
 						cover: "static/assets/image/silder/slider-1.jpg"
 					},
-					title: 'Change Your Look',
-					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					title: 'Những đôi giày bền nhất',
+					desc: "Cửa hàng đem đến một không gian giày đa dạng, phong phú, gồm nhiều thương hiệu uy tín: adidas,nike,jordan,...",
 					descLength: 220,
 					button: {
-						text: 'Shop Now',
+						text: 'Mua Sắm Ngay',
 						url: '{% url 'products'%}',
 						class: 'btn btn-medium btn-primary'
 					}
@@ -350,10 +349,10 @@
 						main: "static/assets/image/silder/slider-6.jpg",
 						cover: "static/assets/image/silder/slider-2.jpg"
 					},
-					title: 'Best Brand Shoes',
-					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					title: 'Đem đến nhiều sự lựa chọn',
+					// desc: "",
 					button: {
-						text: 'Shop Now',
+						text: 'Mua Sắm Ngay',
 						url: '#',
 						class: 'btn btn-medium btn-primary'
 					}
@@ -363,11 +362,11 @@
 						main: "static/assets/image/silder/slider-1.jpg",
 						cover: "static/assets/image/silder/slider-3.jpg"
 					},
-					title: 'Change Your Life',
-					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					title: 'Thay đổi phong cách của bạn',
+					// desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
 					descLength: 190,
 					button: {
-						text: 'Shop Now',
+						text: 'Mua Sắm Ngay',
 						url: '#',
 						class: 'btn btn-medium btn-primary'
 					}
@@ -377,10 +376,10 @@
 						main: "static/assets/image/silder/slider-2.jpg",
 						cover: "static/assets/image/silder/slider-6.jpg"
 					},
-					title: 'New Style Fashion ',
-					desc: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. or randomised words which don't look even slightly believable.",
+					title: 'Phong cách hiện đại, mới mẻ, năng động',
+					// desc: "",
 					button: {
-						text: 'Shop Now',
+						text: 'Mua Sắm Ngay',
 						url: false,
 						class: 'btn btn-medium btn-primary'
 					}
