@@ -34,14 +34,14 @@
 								<tr v-for="item in items">
 									<td><div class="table-cart-figure" ><img v-bind:src="[[item.imageURL]]" alt="" width="146" height="132"></div>
 										<a class="table-cart-link" >  [[item.name]]</a></td>
-									<td>[[item.price]]</td>
+									<td>[[item.price]].000đ</td>
 									<td>
 
 										<p class="table-cart-link" href="#"><button @click="addToCart( item.id)" class="btn btn-dark">+</button>      [[item.quantity]]     
 											<button  @click="removeFromCart( item.id)" class="btn btn-dark">-</button></p>
 										
 									</td>
-									<td>[[item.gettotal]]</td>
+									<td>[[item.gettotal]].000đ</td>
 								</tr>
 								
 							</tbody>
@@ -64,7 +64,7 @@
 							<div>
 							  <div class="group-md group-middle">
 								<div class="heading-5 font-weight-medium text-gray-500">Tổng Giá Tiền</div>
-								<div class="heading-3 font-weight-normal">[[total]]</div>
+								<div class="heading-3 font-weight-normal">[[total]].000đ</div>
 							  </div>
 							</div><a class="btn" href="{% url 'checkout'%}">Thanh Toán</a>
 						</div>
