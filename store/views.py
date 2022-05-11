@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
 def store(request):
 	products = Product.objects.order_by("id")[:7]
+	categories = Category.objects.order_by("id")[:10]
 	blogs = Blog.objects.all()
 	# try:
 	if request.user.is_authenticated:
@@ -27,10 +28,10 @@ def store(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
+	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
 	return render(request, 'store/store.html', context)
 def cart(request):
-
+	categories = Category.objects.order_by("id")[:10]
 	try:
 		if request.user.is_authenticated:
 			customer = request.user.customer
@@ -61,9 +62,10 @@ def cart(request):
 	except:
 		pass
 
-	context = {'productsstring': productsstring, 'total':total, 'cartItems': cartItems}
+	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cartItems': cartItems}
 	return render(request, 'store/cart.html', context)
 def checkout(request):
+	categories = Category.objects.order_by("id")[:10]
 	try:
 		if request.user.is_authenticated:
 			customer = request.user.customer
@@ -94,11 +96,11 @@ def checkout(request):
 	except:
 		pass
 
-	context = {'productsstring': productsstring, 'total':total, 'cartItems': cartItems}
+	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cartItems': cartItems}
 	return render(request, 'store/checkout.html', context)
 
 def contact(request):
-	products = Product.objects.all()
+	categories = Category.objects.order_by("id")[:10]
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -114,7 +116,7 @@ def contact(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/contact_us.html', context)
 
 def products(request):
@@ -139,7 +141,7 @@ def products(request):
 	return render(request, 'store/products.html', context)
 def blog(request):
 	blogs = Blog.objects.all()
-
+	categories = Category.objects.order_by("id")[:10]
 
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -155,10 +157,10 @@ def blog(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'blogs': blogs, 'cartItems': cartItems, 'total':0}
+	context = {'blogs': blogs,'categories':categories, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/blog.html', context)	
 def about_us(request):
-	products = Product.objects.all()
+	categories = Category.objects.order_by("id")[:10]
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -174,11 +176,12 @@ def about_us(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/about_us.html', context)	
 def blog_details(request, pk):
 
 	products = Product.objects.order_by("id")[:7]
+	categories = Category.objects.order_by("id")[:10]
 	blogs = Blog.objects.order_by("id")[:4]
 	blog = Blog.objects.get(id=pk)
 	# tag = get_object_or_404(Tag, slug=tag_slug)
@@ -202,13 +205,14 @@ def blog_details(request, pk):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0, 'blog': blog, 'blogs':blogs}
+	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'blog': blog, 'blogs':blogs}
 	return render(request, 'store/blog_details.html', context)	
 def logoutUser(request):
 	logout(request)
 	return redirect('loginPage')	
 
 def loginPage(request):
+	categories = Category.objects.order_by("id")[:10]
 	if request.method == 'POST':
 		username= request.POST.get('username')
 		password =request.POST.get('password')
@@ -217,7 +221,6 @@ def loginPage(request):
 			login(request, user) 
 			return redirect('store')
 		messages.success(request, 'Tài khoản hoặc mật khẩu không chính xác')
-	products = Product.objects.all()
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -233,7 +236,7 @@ def loginPage(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0}
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
 	return render(request, 'store/login.html', context)		
 def register(request):
 	form = CreateUserForm(request.POST)  
@@ -247,7 +250,7 @@ def register(request):
 		return redirect('store')
 
 		# return redirect('loginPage')
-	products = Product.objects.all()
+	categories = Category.objects.order_by("id")[:10]
 	# try:
 	if request.user.is_authenticated:
 		customer = request.user.customer
@@ -263,7 +266,7 @@ def register(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0,'form': form}		
+	context = {'categories': categories, 'cartItems': cartItems, 'total':0,'form': form}		
 
 	return render(request, 'store/register.html', context)	
 def updateItem(request):
@@ -290,7 +293,7 @@ def single_product(request, pk):
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	products = Product.objects.order_by("id")[:7]
-
+	categories = Category.objects.order_by("id")[:10]
 
 	if request.user.is_authenticated:
 		review, created = Review.objects.get_or_create(user= request.user,product= product)
@@ -308,7 +311,7 @@ def single_product(request, pk):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'total':0, 'product': product, 'review':review}
+	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'product': product, 'review':review}
 	return render(request, 'store/single-product.html', context)	
 def review_stars(request, stars, pk):
 	product = Product.objects.get(id=pk)

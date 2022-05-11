@@ -108,7 +108,7 @@
 						<div class="form">
 							<form action="{%url 'search'%}" method="get">
 							{% comment %} <i class="fa fa-search"></i> {% endcomment %}
-							<input type="text" name="q" class="form-control form-input" placeholder="Search anything...">
+							<input type="text" name="q" class="form-control form-input" placeholder="Tìm Sản Phẩm .....">
 						</form>
 						  </div>
 
@@ -186,42 +186,9 @@
 												<span class="plus">+</span><span class="minus">-</span></a></span>
 												<div id="category84" class="panel-collapse collapse" style="clear: both; height: 0px;" aria-expanded="false">
 													<ul>
-														<li>
-															 <a href="{% url 'products'%}">Coats</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Outwear</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">T-shirt</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Caps</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Shoes</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Innerwear</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Suits</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Shirt</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Bags</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Dresses</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Swimwear</a>
-														</li>
-														<li>
-															 <a href="{% url 'products'%}">Sweatshirts & Hoodies</a>
-														</li>
+														{%for category in categories%}
+														<li><a href="{%url 'category' category.pk %}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{category.name}}</a></li>
+														{%endfor%}
 													</ul>
 												</div>
 										</li>
@@ -309,22 +276,9 @@
 									
 									<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Danh Mục<i class="fa fa-angle-down"></i></a>
 										<ul class="dropdown-menu">
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Coats</a></li>
-
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Outwear</a></li>
-
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">T-shirt</a></li>
-
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Caps</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shoes</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Innerwear</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Suits</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Shirt</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Bags</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Dresses</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Swimwear</a></li>
-											<li class="nav-item"><a href="{% url 'products'%}" class="nav-link">Sweatshirts & Hoodies</a></li>
-
+											{%for category in categories%}
+											<li><a href="{%url 'category' category.pk %}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{category.name}}</a></li>
+											{%endfor%}
 										</ul>
 									</li> 
 									<li class="nav-item"><a href="#" class="nav-link">Thêm<i class="fa fa-angle-down"></i></a>
@@ -420,7 +374,7 @@
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 					<div class="footer_list_wrapper">
-						<h2 class="wow fadeInDown animated">Danh Mục</h2>
+						<h2 class="wow fadeInDown animated">Trang trong shop</h2>
 						<ul class="footer_list">
 							<li class="wow fadeInDown animated"><a href="{% url 'about_us'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Giới Thiệu Chung</a>
 							</li>
@@ -437,20 +391,11 @@
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 					<div class="footer_list_wrapper">
-						<h2>Sản Phẩm </h2>
+						<h2>Danh mục </h2>
 						<ul class="footer_list">
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Bags</a>
-							</li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Jeans </a>
-							</li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> T-shirt</a>
-							</li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i> Dress</a>
-							</li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Caps</a> </li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Innerwear</a> </li>
-							<li class="wow fadeInDown animated"><a href="{% url 'products'%}"><i class="fa fa-angle-right" aria-hidden="true"></i>Shoes</a> </li>
-							
+							{%for category in categories%}
+							<li><a href="{%url 'category' category.pk %}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{category.name}}</a></li>
+							{%endfor%}	
 						</ul>
 					</div>
 				</div>
