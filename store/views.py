@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
 def store(request):
 	products = Product.objects.order_by("id")[:7]
+	products1 = Product.objects.order_by("review_times")[:7]
 	categories = Category.objects.order_by("id")[:10]
 	blogs = Blog.objects.all()
 	# try:
@@ -28,7 +29,7 @@ def store(request):
 			cartItems += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
+	context = {'products': products,'products1': products1,'categories':categories, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
 	return render(request, 'store/store.html', context)
 def cart(request):
 	categories = Category.objects.order_by("id")[:10]
