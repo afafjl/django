@@ -468,7 +468,9 @@ def feedback(request):
 		messages.success(request, 'Gửi tin thành công')
 	return redirect('contact')	
 
-
+def aaa(request):
+	context = {}
+	return render(request, 'store/aaa.html', context)
 
 
 
