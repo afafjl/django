@@ -307,7 +307,7 @@ def search(request):
 
 def store(request):
 	products = Product.objects.order_by("id")[:7]
-	products1 = Product.objects.order_by("review_times")[:7]
+	products1 = Product.objects.order_by("-review_times")[:7]
 	categories = Category.objects.order_by("id")[:10]
 	blogs = Blog.objects.all()
 	# try:
