@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 # Create your models here.
+class Feedback(models.Model):
+    name = models.CharField( max_length=100, null= True)
+    email = models.CharField( max_length=100, null= True)
+
+    comment = models.TextField( max_length=1000, null= True)
+     
+    def __str__(self):
+        return self.name
 class Category(models.Model):
     name = models.CharField(max_length=200)
     # slug = models.SlugField()
@@ -65,16 +73,7 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
-# class ShippingAddress(models.Model):
-#     customer = models.ForeignKey(Customer, blank=True, null= True, on_delete=models.SET_NULL)
-#     order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
-#     address = models.CharField( max_length=400, null= True)
-#     name = models.CharField( max_length=50, null= True)
-#     phone = models.CharField( max_length=15, null= True)
-#     city = models.CharField( max_length=100, null= True)
-#     date_added = models.DateTimeField( auto_now_add=True, null= True)
-#     def __str__(self):
-#         return self.address
+
 class Address(models.Model):
     address = models.CharField( max_length=300, null= True)
     name = models.CharField( max_length=300, null= True)
@@ -124,11 +123,3 @@ class Review(models.Model):
 
     def aaa(self):
         return 5 - self.stars
-class Feedback(models.Model):
-    name = models.CharField( max_length=100, null= True)
-    email = models.CharField( max_length=100, null= True)
-
-    comment = models.TextField( max_length=1000, null= True)
-     
-    def __str__(self):
-        return self.name

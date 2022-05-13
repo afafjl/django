@@ -29,5 +29,5 @@ urlpatterns = [
 	path('search', views.search, name="search"),
 	path('vnpay', views.payment, name="vnpay"),
 	path('feedback', views.feedback, name="feedback"),
-	path('aaa', views.aaa, name="aaa"),
+
 ]	
