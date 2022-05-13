@@ -102,7 +102,7 @@
 					<div class="product-collateral">
 						<div class="add_info">
 							<ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-								<li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Mô Tả Thêm Về Sản Phẩm </a> </li>
+								<li> <h3> Mô Tả Thêm Về Sản Phẩm </h3> </li>
 							</ul>
 
 
@@ -111,6 +111,7 @@
 									<div class="std">
 									<p>{{product.description |linebreaks }} </p>
 								</div>
+								<br>
 								<!-- product tabs description End-->
 
 									<!-- Add Tags End-->
@@ -142,7 +143,7 @@
 								<div>
 									<div class="comment-respond">
 										{%if user.username%}
-										<h3 >Bình Luận </h3>			
+										{% comment %} <h3 >Bình Luận </h3>			 {% endcomment %}
 											
 											<div class="comment-form-rating">
 												<label id="rating">Đánh Giá</label>
@@ -163,7 +164,7 @@
 										</div>
 											{%else%}
 												<p>Bạn đã đánh giá sản phẩm này <strong>{{review.stars}}</strong> sao</p>
-												<label id="rating">Đánh giá lại</label>
+												{% comment %} <label id="rating">Đánh giá lại</label> {% endcomment %}
 											<div class="comment-form-rating">
 
 													<p class="stars">
@@ -179,7 +180,47 @@
 											</p>
 										</div>
 											{%endif%}
-
+											<h3> Bình Luận </h3>
+											<ol class="commentlist">
+												{%for comment in product.comments.all%}
+												<li class="comment">
+													<div>
+														<img alt="" src="{% static 'assets/image/member/member.png'%}" class="avatar avatar-60 photo">
+														<div class="comment-text">
+		
+															
+															<p class="meta">
+																<strong>{{comment.user.username}}</strong> 
+																<span>–</span> <time>{{comment.date_added.date}}</time>
+															</p>
+															<div class="description"><p>{{comment.description |linebreaks }}</p>
+															
+															</div>
+														</div>
+													</div>
+												</li><!-- #comment-## -->
+												{%endfor%}
+											</ol>
+											<ol class="commentlist">
+												{%for comment in blog.comments.all%}
+												<li class="comment">
+													<div>
+														<img alt="" src="{% static 'assets/image/member/member.png'%}" class="avatar avatar-60 photo">
+														<div class="comment-text">
+		
+															
+															<p class="meta">
+																<strong>{{comment.user.username}}</strong> 
+																<span>–</span> <time>{{comment.date_added.date}}</time>
+															</p>
+															<div class="description"><p>{{comment.description |linebreaks }}</p>
+															
+															</div>
+														</div>
+													</div>
+												</li><!-- #comment-## -->
+												{%endfor%}
+											</ol>
 											<form action="" method="POST" class="comment-form" novalidate="">
 												{% csrf_token%}
 											
@@ -197,8 +238,30 @@
 											</p>
 										</form>
 										{%else%}
-				
+										<h3> Bình Luận </h3>
+										<ol class="commentlist">
+											{%for comment in product.comments.all%}
+											<li class="comment">
+												<div>
+													<img alt="" src="{% static 'assets/image/member/member.png'%}" class="avatar avatar-60 photo">
+													<div class="comment-text">
+	
+														
+														<p class="meta">
+															<strong>{{comment.user.username}}</strong> 
+															<span>–</span> <time>{{comment.date_added.date}}</time>
+														</p>
+														<div class="description"><p>{{comment.description |linebreaks }}</p>
+														
+														</div>
+													</div>
+												</div>
+											</li><!-- #comment-## -->
+											{%endfor%}
+										</ol>
 										{%endif%}
+											
+
 									</div><!-- #respond -->
 								</div>
 							</div>
