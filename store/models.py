@@ -75,6 +75,7 @@ class OrderItem(models.Model):
         return total
 
 class Address(models.Model):
+    order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
     address = models.CharField( max_length=300, null= True)
     name = models.CharField( max_length=300, null= True)
     phone = models.CharField( max_length=300, null= True)

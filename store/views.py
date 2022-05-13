@@ -10,176 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
 
-def logoutUser(request):
-	logout(request)
-	return redirect('loginPage')	
 
-def loginPage(request):
-	categories = Category.objects.order_by("id")[:10]
-	if request.method == 'POST':
-		username= request.POST.get('username')
-		password =request.POST.get('password')
-		user = authenticate(request, username=username, password= password)
-		if user is not None:
-			login(request, user) 
-			return redirect('store')
-		messages.success(request, 'Tài khoản hoặc mật khẩu không chính xác')
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/login.html', context)		
-def register(request):
-	form = CreateUserForm(request.POST)  
-	if form.is_valid():
-		form.save()
-		username= request.POST.get('username')
-		user = User.objects.get(username= username)
-		login(request, user) 
-		Customer.objects.create(email=user.email, user=user, name= user.username)
-		messages.success(request, 'Đăng ký Thành Công')
-		return redirect('store')
-
-		# return redirect('loginPage')
-	categories = Category.objects.order_by("id")[:10]
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0,'form': form}		
-
-	return render(request, 'store/register.html', context)	
-def updateItem(request):
-	data = json.loads(request.body)
-	productId = data['productId']
-	action = data['action']
-	customer = request.user.customer
-	product= Product.objects.get(id=productId)
-	order, created = Order.objects.get_or_create(customer= customer, complete = False)
-	orderItem, created = OrderItem.objects.get_or_create(order= order,product= product)
-	if action == 'add':
-		orderItem.quantity += 1
-	elif action == 'remove':
-		orderItem.quantity -= 1
-	orderItem.save()	
-	if orderItem.quantity <= 0:
-		orderItem.delete()
-	return JsonResponse('Item added', safe= False)
-def single_product(request, pk):
-	product = Product.objects.get(id=pk)
-	if request.method == 'POST':
-		description = request.POST.get('comment')
-		Comment.objects.create( user=request.user, description = description, product = product)
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-	products = Product.objects.order_by("id")[:7]
-	categories = Category.objects.order_by("id")[:10]
-
-	if request.user.is_authenticated:
-		review, created = Review.objects.get_or_create(user= request.user,product= product)
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:	
-		review = 0	
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'product': product, 'review':review}
-	return render(request, 'store/single-product.html', context)	
-def review_stars(request, stars, pk):
-	product = Product.objects.get(id=pk)
-	review, created = Review.objects.get_or_create(user= request.user,product= product)
-
-	if(review.first_time):
-		review.first_time = False
-		product.stars = ((product.stars*product.review_times + stars)/(product.review_times+1))
-		product.review_times += 1
-	else:
-		product.stars = ((product.stars*product.review_times + stars - review.stars)/(product.review_times))
-	review.b = round(review.stars, 0)
-	review.stars = stars
-	product.save()
-	review.save()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
-def category(request, pk):
-	category = Category.objects.get(id=pk)
-	categories = Category.objects.all()
-	
-	if request.user.is_authenticated:
-
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:	
-		review = 0	
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0, 'category': category}
-	return render(request, 'store/products.html', context)
-def search(request):
-
-	categories = Category.objects.all()
-	if request.method == 'GET':   
-		q =  request.GET.get('q')     
-
-		products= Product.objects.filter(name__contains=q)
-	else:
-		products =Product.objects.all()
-	if request.user.is_authenticated:
-
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:	
-		review = 0	
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0,'products':products, 'q': q}
-	return render(request, 'store/products.html', context)
 def payment(request):
 	import urllib.request
 	import urllib
@@ -199,7 +30,24 @@ def payment(request):
 		else:
 			messages.success(request, 'Vui lòng điền đầy đủ thông tin')
 			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-		Address.objects.create(name= name, address= address, city=city,phone = phone)
+		order_id = int(request.POST.get('order_id'))
+
+		if (order_id < 0) : 
+
+			order = Order.objects.create( complete = True)
+			try:
+				cart = json.loads(request.COOKIES['cart'])
+			except:
+				cart={}
+			for i in cart:
+				product = Product.objects.get(id= i)
+				orderItem = OrderItem.objects.create(product=product,order=order, quantity=cart[i]['quantity'] )
+		else:
+			order = Order.objects.get(id=order_id)
+			order.complete = True
+			order.save()
+
+		Address.objects.create(name= name, address= address, city=city,phone = phone,order = order)
 		price = str(int(price)*1000)
 		# parameters send to MoMo get get payUrl
 		endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
@@ -269,180 +117,21 @@ def feedback(request):
 		Feedback.objects.create( name= name, email = email, comment = comment)
 		messages.success(request, 'Gửi tin thành công')
 	return redirect('contact')	
+def review_stars(request, stars, pk):
+	product = Product.objects.get(id=pk)
+	review, created = Review.objects.get_or_create(user= request.user,product= product)
 
-
-
-
-def store(request):
-	products = Product.objects.order_by("id")[:7]
-	products1 = Product.objects.order_by("review_times")[:7]
-	categories = Category.objects.order_by("id")[:10]
-	blogs = Blog.objects.all()
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products,'products1': products1,'categories':categories, 'cartItems': cartItems, 'total':0, 'blogs': blogs}
-	return render(request, 'store/store.html', context)
-def cart(request):
-	categories = Category.objects.order_by("id")[:10]
-	try:
-		if request.user.is_authenticated:
-			customer = request.user.customer
-			order, created = Order.objects.get_or_create(customer= customer, complete = False)
-			items = order.orderitem_set.all()
-			cartItems = order.get_cart_items
-			productsstring = ''		
-			for item in items:
-				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (item.product.imageURL,item.product.id, item.product.name, item.product.price, item.get_total, item.quantity)
-				productsstring = productsstring + b
-			total = order.get_cart_total
-		else:
-			productsstring = ''
-			try:
-				cart = json.loads(request.COOKIES['cart'])
-			except:
-				cart={}
-			order = {'get_cart_total':0, 'get_cart_items':0}
-			cartItems = order['get_cart_items']
-			for i in cart:
-				cartItems += cart[i]["quantity"]
-				product = Product.objects.get(id= i)
-				total = (product.price* cart[i]['quantity'])
-				order['get_cart_total'] += total
-				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (product.imageURL,product.id, product.name, product.price, (product.price* cart[i]['quantity']),  cart[i]['quantity'])
-				productsstring = productsstring + b
-			total = order['get_cart_total']
-	except:
-		pass
-
-	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cartItems': cartItems}
-	return render(request, 'store/cart.html', context)
-def checkout(request):
-	categories = Category.objects.order_by("id")[:10]
-	try:
-		if request.user.is_authenticated:
-			customer = request.user.customer
-			order, created = Order.objects.get_or_create(customer= customer, complete = False)
-			items = order.orderitem_set.all()
-			cartItems = order.get_cart_items
-			productsstring = ''		
-			for item in items:
-				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (item.product.imageURL,item.product.id, item.product.name, item.product.price, item.get_total, item.quantity)
-				productsstring = productsstring + b
-			total = order.get_cart_total
-		else:
-			productsstring = ''
-			try:
-				cart = json.loads(request.COOKIES['cart'])
-			except:
-				cart={}
-			order = {'get_cart_total':0, 'get_cart_items':0}
-			cartItems = order['get_cart_items']
-			for i in cart:
-				cartItems += cart[i]["quantity"]
-				product = Product.objects.get(id= i)
-				total = (product.price* cart[i]['quantity'])
-				order['get_cart_total'] += total
-				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (product.imageURL,product.id, product.name, product.price, (product.price* cart[i]['quantity']),  cart[i]['quantity'])
-				productsstring = productsstring + b
-			total = order['get_cart_total']
-	except:
-		pass
-
-	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cartItems': cartItems}
-	return render(request, 'store/checkout.html', context)
-
-def contact(request):
-	categories = Category.objects.order_by("id")[:10]
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/contact_us.html', context)
-
-def products(request):
-	products = Product.objects.all()
-	categories = Category.objects.all()
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'products': products, 'cartItems': cartItems, 'categories': categories, 'total':0}
-	return render(request, 'store/products.html', context)
-def blog(request):
-	blogs = Blog.objects.all()
-	categories = Category.objects.order_by("id")[:10]
-
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'blogs': blogs,'categories':categories, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/blog.html', context)	
-def about_us(request):
-	categories = Category.objects.order_by("id")[:10]
-	# try:
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
-	else:		
-		try:
-			cart = json.loads(request.COOKIES['cart'])
-		except:
-			cart={}
-		cartItems = 0
-		for i in cart:
-			cartItems += cart[i]["quantity"]
-	# except:
-	# 	pass
-	context = {'categories': categories, 'cartItems': cartItems, 'total':0}
-	return render(request, 'store/about_us.html', context)	
+	if(review.first_time):
+		review.first_time = False
+		product.stars = ((product.stars*product.review_times + stars)/(product.review_times+1))
+		product.review_times += 1
+	else:
+		product.stars = ((product.stars*product.review_times + stars - review.stars)/(product.review_times))
+	review.b = round(review.stars, 0)
+	review.stars = stars
+	product.save()
+	review.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
 def blog_details(request, pk):
 
 	products = Product.objects.order_by("id")[:7]
@@ -459,19 +148,352 @@ def blog_details(request, pk):
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
-		cartItems = order.get_cart_items
+		cart_quantity = order.get_cart_items
 	else:		
 		try:
 			cart = json.loads(request.COOKIES['cart'])
 		except:
 			cart={}
-		cartItems = 0
+		cart_quantity = 0
 		for i in cart:
-			cartItems += cart[i]["quantity"]
+			cart_quantity += cart[i]["quantity"]
 	# except:
 	# 	pass
-	context = {'products': products,'categories':categories, 'cartItems': cartItems, 'total':0, 'blog': blog, 'blogs':blogs}
+	context = {'products': products,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'blog': blog, 'blogs':blogs}
 	return render(request, 'store/blog_details.html', context)	
+
+
+def logoutUser(request):
+	logout(request)
+	return redirect('loginPage')	
+
+def loginPage(request):
+	categories = Category.objects.order_by("id")[:10]
+	if request.method == 'POST':
+		username= request.POST.get('username')
+		password =request.POST.get('password')
+		user = authenticate(request, username=username, password= password)
+		if user is not None:
+			login(request, user) 
+			return redirect('store')
+		messages.success(request, 'Tài khoản hoặc mật khẩu không chính xác')
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
+	return render(request, 'store/login.html', context)		
+def register(request):
+	form = CreateUserForm(request.POST)  
+	if form.is_valid():
+		form.save()
+		username= request.POST.get('username')
+		user = User.objects.get(username= username)
+		login(request, user) 
+		Customer.objects.create(email=user.email, user=user, name= user.username)
+		messages.success(request, 'Đăng ký Thành Công')
+		return redirect('store')
+
+		# return redirect('loginPage')
+	categories = Category.objects.order_by("id")[:10]
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0,'form': form}		
+
+	return render(request, 'store/register.html', context)	
+
+def single_product(request, pk):
+	product = Product.objects.get(id=pk)
+	if request.method == 'POST':
+		description = request.POST.get('comment')
+		Comment.objects.create( user=request.user, description = description, product = product)
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+	products = Product.objects.order_by("id")[:7]
+	categories = Category.objects.order_by("id")[:10]
+
+	if request.user.is_authenticated:
+		review, created = Review.objects.get_or_create(user= request.user,product= product)
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'products': products,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'product': product, 'review':review}
+	return render(request, 'store/single-product.html', context)	
+
+def category(request, pk):
+	category = Category.objects.get(id=pk)
+	categories = Category.objects.all()
+	
+	if request.user.is_authenticated:
+
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0, 'category': category}
+	return render(request, 'store/products.html', context)
+def search(request):
+
+	categories = Category.objects.all()
+	if request.method == 'GET':   
+		q =  request.GET.get('q')     
+
+		products= Product.objects.filter(name__contains=q)
+	else:
+		products =Product.objects.all()
+	if request.user.is_authenticated:
+
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:	
+		review = 0	
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0,'products':products, 'q': q}
+	return render(request, 'store/products.html', context)
+
+def store(request):
+	products = Product.objects.order_by("id")[:7]
+	products1 = Product.objects.order_by("review_times")[:7]
+	categories = Category.objects.order_by("id")[:10]
+	blogs = Blog.objects.all()
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'products': products,'products1': products1,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'blogs': blogs}
+	return render(request, 'store/store.html', context)
+def cart(request):
+	categories = Category.objects.order_by("id")[:10]
+	try:
+		if request.user.is_authenticated:
+			customer = request.user.customer
+			order, created = Order.objects.get_or_create(customer= customer, complete = False)
+			items = order.orderitem_set.all()
+			cart_quantity = order.get_cart_items
+			productsstring = ''		
+			for item in items:
+				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (item.product.imageURL,item.product.id, item.product.name, item.product.price, item.get_total, item.quantity)
+				productsstring = productsstring + b
+			total = order.get_cart_total
+		else:
+			productsstring = ''
+			try:
+				cart = json.loads(request.COOKIES['cart'])
+			except:
+				cart={}
+			order = {'get_cart_total':0, 'get_cart_items':0}
+			cart_quantity = order['get_cart_items']
+			for i in cart:
+				cart_quantity += cart[i]["quantity"]
+				product = Product.objects.get(id= i)
+				total = (product.price* cart[i]['quantity'])
+				order['get_cart_total'] += total
+				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (product.imageURL,product.id, product.name, product.price, (product.price* cart[i]['quantity']),  cart[i]['quantity'])
+				productsstring = productsstring + b
+			total = order['get_cart_total']
+	except:
+		pass
+
+	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cart_quantity': cart_quantity}
+	return render(request, 'store/cart.html', context)
+def updateItem(request):
+	data = json.loads(request.body)
+	productId = data['productId']
+	action = data['action']
+	customer = request.user.customer
+	product= Product.objects.get(id=productId)
+	order, created = Order.objects.get_or_create(customer= customer, complete = False)
+	orderItem, created = OrderItem.objects.get_or_create(order= order,product= product)
+	if action == 'add':
+		orderItem.quantity += 1
+	elif action == 'remove':
+		orderItem.quantity -= 1
+	orderItem.save()	
+	if orderItem.quantity <= 0:
+		orderItem.delete()
+	return JsonResponse('Item added', safe= False)
+def checkout(request):
+	categories = Category.objects.order_by("id")[:10]
+	try:
+		if request.user.is_authenticated:
+			customer = request.user.customer
+			order, created = Order.objects.get_or_create(customer= customer, complete = False)
+			order_id = order.id
+			items = order.orderitem_set.all()
+			cart_quantity = order.get_cart_items
+		
+			productsstring = ''		
+			for item in items:
+				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (item.product.imageURL,item.product.id, item.product.name, item.product.price, item.get_total, item.quantity)
+				productsstring = productsstring + b
+			total = order.get_cart_total
+		else:
+			productsstring = ''
+			try:
+				cart = json.loads(request.COOKIES['cart'])
+			except:
+				cart={}
+			order = {'get_cart_total':0, 'get_cart_items':0}
+			cart_quantity = order['get_cart_items']
+			for i in cart:
+				cart_quantity += cart[i]["quantity"]
+				product = Product.objects.get(id= i)
+				total = (product.price* cart[i]['quantity'])
+				order['get_cart_total'] += total
+				b = "{'imageURL': '%s','id': '%s', 'name': '%s', 'price': '%s','gettotal': '%s','quantity': '%s'}," % (product.imageURL,product.id, product.name, product.price, (product.price* cart[i]['quantity']),  cart[i]['quantity'])
+				productsstring = productsstring + b
+			total = order['get_cart_total']
+			order_id = -1
+	except:
+		pass
+
+	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cart_quantity': cart_quantity, 'order_id': order_id}
+	return render(request, 'store/checkout.html', context)
+
+def contact(request):
+	categories = Category.objects.order_by("id")[:10]
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
+	return render(request, 'store/contact_us.html', context)
+
+def products(request):
+	products = Product.objects.all()
+	categories = Category.objects.all()
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'products': products, 'cart_quantity': cart_quantity, 'categories': categories, 'total':0}
+	return render(request, 'store/products.html', context)
+def blog(request):
+	blogs = Blog.objects.all()
+	categories = Category.objects.order_by("id")[:10]
+
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'blogs': blogs,'categories':categories, 'cart_quantity': cart_quantity, 'total':0}
+	return render(request, 'store/blog.html', context)	
+def about_us(request):
+	categories = Category.objects.order_by("id")[:10]
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
+	return render(request, 'store/about_us.html', context)	
 
 
 
