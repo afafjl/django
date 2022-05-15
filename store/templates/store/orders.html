@@ -1,0 +1,44 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<title>Fashion Shop | quan ly</title>
+
+<div id="content" class="blog_page blog_margin">
+<!-- Our Services -->
+	<div id="blogs" class="blog_section">
+		<div class="container-fluid">
+			<div class="row">
+				<h3>đơn hàng chưa được giao</h3>
+				{%for order in orders%}
+				<div class="col-sm-3">
+					<div class="blog_inner_matter">
+
+						<h3 class="wow fadeInDown animated"><a href="{%url 'address_info' order.id %}">đơn giao hàng {{order.id}}</a></h3>
+						<p class="wow fadeInDown animated">{{order.address.address}}</p>
+						<a href="{%url 'address_info' order.id %}" class="btn wow fadeInDown animated" >Xem</a>
+						<a href="{% url 'shipped' order.id%}"><button  class="btn" title="Add to Cart" type="button">đã Giao xong</button></a>
+					</div>
+				</div>
+				{%endfor%}
+				
+			</div>
+		</div>
+	</div>
+<!-- Our Services End-->
+<!-- Pagination -->
+{% comment %} <div class="container-fluid">
+	<div class="row">
+		<div class="pagination-section text-center wow fadeInDown animated">
+			<a href="#" class="prev page-numbers"><i class="fa fa-angle-left"></i></a>
+			<span class="page-numbers current" aria-current="page">1</span>
+			<a href="#" class="page-numbers">2</a>
+			<a href="#" class="page-numbers">3</a>
+			<a href="#" class="page-numbers">4</a>
+			<a href="#" class="page-numbers">5</a>
+			<a href="#" class="next page-numbers"><i class="fa fa-angle-right"></i></a>
+		</div>
+	</div>
+</div> {% endcomment %}
+<!-- Pagination End-->
+</div>
+{% endblock content %}

@@ -1,0 +1,136 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<title>Fashion Shop | thong tin giao hang</title>
+
+	<div id="content" class="single_products_page">
+
+		<div id="products_products" class="single_products_section">
+			<div class="container-fluid">
+				<div class="row">
+					{% comment %} <div class="col-sm-6">
+						<div class="eb_right single_products_right_side">
+
+						</div>
+					</div> {% endcomment %}
+					
+					
+					<div class="col-sm-6">
+						<div class="eb_left single_products_left_side">
+							<h2>Đơn giao hàng {{order1.id}}</h2>
+							
+							<div class="add-to-box">
+								<div class="add-to-cart">
+									<div class="pull-left">
+
+									</div>
+									{%if order1.shipped == True%}
+									Đã giao hàng cho đơn hang này
+									{%else %}
+									<a href="{% url 'shipped' order1.id%}"><button  class="btn" title="Add to Cart" type="button">đã Giao xong</button></a>
+									{%endif%}
+
+								</div>
+							</div>
+							
+							<div class="short-description">
+								<h3>Địa chỉ giao hàng</h3>
+								<p> {{order1.address.address |linebreaks }}</p>
+							</div>
+							
+
+						</div>
+
+							
+						</div>	
+					</div>
+				</div>		
+				
+				<div id="cart" class="cart_section">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="table-custom-responsive wow fadeInDown animated">
+								<table class="table-custom table-cart table-responsive">
+									<thead>
+										<tr>
+											<th>Sản Phẩm</th>
+
+											<th>Số Lượng</th>
+										</tr>
+									</thead>
+										<tbody>
+											{%for item in order1.orderitem_set.all%}
+											<tr>
+												<td><div class="table-cart-figure" ><img src="{{item.product.imageURL}}" alt="" width="146" height="132"></div>
+													<a class="table-cart-link" >  {{item.product.name}}</a></td>
+
+												<td>
+			
+													<p class="table-cart-link" href="#">   {{item.quantity}}     
+													</p>
+													
+												</td>
+
+											</tr>
+											{%endfor%}
+										</tbody>
+								</table>
+							</div>
+
+						</div>	
+					</div>	
+				</div>	
+				<!-- Products End-->
+				
+				<!-- relative products  end-->
+				
+			</div>	
+		</div>
+	</div>	
+</div>
+</div>
+</div>
+</div>
+
+{% endblock content %}
+{% block scripts %}
+
+<script >
+
+	$(document).ready(function(){
+		$('#additional_silder_products_images').owlCarousel({	
+			items:5,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,2],
+			itemsTablet:[768,3],
+			itemsMobile:[600,2],
+			autoPlay: 6000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left fa-5x"></i>', '<i class="fa fa-angle-right fa-5x"></i>']
+		});
+	});
+	
+	$(document).ready(function(){
+		$('#related_product').owlCarousel({	
+			items: 4,
+			itemsDesktop:[1199,3],
+			itemsDesktopSmall:[992,3],
+			itemsTablet:[768,2],
+			itemsMobile:[450,1],
+			autoPlay: 10000,
+			pagination: false,
+			navigation: true,
+			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
+		});
+	});
+	
+	$(window).load(function() {
+		$('.sp-wrap').smoothproducts();
+	});
+	
+</script>
+
+<script  src="assets/vendor/smoothproducts/smoothproducts.min.js"></script>
+
+{% endblock %}

@@ -29,5 +29,7 @@ urlpatterns = [
 	path('search', views.search, name="search"),
 	path('vnpay', views.payment, name="vnpay"),
 	path('feedback', views.feedback, name="feedback"),
-
+	path('address_info/<int:pk>', views.address_info, name="address_info"),
+	path('orders', views.orders, name="orders"),
+	path('shipped/<int:pk>', views.shipped, name="shipped"),
 ]	

@@ -9,7 +9,57 @@ from .form import OrderForm, CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import user_passes_test
 
+@user_passes_test(lambda u: u.is_superuser)
+def shipped(request, pk):
+	order1 = Order.objects.get(id= pk)
+	order1.shipped = True
+	order1.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
+@user_passes_test(lambda u: u.is_superuser)
+def address_info(request,pk):
+	order1 = Order.objects.get(id= pk)
+	categories = Category.objects.order_by("id")[:10]
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'cart_quantity': cart_quantity, 'total':0, 'order1': order1}
+	return render(request, 'store/address_info.html', context)
+@user_passes_test(lambda u: u.is_superuser)
+def orders(request):
+	orders = Order.objects.filter(complete = True,shipped = False).order_by("id")
+	categories = Category.objects.order_by("id")[:10]
+
+	# try:
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer= customer, complete = False)
+		cart_quantity = order.get_cart_items
+	else:		
+		try:
+			cart = json.loads(request.COOKIES['cart'])
+		except:
+			cart={}
+		cart_quantity = 0
+		for i in cart:
+			cart_quantity += cart[i]["quantity"]
+	# except:
+	# 	pass
+	context = {'cart_quantity': cart_quantity, 'total':0, 'orders': orders}
+	return render(request, 'store/orders.html', context)
 
 def payment(request):
 	import urllib.request
@@ -195,7 +245,7 @@ def loginPage(request):
 	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
 	return render(request, 'store/login.html', context)		
 def register(request):
-	form = CreateUserForm(request.POST)  
+	form = CreateUserForm(request.POST or None)  
 	if form.is_valid():
 		form.save()
 		username= request.POST.get('username')

@@ -17,16 +17,15 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-    # def clean_password(self):
-    #     if self.data['password1'] != self.data['password2']:
-    #         raise forms.ValidationError('Mật khẩu không giống nhau')
-    #     return self.data['password']
-    # def clean_username(self):
-    #     username = self.cleaned_data['username']
-    #     if not re.search(r'^/+$'):
-    #         raise forms.ValidationError("Tên tài khỏan không được có kí tự đặc biệt")
-    #     try:
-    #         User.objects.get(username=username)
-    #     except ObjectDoesNotExist:
-    #         return username
-    #     raise forms.ValidationError("Tên tài khoản đã tồn tại")
+    def clean_password2(self):
+        if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+            raise forms.ValidationError('Mật khẩu không giống nhau')
+        return self.data['password']
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        
+        try:
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return username
+        raise forms.ValidationError("Tên tài khoản đã tồn tại")

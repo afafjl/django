@@ -52,6 +52,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, blank=True, null= True, on_delete=models.SET_NULL)
     date_ordered = models.DateTimeField( auto_now_add=True, null= True)
     complete = models.BooleanField(default= False, null = True, blank = False)
+    shipped = models.BooleanField(default= False, null = True, blank = False)
     transaction_id = models.CharField( max_length=100, null= True)
     def __str__(self):
         return str(self.id)
@@ -75,7 +76,7 @@ class OrderItem(models.Model):
         return total
 
 class Address(models.Model):
-    order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
+    order = models.OneToOneField(Order, blank=True, null= True, on_delete=models.SET_NULL)
     address = models.CharField( max_length=300, null= True)
     name = models.CharField( max_length=300, null= True)
     phone = models.CharField( max_length=300, null= True)
