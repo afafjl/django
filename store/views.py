@@ -333,7 +333,7 @@ def search(request):
 	if request.method == 'GET':   
 		q =  request.GET.get('q')     
 
-		products= Product.objects.filter(name__contains=q)
+		products= Product.objects.filter(name__icontains=q)
 	else:
 		products =Product.objects.all()
 	if request.user.is_authenticated:
