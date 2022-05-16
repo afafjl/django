@@ -20,7 +20,8 @@ class CreateUserForm(UserCreationForm):
     def clean_password2(self):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             raise forms.ValidationError('Mật khẩu không giống nhau')
-        return self.data['password']
+        return self.data['password1']
+
     def clean_username(self):
         username = self.cleaned_data['username']
         
