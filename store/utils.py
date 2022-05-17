@@ -1,6 +1,6 @@
 import json
 from. models import *
-
+#hàm xuất dữ liệu cho thanh nav
 def nav(request):
     products = Product.objects.all()
     total =0

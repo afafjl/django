@@ -37,15 +37,15 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     @property
-    def imageURL(self):
+    def imageURL(self):#hàm xử lý đường dẫn hình ảnh
         try:
             url = self.image.url
         except:
             url = ''
         return url
-    def aaa(self):
+    def aaa(self):#hàm làm tròn trả về giá trị 5- điểm đánh giá
         return 5-round(self.stars,0)
-    def aaaa(self):
+    def aaaa(self):#hàm làm tròn trả về giá trị điểm đánh giá
         return round(self.stars,0)
 
 class Order(models.Model):
@@ -57,11 +57,11 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
     @property
-    def get_cart_total(self):
+    def get_cart_total(self):#hàm trả về tổng giá trị trong đơn hàng
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return total
-    def get_cart_items(self):
+    def get_cart_items(self):#hàm trả về số lượng sản phẩm trong đơn hàng
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total    
@@ -71,7 +71,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default= 0, null=True, blank= True)
     date_added= models.DateTimeField( auto_now_add=True, null= True)
     @property
-    def get_total(self):
+    def get_total(self):#hàm trả về tổng tiền của sản phẩm này trong đơn hàng
         total = self.product.price * self.quantity
         return total
 
@@ -96,7 +96,7 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
     @property
-    def imageURL(self):
+    def imageURL(self):#hàm xử lý đường dẫn hình ảnh
         try:
             url = self.image.url
         except:

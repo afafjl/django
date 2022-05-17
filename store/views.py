@@ -5,24 +5,27 @@ from . utils import *
 import json
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm  
-from .form import OrderForm, CreateUserForm
+from .form import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser) #chỉ cho phép admin truy cập
+#hàm đổi trạng thái sau khi đơn hàng hoàn tất
 def shipped(request, pk):
 	order1 = Order.objects.get(id= pk)
 	order1.shipped = True
 	order1.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
-@user_passes_test(lambda u: u.is_superuser)
+
+@user_passes_test(lambda u: u.is_superuser)#chỉ cho phép admin truy cập
+#hàm đưa ra trang thông tin của đơn hàng
 def address_info(request,pk):
 	order1 = Order.objects.get(id= pk)
 	categories = Category.objects.order_by("id")[:10]
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -38,13 +41,16 @@ def address_info(request,pk):
 	# 	pass
 	context = {'cart_quantity': cart_quantity, 'total':0, 'order1': order1}
 	return render(request, 'store/address_info.html', context)
-@user_passes_test(lambda u: u.is_superuser)
+
+@user_passes_test(lambda u: u.is_superuser)#chỉ cho phép admin truy cập
+
+#hàm đưa ra trang chứa tất cả các đơn hàng đã được đặt mà chưa được giao hàng
 def orders(request):
 	orders = Order.objects.filter(complete = True,shipped = False).order_by("id")
 	categories = Category.objects.order_by("id")[:10]
 
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -61,6 +67,7 @@ def orders(request):
 	context = {'cart_quantity': cart_quantity, 'total':0, 'orders': orders}
 	return render(request, 'store/orders.html', context)
 
+#hàm xứ lý thanh toán qua momo
 def payment(request):
 	import urllib.request
 	import urllib
@@ -68,6 +75,7 @@ def payment(request):
 	import requests
 	import hmac
 	import hashlib
+
 	if request.method == 'POST': 
 		price =  request.POST.get('price') 
 		name =  request.POST.get('name')
@@ -81,7 +89,7 @@ def payment(request):
 			messages.success(request, 'Vui lòng điền đầy đủ thông tin')
 			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 		order_id = int(request.POST.get('order_id'))
-
+		#lưu thông tin đơn hàng
 		if (order_id < 0) : 
 
 			order = Order.objects.create( complete = True)
@@ -96,7 +104,7 @@ def payment(request):
 			order = Order.objects.get(id=order_id)
 			order.complete = True
 			order.save()
-
+		#chuyển thông tin sang bên môi trường momo test
 		Address.objects.create(name= name, address= address, city=city,phone = phone,order = order)
 		price = str(int(price)*1000)
 		# parameters send to MoMo get get payUrl
@@ -159,6 +167,8 @@ def payment(request):
 		return redirect(response.json()['payUrl'])
 	else:
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+#hàm lưu thông tin về các feedback của người dùng
 def feedback(request):
 	if request.method == 'POST':
 		name= request.POST.get('name')
@@ -167,6 +177,8 @@ def feedback(request):
 		Feedback.objects.create( name= name, email = email, comment = comment)
 		messages.success(request, 'Gửi tin thành công')
 	return redirect('contact')	
+
+#hàm lưu đánh giá số lượng sao sản phẩm
 def review_stars(request, stars, pk):
 	product = Product.objects.get(id=pk)
 	review, created = Review.objects.get_or_create(user= request.user,product= product)
@@ -182,6 +194,8 @@ def review_stars(request, stars, pk):
 	product.save()
 	review.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))	
+
+#hàm xuất dữ liệu ra trang thông tin chi tiết bài viết
 def blog_details(request, pk):
 
 	products = Product.objects.order_by("id")[:7]
@@ -189,13 +203,13 @@ def blog_details(request, pk):
 	blogs = Blog.objects.order_by("id")[:4]
 	blog = Blog.objects.get(id=pk)
 	# tag = get_object_or_404(Tag, slug=tag_slug)
-
+	#nếu người dùng có bình luận vào bài viết này
 	if request.method == 'POST':
 		description = request.POST.get('comment')
 		Blog_comment.objects.create( user=request.user, description = description, blog = blog)
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -212,11 +226,12 @@ def blog_details(request, pk):
 	context = {'products': products,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'blog': blog, 'blogs':blogs}
 	return render(request, 'store/blog_details.html', context)	
 
-
+#đăng xuất
 def logoutUser(request):
 	logout(request)
 	return redirect('loginPage')	
 
+#đăng nhập
 def loginPage(request):
 	categories = Category.objects.order_by("id")[:10]
 	if request.method == 'POST':
@@ -228,7 +243,7 @@ def loginPage(request):
 			return redirect('store')
 		messages.success(request, 'Tài khoản hoặc mật khẩu không chính xác')
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -244,6 +259,8 @@ def loginPage(request):
 	# 	pass
 	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
 	return render(request, 'store/login.html', context)		
+
+#đăng ký
 def register(request):
 	form = CreateUserForm(request.POST or None)  
 	if form.is_valid():
@@ -258,7 +275,7 @@ def register(request):
 		# return redirect('loginPage')
 	categories = Category.objects.order_by("id")[:10]
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -276,9 +293,10 @@ def register(request):
 
 	return render(request, 'store/register.html', context)	
 
+#hàm xuất dữ liệu ra trang thông tin chi tiết sản phẩm
 def single_product(request, pk):
 	product = Product.objects.get(id=pk)
-	if request.method == 'POST':
+	if request.method == 'POST':#nếu người dùng có bình luận 
 		description = request.POST.get('comment')
 		Comment.objects.create( user=request.user, description = description, product = product)
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -286,7 +304,7 @@ def single_product(request, pk):
 	products = Product.objects.order_by("id")[:7]
 	categories = Category.objects.order_by("id")[:10]
 
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		review, created = Review.objects.get_or_create(user= request.user,product= product)
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
@@ -305,11 +323,12 @@ def single_product(request, pk):
 	context = {'products': products,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'product': product, 'review':review}
 	return render(request, 'store/single-product.html', context)	
 
+#hàm xuất dữ liệu ra trang sản phẩm lọc theo category
 def category(request, pk):
 	category = Category.objects.get(id=pk)
 	categories = Category.objects.all()
 	
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
@@ -327,6 +346,8 @@ def category(request, pk):
 	# 	pass
 	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0, 'category': category}
 	return render(request, 'store/products.html', context)
+
+#hàm tìm kiếm sản phẩm
 def search(request):
 
 	categories = Category.objects.all()
@@ -336,7 +357,7 @@ def search(request):
 		products= Product.objects.filter(name__icontains=q)
 	else:
 		products =Product.objects.all()
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
@@ -355,13 +376,14 @@ def search(request):
 	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0,'products':products, 'q': q}
 	return render(request, 'store/products.html', context)
 
+#hàm xuất dữ liệu ra trang chính
 def store(request):
 	products = Product.objects.order_by("id")[:7]
 	products1 = Product.objects.order_by("-review_times")[:7]
 	categories = Category.objects.order_by("id")[:10]
 	blogs = Blog.objects.all()
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -377,10 +399,12 @@ def store(request):
 	# 	pass
 	context = {'products': products,'products1': products1,'categories':categories, 'cart_quantity': cart_quantity, 'total':0, 'blogs': blogs}
 	return render(request, 'store/store.html', context)
+
+#hàm xuất dữ liệu ra trang giỏ hàng dữ liệu trong giỏ hàng phải được trả về dạng chuỗi để vuejs có thể đọc được
 def cart(request):
 	categories = Category.objects.order_by("id")[:10]
 	try:
-		if request.user.is_authenticated:
+		if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 			customer = request.user.customer
 			order, created = Order.objects.get_or_create(customer= customer, complete = False)
 			items = order.orderitem_set.all()
@@ -411,6 +435,8 @@ def cart(request):
 
 	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cart_quantity': cart_quantity}
 	return render(request, 'store/cart.html', context)
+
+#hàm xử lý logic khi người dùng thêm hay xóa sản phẩm trong giỏ hàng
 def updateItem(request):
 	data = json.loads(request.body)
 	productId = data['productId']
@@ -427,10 +453,12 @@ def updateItem(request):
 	if orderItem.quantity <= 0:
 		orderItem.delete()
 	return JsonResponse('Item added', safe= False)
+
+#đây là hàm thanh toán tương tự như hàm giỏ hàng
 def checkout(request):
 	categories = Category.objects.order_by("id")[:10]
 	try:
-		if request.user.is_authenticated:
+		if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 			customer = request.user.customer
 			order, created = Order.objects.get_or_create(customer= customer, complete = False)
 			order_id = order.id
@@ -465,10 +493,11 @@ def checkout(request):
 	context = {'productsstring': productsstring,'categories':categories, 'total':total, 'cart_quantity': cart_quantity, 'order_id': order_id}
 	return render(request, 'store/checkout.html', context)
 
+#hàm xuất dữ liệu ra trang liên hệ
 def contact(request):
 	categories = Category.objects.order_by("id")[:10]
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -485,11 +514,12 @@ def contact(request):
 	context = {'categories': categories, 'cart_quantity': cart_quantity, 'total':0}
 	return render(request, 'store/contact_us.html', context)
 
+#hàm xuất dữ liệu ra trang tất cả sản phẩm
 def products(request):
 	products = Product.objects.all()
 	categories = Category.objects.all()
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -505,11 +535,13 @@ def products(request):
 	# 	pass
 	context = {'products': products, 'cart_quantity': cart_quantity, 'categories': categories, 'total':0}
 	return render(request, 'store/products.html', context)
+
+#hàm xuất dữ liệu ra trang tất cả bài viết
 def blog(request):
 	blogs = Blog.objects.all()
 	categories = Category.objects.order_by("id")[:10]
 
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items
@@ -525,10 +557,12 @@ def blog(request):
 	# 	pass
 	context = {'blogs': blogs,'categories':categories, 'cart_quantity': cart_quantity, 'total':0}
 	return render(request, 'store/blog.html', context)	
+
+#hàm xuất dữ liệu ra trang giới thiệu
 def about_us(request):
 	categories = Category.objects.order_by("id")[:10]
 	# try:
-	if request.user.is_authenticated:
+	if request.user.is_authenticated:#nếu người dùng đã đăng nhập thì lấy thông tin giỏ hàng từ database còn không thì lấy từ cookie
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer= customer, complete = False)
 		cart_quantity = order.get_cart_items

@@ -5,10 +5,12 @@ from django import forms
 from django.contrib.auth.models import User
 import re
 from django.core.exceptions import ObjectDoesNotExist 
-class OrderForm (ModelForm):
-    class Meta:
-        model = Order 
-        fields = '__all__'
+# class OrderForm (ModelForm):
+#     class Meta:
+#         model = Order 
+#         fields = '__all__'
+
+#hàm xử lý dữ liệu trong form đăng ký
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-input form-control'}))
     username = forms.CharField(label= 'Tài Khoản', widget=forms.TextInput(attrs={'class':'form-input form-control'}))
@@ -17,11 +19,12 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+    #kiểm tra password có trùng nhau không
     def clean_password2(self):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             raise forms.ValidationError('Mật khẩu không giống nhau')
         return self.data['password1']
-
+    #kiểm tra xem tên tài khoản có tồn tại không
     def clean_username(self):
         username = self.cleaned_data['username']
         
