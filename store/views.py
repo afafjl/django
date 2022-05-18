@@ -43,7 +43,6 @@ def address_info(request,pk):
 	return render(request, 'store/address_info.html', context)
 
 @user_passes_test(lambda u: u.is_superuser)#chỉ cho phép admin truy cập
-
 #hàm đưa ra trang chứa tất cả các đơn hàng đã được đặt mà chưa được giao hàng
 def orders(request):
 	orders = Order.objects.filter(complete = True,shipped = False).order_by("id")
