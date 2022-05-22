@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 # Create your models here.
 class Feedback(models.Model):
+    """class phản hồi """
     name = models.CharField( max_length=100, null= True)
     email = models.CharField( max_length=100, null= True)
 
@@ -11,6 +12,7 @@ class Feedback(models.Model):
     def __str__(self):
         return self.name
 class Category(models.Model):
+    """class danh mục sản phẩm """
     name = models.CharField(max_length=200)
     # slug = models.SlugField()
     # parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete=models.SET_NULL)
@@ -18,6 +20,7 @@ class Category(models.Model):
     def __str__(self):                                         
         return self.name  
 class Customer(models.Model):
+    """class khách hàng"""
     user = models.OneToOneField(User, null= True, blank= True, on_delete= models.CASCADE)
     name = models.CharField( max_length=100, null= True)
     email = models.CharField( max_length=100, null= True)
@@ -25,6 +28,7 @@ class Customer(models.Model):
         return self.name
 
 class Product(models.Model):
+    """class sản phẩm"""
     name = models.CharField( max_length=100, null= True)
     price = models.IntegerField( null= True)
     unsale_price = models.IntegerField( null= True)
@@ -37,18 +41,22 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     @property
-    def imageURL(self):#hàm xử lý đường dẫn hình ảnh
+    def imageURL(self):
+        """hàm xử lý đường dẫn hình ảnh"""
         try:
             url = self.image.url
         except:
             url = ''
         return url
-    def aaa(self):#hàm làm tròn trả về giá trị 5- điểm đánh giá
+    def aaa(self):
+        """hàm làm tròn trả về giá trị 5- điểm đánh giá"""
         return 5-round(self.stars,0)
-    def aaaa(self):#hàm làm tròn trả về giá trị điểm đánh giá
+    def aaaa(self):
+        """hàm làm tròn trả về giá trị điểm đánh giá"""
         return round(self.stars,0)
 
 class Order(models.Model):
+    """class đơn đặt hàng"""
     customer = models.ForeignKey(Customer, blank=True, null= True, on_delete=models.SET_NULL)
     date_ordered = models.DateTimeField( auto_now_add=True, null= True)
     complete = models.BooleanField(default= False, null = True, blank = False)
@@ -57,25 +65,30 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
     @property
-    def get_cart_total(self):#hàm trả về tổng giá trị trong đơn hàng
+    def get_cart_total(self):
+        """hàm trả về tổng giá trị trong đơn hàng"""
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return total
-    def get_cart_items(self):#hàm trả về số lượng sản phẩm trong đơn hàng
+    def get_cart_items(self):
+        """hàm trả về số lượng sản phẩm trong đơn hàng"""
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total    
 class OrderItem(models.Model):
+    """class sản phẩm trong đơn hàng"""
     product = models.ForeignKey(Product, blank=True, null= True, on_delete=models.SET_NULL)
     order = models.ForeignKey(Order, blank=True, null= True, on_delete=models.SET_NULL)
     quantity = models.IntegerField(default= 0, null=True, blank= True)
     date_added= models.DateTimeField( auto_now_add=True, null= True)
     @property
-    def get_total(self):#hàm trả về tổng tiền của sản phẩm này trong đơn hàng
+    def get_total(self):
+        """hàm trả về tổng tiền của sản phẩm này trong đơn hàng"""
         total = self.product.price * self.quantity
         return total
 
 class Address(models.Model):
+    """class địa chỉ khách hàng"""
     order = models.OneToOneField(Order, blank=True, null= True, on_delete=models.SET_NULL)
     address = models.CharField( max_length=300, null= True)
     name = models.CharField( max_length=300, null= True)
@@ -86,6 +99,7 @@ class Address(models.Model):
     def __str__(self):
         return self.address
 class Blog(models.Model):
+    """class blog"""
     title = models.CharField( max_length=100, null= True)
     description = models.TextField( null= True)
     short_description = models.CharField( max_length=300, null= True)
@@ -96,13 +110,15 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
     @property
-    def imageURL(self):#hàm xử lý đường dẫn hình ảnh
+    def imageURL(self):
+        """hàm xử lý đường dẫn hình ảnh"""
         try:
             url = self.image.url
         except:
             url = ''
         return url
 class Comment(models.Model):
+    """class bình luận cho sản phẩm"""
     product = models.ForeignKey(Product, blank=True,related_name = "comments", null= True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
     description = models.TextField( null= True)
@@ -110,6 +126,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.description
 class Blog_comment(models.Model):
+    """class bình luận cho blog"""
     blog = models.ForeignKey(Blog, blank=True,related_name = "comments", null= True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
     description = models.TextField( null= True)
@@ -117,11 +134,10 @@ class Blog_comment(models.Model):
     def __str__(self):
         return self.description
 class Review(models.Model):
+    """class điểm đánh giá sản phẩm"""
     product = models.ForeignKey(Product, blank=True, null= True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null= True, blank= True, on_delete= models.CASCADE)
     stars = models.IntegerField(default=0,null= True)
     first_time = models.BooleanField(default= True, null = True, blank = False)
-    @property
 
-    def aaa(self):
-        return 5 - self.stars
+
